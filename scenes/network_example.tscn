@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dhl3iaf4o8bn"]
+
+[ext_resource type="PackedScene" uid="uid://bbuajs42h2k67" path="res://scenes/level.tscn" id="1_yuolt"]
+[ext_resource type="Script" uid="uid://dk77r07cqi6ec" path="res://scirpts/multiplayer_spawner.gd" id="2_h0xkj"]
+[ext_resource type="PackedScene" uid="uid://duelrwt8uoywj" path="res://scenes/player_node.tscn" id="3_h0xkj"]
+[ext_resource type="Script" path="res://scirpts/map_strip.gd" id="4_map"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Map" type="Node2D" parent="."]
+position = Vector2(0, 300)
+script = ExtResource("4_map")
+
+[node name="HighLevelUI" parent="." instance=ExtResource("1_yuolt")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://duelrwt8uoywj")
+spawn_path = NodePath("..")
+script = ExtResource("2_h0xkj")
+network_player = ExtResource("3_h0xkj")
