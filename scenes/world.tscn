@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8n2vjq1w3l4a"]
+
+[ext_resource type="Script" path="res://scripts/world.gd" id="1_world"]
+[ext_resource type="Script" path="res://scripts/synced_camera.gd" id="2_camera"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_world")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 0)
+zoom = Vector2(1, 1)
+current = true
+script = ExtResource("2_camera")
