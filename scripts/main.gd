@@ -4,6 +4,7 @@ extends Control
 
 @onready var connection_panel: VBoxContainer = $UI/ConnectionPanel
 @onready var ip_edit: LineEdit = $UI/ConnectionPanel/IPEdit
+@onready var lobby_list: ItemList = $UI/ConnectionPanel/LobbyList
 @onready var host_button: Button = $UI/ConnectionPanel/HostButton
 @onready var join_button: Button = $UI/ConnectionPanel/JoinButton
 @onready var status_label: Label = $UI/StatusLabel
@@ -14,6 +15,8 @@ extends Control
 func _ready() -> void:
 	host_button.pressed.connect(_on_host_pressed)
 	join_button.pressed.connect(_on_join_pressed)
+	lobby_list.item_selected.connect(_on_lobby_selected)
+	NetworkManager.lobbies_changed.connect(_on_lobbies_changed)
 	offset_checkbox.toggled.connect(_on_offset_toggled)
 	NetworkManager.status_changed.connect(_on_status_changed)
 	_on_status_changed(NetworkManager.status)
@@ -27,8 +30,20 @@ func _on_host_pressed() -> void:
 
 func _on_join_pressed() -> void:
 	var address := ip_edit.text.strip_edges()
-	if address.is_empty():
-		address = "127.0.0.1"
+	_join(address if not address.is_empty() else "127.0.0.1")
+
+
+func _on_lobbies_changed(lobbies: Dictionary) -> void:
+	lobby_list.clear()
+	for lobby_name in lobbies:
+		lobby_list.set_item_metadata(lobby_list.add_item(lobby_name), lobbies[lobby_name])
+
+
+func _on_lobby_selected(index: int) -> void:
+	_join(lobby_list.get_item_metadata(index))
+
+
+func _join(address: String) -> void:
 	NetworkManager.join_game(address)
 	camera.set_screen_index(1)
 	connection_panel.visible = false

@@ -9,8 +9,13 @@ const MAX_CLIENTS := 1  # Total session size is host + 1 client = 2 players.
 enum Role { NONE, HOST, CLIENT }
 
 signal status_changed(status_text: String)
+signal lobbies_changed(lobbies: Dictionary)  # service name -> host IPv4
 
 var role: Role = Role.NONE
+var lobbies := {}
+# iOS-only native plugin (native/bonjour): mDNSResponder advertise + NWBrowser browse.
+# Null in the editor / non-iOS builds, where the manual IP field is the fallback.
+var _bonjour: Object
 
 var status: String = "Disconnected":
 	set(value):
@@ -24,6 +29,21 @@ func _ready() -> void:
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
+	if Engine.has_singleton("Bonjour"):
+		_bonjour = Engine.get_singleton("Bonjour")
+		_bonjour.start_browsing()
+	else:
+		set_process(false)
+
+
+func _process(_delta: float) -> void:
+	while _bonjour.get_pending_event_count() > 0:
+		var event: Dictionary = _bonjour.pop_pending_event()
+		if event.type == "found":
+			lobbies[event.name] = event.host
+		else:
+			lobbies.erase(event.name)
+		lobbies_changed.emit(lobbies)
 
 
 func host_game() -> void:
@@ -34,6 +54,9 @@ func host_game() -> void:
 		return
 	multiplayer.multiplayer_peer = peer
 	role = Role.HOST
+	_stop_browsing()
+	if _bonjour:
+		_bonjour.start_advertising("", PORT)  # "" = device name.
 	status = "Hosting on %s:%d" % [_get_local_ip(), PORT]
 
 
@@ -45,6 +68,7 @@ func join_game(address: String) -> void:
 		return
 	multiplayer.multiplayer_peer = peer
 	role = Role.CLIENT
+	_stop_browsing()
 	status = "Connecting to %s..." % address
 
 
@@ -53,7 +77,15 @@ func disconnect_game() -> void:
 		multiplayer.multiplayer_peer.close()
 		multiplayer.multiplayer_peer = null
 	role = Role.NONE
+	if _bonjour:
+		_bonjour.stop_advertising()
 	status = "Disconnected"
+
+
+func _stop_browsing() -> void:
+	if _bonjour:
+		_bonjour.stop_browsing()
+		set_process(false)
 
 
 func _on_peer_connected(id: int) -> void:

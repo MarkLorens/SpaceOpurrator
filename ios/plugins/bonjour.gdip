@@ -1,0 +1,17 @@
+[config]
+name="Bonjour"
+binary="bonjour.xcframework"
+
+initialization="register_bonjour_types"
+deinitialization="unregister_bonjour_types"
+
+[dependencies]
+linked=[]
+embedded=[]
+system=[]
+
+capabilities=[]
+
+files=[]
+
+[plist]

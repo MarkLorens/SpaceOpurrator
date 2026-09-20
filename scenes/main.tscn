@@ -39,16 +39,20 @@ text = "Host"
 layout_mode = 2
 text = "Join"
 
+[node name="LobbyList" type="ItemList" parent="UI/ConnectionPanel"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
 [node name="StatusLabel" type="Label" parent="UI"]
 offset_left = 16.0
-offset_top = 150.0
+offset_top = 270.0
 offset_right = 300.0
-offset_bottom = 174.0
+offset_bottom = 294.0
 text = "Disconnected"
 
 [node name="OffsetModeCheckBox" type="CheckBox" parent="UI"]
 offset_left = 16.0
-offset_top = 184.0
+offset_top = 304.0
 offset_right = 220.0
-offset_bottom = 208.0
+offset_bottom = 328.0
 text = "Offset View Mode"
