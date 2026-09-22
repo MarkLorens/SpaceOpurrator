@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bsow1seys8h0w"]
+
+[ext_resource type="Script" uid="uid://dahpm7fuw0y6d" path="res://scripts/utils/phone_frames.gd" id="1_2q5je"]
+[ext_resource type="Texture2D" uid="uid://cx0o2u8wc82xn" path="res://assets/board.jpg" id="1_jnyf0"]
+
+[node name="Board" type="Control" unique_id=308978416]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1078474926]
+layout_mode = 0
+offset_right = 10488.0
+offset_bottom = 1206.0
+texture = ExtResource("1_jnyf0")
+
+[node name="PhoneFrames" type="Control" parent="." unique_id=308978417]
+anchors_preset = 0
+offset_right = 10488.0
+offset_bottom = 1206.0
+mouse_filter = 2
+script = ExtResource("1_2q5je")
+number_color = Color(0, 0, 0, 0.34901962)
