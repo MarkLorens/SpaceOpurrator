@@ -1,7 +1,5 @@
 extends Control
 
-@export_file var LEVEL_1_PATH
-
 @onready var connection_panel: VBoxContainer = $UI/ConnectionPanel
 @onready var ip_edit: LineEdit = $UI/ConnectionPanel/IPEdit
 @onready var lobby_list: ItemList = $UI/ConnectionPanel/LobbyList
@@ -16,19 +14,19 @@ func _ready() -> void:
 
 	NetworkManager.lobbies_changed.connect(_on_lobbies_changed)
 	NetworkManager.status_changed.connect(_on_status_changed)
-	NetworkManager.level_should_start.connect(_on_level_should_start)
-	
-	#offset_checkbox.button_pressed = NetworkManager.offset_mode
+
+	# Seed with whatever's already known so a returning player isn't stuck with
+	# an empty list until the next discovery event.
+	_on_lobbies_changed(NetworkManager.lobbies)
 	_on_status_changed(NetworkManager.status)
 
-
 func _on_host_pressed() -> void:
-	NetworkManager.host_game()
+	GameState.host_game()
 
 
 func _on_join_pressed() -> void:
 	var address := ip_edit.text.strip_edges()
-	NetworkManager.join_game(address if not address.is_empty() else "127.0.0.1")
+	GameState.join_game(address if not address.is_empty() else "127.0.0.1")
 
 
 func _on_lobbies_changed(lobbies: Dictionary) -> void:
@@ -38,12 +36,9 @@ func _on_lobbies_changed(lobbies: Dictionary) -> void:
 
 
 func _on_lobby_selected(index: int) -> void:
-	NetworkManager.join_game(lobby_list.get_item_metadata(index))
+	GameState.join_game(lobby_list.get_item_metadata(index))
 
 
 func _on_status_changed(status: String) -> void:
 	status_label.text = status
 	
-
-func _on_level_should_start() -> void:
-	get_tree().change_scene_to_file(LEVEL_1_PATH)

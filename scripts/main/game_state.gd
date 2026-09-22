@@ -1,11 +1,117 @@
 extends Node
+## Autoload GameState: owns the multiplayer SESSION.
+##
+## Holds the role (host/client), turns NetworkManager's raw transport events
+## into game flow, and drives the scene transitions:
+##   host  -> loading screen -> (player joins) -> level
+##   join  -> (connected)    -> level
+##   leave / drop            -> main menu
+## The UI calls host_game()/join_game()/leave_game(); everything else is
+## reactions to NetworkManager signals.
 
+const MAIN_MENU := "uid://bqxk8h2m5t7yf"  # scenes/main.tscn
+const LOADING := "uid://cq2lo4dscrn0"     # scenes/loading_screen.tscn
+const LEVEL_1 := "uid://c7l1v3lb0ard0"    # scenes/levels/level_1.tscn
 
-# Called when the node enters the scene tree for the first time.
+## How long the host waits for the client to disconnect before closing anyway.
+const CLIENT_LEAVE_TIMEOUT := 2.0
+
+var role: Role.Type = Role.Type.NONE
+var _pending_host_close := false  # host is waiting for the client to leave first
+
 func _ready() -> void:
-	pass # Replace with function body.
+	NetworkManager.peer_joined.connect(_on_peer_joined)
+	NetworkManager.peer_left.connect(_on_peer_left)
+	NetworkManager.connected_to_host.connect(_on_connected_to_host)
+	NetworkManager.connection_failed.connect(_on_connection_failed)
+	NetworkManager.host_left.connect(_on_host_left)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+# --- Session actions (called by the UI) ---
+
+func host_game() -> void:
+	if not NetworkManager.host():
+		return
+
+	_pending_host_close = false
+	role = Role.Type.HOST
+	_change_scene(LOADING)
+
+
+func join_game(address: String) -> void:
+	if not NetworkManager.join(address):
+		return
+
+	_pending_host_close = false
+	role = Role.Type.CLIENT
+
+
+func leave_game() -> void:
+	if role == Role.Type.HOST and _has_peers():
+		_pending_host_close = true
+		_request_client_leave.rpc()
+		get_tree().create_timer(CLIENT_LEAVE_TIMEOUT).timeout.connect(_force_close_if_pending)
+	else:
+		_reset_to_menu()
+
+
+## RPC the host sends to the client: "leave on your own". The client tears down
+## its own connection, so the host later sees a clean, ordinary disconnect.
+@rpc("authority", "call_remote", "reliable")
+func _request_client_leave() -> void:
+	_reset_to_menu()
+
+
+# --- Reactions to transport events ---
+
+func _on_peer_joined(_id: int) -> void:
+	if role == Role.Type.HOST:
+		_change_scene(LEVEL_1)
+
+
+func _on_connected_to_host() -> void:
+	_change_scene(LEVEL_1)
+
+
+func _on_peer_left(_id: int) -> void:
+	if _pending_host_close :
+		# We asked the client to leave; once none remain the server can close
+		# safely (no peer attached).
+		if not _has_peers():
+			_reset_to_menu()
+	else:
+		_reset_to_menu()
+
+
+func _on_host_left() -> void:
+	_reset_to_menu()
+
+
+func _on_connection_failed() -> void:
+	role = Role.Type.NONE
+
+
+# --- Helpers ---
+
+func _force_close_if_pending() -> void:
+	# The client never disconnected (crashed/froze) — close anyway so the host
+	# isn't stuck on the pause menu forever.
+	if _pending_host_close:
+		_reset_to_menu()
+
+
+func _has_peers() -> bool:
+	return multiplayer.multiplayer_peer != null and not multiplayer.get_peers().is_empty()
+
+
+func _reset_to_menu() -> void:
+	_pending_host_close = false
+
+	NetworkManager.leave()
+	role = Role.Type.NONE
+	get_tree().paused = false  # in case we were paused when the session ended
+	_change_scene(MAIN_MENU)
+
+
+func _change_scene(uid: String) -> void:
+	get_tree().change_scene_to_file(uid)

@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 NetworkManager="*uid://cdd5jm0apwsmk"
 SequenceGenerator="*uid://dgmmmfdyycsdk"
 PuzzleSolver="*uid://b16wdruviytax"
+GameState="*uid://bbk1if4dggjc5"
 
 [display]
 
