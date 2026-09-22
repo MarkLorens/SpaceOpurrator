@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bqxk8h2m5t7yf"]
+
+[ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main_menu.gd" id="1_main"]
+
+[node name="MainMenu" type="Control" unique_id=1947701498]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_main")
+
+[node name="ConnectionPanel" type="VBoxContainer" parent="." unique_id=837088202]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 260.0
+offset_bottom = 140.0
+
+[node name="TitleLabel" type="Label" parent="ConnectionPanel" unique_id=1811194071]
+layout_mode = 2
+text = "Multiplayer Camera Sync"
+
+[node name="IPEdit" type="LineEdit" parent="ConnectionPanel" unique_id=1111460422]
+layout_mode = 2
+text = "127.0.0.1"
+placeholder_text = "127.0.0.1"
+
+[node name="HostButton" type="Button" parent="ConnectionPanel" unique_id=1116650294]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="ConnectionPanel" unique_id=737834803]
+layout_mode = 2
+text = "Join"
+
+[node name="LobbyList" type="ItemList" parent="ConnectionPanel" unique_id=1725757424]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2

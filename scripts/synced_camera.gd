@@ -30,6 +30,7 @@ var screen_index := 0       # 0 = host / left screen, 1 = client / right screen.
 func _ready() -> void:
 	master_x = position.x
 	display_x = position.x
+	screen_index = 1 if NetworkManager.role == NetworkManager.Role.CLIENT else 0
 
 
 func _input(event: InputEvent) -> void:
@@ -71,10 +72,6 @@ func _process(delta: float) -> void:
 
 func set_offset_mode(enabled: bool) -> void:
 	offset_mode = enabled
-
-
-func set_screen_index(index: int) -> void:
-	screen_index = index
 
 
 func _on_local_click() -> void:

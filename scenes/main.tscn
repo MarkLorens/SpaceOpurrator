@@ -1,58 +1,79 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqxk8h2m5t7yf"]
+[gd_scene format=3 uid="uid://d0jjm8d4ipq05"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
-[ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
+[ext_resource type="PackedScene" uid="uid://c8n2vjq1w3l4a" path="res://scenes/world.tscn" id="2_world"]
+[ext_resource type="Script" uid="uid://b67gujo0d4cc7" path="res://scenes/ui/hud.gd" id="3_sugp2"]
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" unique_id=1947701498]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_main")
 
-[node name="World" parent="." instance=ExtResource("2_world")]
+[node name="World" parent="." unique_id=1356135964 instance=ExtResource("2_world")]
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=789794099]
 
-[node name="ConnectionPanel" type="VBoxContainer" parent="UI"]
+[node name="ConnectionPanel" type="VBoxContainer" parent="UI" unique_id=837088202]
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 260.0
 offset_bottom = 140.0
 
-[node name="TitleLabel" type="Label" parent="UI/ConnectionPanel"]
+[node name="TitleLabel" type="Label" parent="UI/ConnectionPanel" unique_id=1811194071]
 layout_mode = 2
 text = "Multiplayer Camera Sync"
 
-[node name="IPEdit" type="LineEdit" parent="UI/ConnectionPanel"]
+[node name="IPEdit" type="LineEdit" parent="UI/ConnectionPanel" unique_id=1111460422]
 layout_mode = 2
-placeholder_text = "127.0.0.1"
 text = "127.0.0.1"
+placeholder_text = "127.0.0.1"
 
-[node name="HostButton" type="Button" parent="UI/ConnectionPanel"]
+[node name="HostButton" type="Button" parent="UI/ConnectionPanel" unique_id=1116650294]
 layout_mode = 2
 text = "Host"
 
-[node name="JoinButton" type="Button" parent="UI/ConnectionPanel"]
+[node name="JoinButton" type="Button" parent="UI/ConnectionPanel" unique_id=737834803]
 layout_mode = 2
 text = "Join"
 
-[node name="LobbyList" type="ItemList" parent="UI/ConnectionPanel"]
+[node name="LobbyList" type="ItemList" parent="UI/ConnectionPanel" unique_id=1725757424]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="StatusLabel" type="Label" parent="UI"]
+[node name="StatusLabel" type="Label" parent="UI" unique_id=289036713]
 offset_left = 16.0
 offset_top = 270.0
 offset_right = 300.0
 offset_bottom = 294.0
 text = "Disconnected"
 
-[node name="OffsetModeCheckBox" type="CheckBox" parent="UI"]
+[node name="OffsetModeCheckBox" type="CheckBox" parent="UI" unique_id=1352396491]
 offset_left = 16.0
 offset_top = 304.0
 offset_right = 220.0
 offset_bottom = 328.0
 text = "Offset View Mode"
+
+[node name="SolveButton" type="Button" parent="UI" unique_id=1947701499]
+offset_left = 16.0
+offset_top = 340.0
+offset_right = 120.0
+offset_bottom = 371.0
+text = "Solve"
+
+[node name="hud" type="Control" parent="UI" unique_id=2009253689]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_sugp2")
+
+[node name="Label" type="Label" parent="UI/hud" unique_id=945563829]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
