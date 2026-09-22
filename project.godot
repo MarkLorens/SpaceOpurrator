@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 NetworkManager="*uid://cdd5jm0apwsmk"
+SequenceGenerator="*uid://dgmmmfdyycsdk"
+PuzzleSolver="*uid://b16wdruviytax"
 
 [display]
 

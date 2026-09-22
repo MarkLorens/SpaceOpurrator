@@ -115,8 +115,8 @@ func set_offset_mode(offset_enabled: int) -> void:
 	offset_mode = offset_enabled
 
 
-func set_screen_index(index: int) -> void:
-	screen_index = index
+func set_screen_index(number: int) -> void:
+	screen_index = number
 
 
 func _on_local_click() -> void:
