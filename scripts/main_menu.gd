@@ -15,6 +15,7 @@ func _ready() -> void:
 	lobby_list.item_selected.connect(_on_lobby_selected)
 	if Engine.has_singleton("GameCenterKit"):
 		var game_center := Engine.get_singleton("GameCenterKit")
+		Engine.get_singleton("GameCenterKit")
 		game_center.authenticated.connect(_on_authenticated)
 		game_center.authenticate()
 
@@ -24,8 +25,8 @@ func _ready() -> void:
 	#offset_checkbox.button_pressed = NetworkManager.offset_mode
 	_on_status_changed(NetworkManager.status)
 
-func _on_authenticated():
-	print("bruh")
+func _on_authenticated(ok: bool, error: String) -> void:
+	print("Game Center authenticated: ", ok, " ", error)
 
 func _on_host_pressed() -> void:
 	GameState.host_game()
