@@ -11,6 +11,7 @@ anchors_preset = 0
 layout_mode = 0
 offset_right = 10488.0
 offset_bottom = 1206.0
+mouse_filter = 2
 texture = ExtResource("1_jnyf0")
 
 [node name="PhoneFrames" type="Control" parent="." unique_id=308978417]
