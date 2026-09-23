@@ -4,9 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://ceph42xn14w1q" path="res://assets/space_opurrator_prototype_assets/button_green.png" id="2_kjtie"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fey80"]
-radius = 31.0
+radius = 2.660075
 
 [node name="Area2D" type="Area2D" unique_id=438774499]
+scale = Vector2(5, 5)
 script = ExtResource("1_0j123")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1091520124]
@@ -14,4 +15,5 @@ texture_filter = 1
 texture = ExtResource("2_kjtie")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2110927508]
+scale = Vector2(10, 10)
 shape = SubResource("CircleShape2D_fey80")

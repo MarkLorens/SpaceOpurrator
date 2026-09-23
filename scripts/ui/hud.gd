@@ -3,7 +3,8 @@ extends Control
 ## value to the client; the client's bar only displays it.
 
 @onready var progress_bar: ProgressBar = $ProgressBar
-@onready var solve_button: Button = $"../SolveButton"
+@onready var solve_button: BaseButton = $"../../SolveButton" # world-space, centre of the board
+@onready var victory_screen: Control = $"../VictoryScreen"
 
 # Only the host's values matter in a networked game.
 @export var endTarget: float = 100.0
@@ -72,8 +73,17 @@ func _request_solve() -> void:
 	if PuzzleSolver.solve_puzzle():
 		progress_bar.value += solveReward
 		puzzleTimeLeft = puzzleTime
+		if progress_bar.value >= endTarget:
+			_win.rpc(progress_bar.value)
 
 @rpc("authority", "call_remote", "unreliable_ordered")
 func _sync_progress(value: float, max_value: float) -> void:
 	progress_bar.max_value = max_value
 	progress_bar.value = value
+
+## Host decides; both players stop and see the victory screen.
+@rpc("authority", "call_local", "reliable")
+func _win(final_value: float) -> void:
+	progress_bar.value = final_value
+	GameState.game_running = false
+	victory_screen.show_victory()

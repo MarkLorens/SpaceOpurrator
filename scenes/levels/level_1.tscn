@@ -7,6 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://blny4fuhn70fp" path="res://scenes/levels/level_ui.tscn" id="4_levelui"]
 [ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/pause_menu.tscn" id="5_pause"]
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
+[ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/threats/threat_star.tscn" id="8_s8va5"]
+[ext_resource type="PackedScene" uid="uid://ykvmdwssq2xn" path="res://scenes/puzzle_instruction/puzzle_interface.tscn" id="9_dga24"]
+[ext_resource type="Script" uid="uid://dgug8k4s6rthb" path="res://scripts/puzzle_interface.gd" id="10_qxy0u"]
+[ext_resource type="Texture2D" uid="uid://dl1xbso8h11f4" path="res://assets/space_opurrator_prototype_assets/button_red.png" id="11_btnred"]
+[ext_resource type="PackedScene" path="res://scenes/ui/victory_screen.tscn" id="12_victory"]
 
 [node name="Level1" type="Node2D" unique_id=825060166]
 script = ExtResource("1_oc4kc")
@@ -18,16 +23,27 @@ position = Vector2(1311, 603)
 script = ExtResource("3_6761a")
 
 [node name="Area2D" parent="." unique_id=438774499 instance=ExtResource("4_6761a")]
-position = Vector2(1312, 605)
-btnValue = 2
-
-[node name="Area2D2" parent="." unique_id=184197354 instance=ExtResource("4_6761a")]
-position = Vector2(1200, 603)
+position = Vector2(3003.0002, 523)
 btnValue = 1
 
+[node name="Area2D2" parent="." unique_id=184197354 instance=ExtResource("4_6761a")]
+position = Vector2(6656.0005, 409)
+btnValue = 2
+
 [node name="Area2D3" parent="." unique_id=198184179 instance=ExtResource("4_6761a")]
-position = Vector2(1409, 603)
+position = Vector2(7701.0005, 539)
 btnValue = 3
+
+[node name="SolveButton" type="TextureButton" parent="." unique_id=1420606149]
+texture_filter = 1
+offset_left = 5116.0
+offset_top = 475.0
+offset_right = 5372.0
+offset_bottom = 731.0
+action_mode = 0
+texture_normal = ExtResource("11_btnred")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=905923254]
 
@@ -47,16 +63,9 @@ offset_bottom = 74.0
 text = "Offset View Mode"
 metadata/_edit_use_anchors_ = true
 
-[node name="SolveButton" type="Button" parent="UI" unique_id=1420606149]
-offset_left = 16.0
-offset_top = 86.0
-offset_right = 120.0
-offset_bottom = 117.0
-action_mode = 0
-text = "Solve"
-metadata/_edit_use_anchors_ = true
-
 [node name="hud" parent="UI" unique_id=1669079572 instance=ExtResource("5_sk5k4")]
+startProgress = 95.0
+solveReward = 100.0
 metadata/_edit_use_anchors_ = true
 
 [node name="LevelUi" parent="UI" unique_id=2049721090 instance=ExtResource("4_levelui")]
@@ -68,4 +77,13 @@ grow_vertical = 1
 
 [node name="PauseMenu" parent="UI" unique_id=1532350907 instance=ExtResource("5_pause")]
 
+[node name="VictoryScreen" parent="UI" unique_id=1388327517 instance=ExtResource("12_victory")]
+
 [node name="UI2" type="CanvasLayer" parent="." unique_id=919110718]
+
+[node name="ThreatStar" parent="." unique_id=915317815 instance=ExtResource("8_s8va5")]
+position = Vector2(487, 353)
+
+[node name="PuzzleInterface" parent="." unique_id=744080779 instance=ExtResource("9_dga24")]
+position = Vector2(9793, 305)
+script = ExtResource("10_qxy0u")

@@ -30,6 +30,10 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation="landscape"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gamecenter/plugin.cfg")
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

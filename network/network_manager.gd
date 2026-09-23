@@ -43,7 +43,6 @@ func _ready() -> void:
 	else:
 		set_process(false)
 
-
 func _process(_delta: float) -> void:
 	while _bonjour.get_pending_event_count() > 0:
 		var event: Dictionary = _bonjour.pop_pending_event()
