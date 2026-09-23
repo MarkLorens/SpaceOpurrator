@@ -57,9 +57,6 @@ text = "Solve"
 metadata/_edit_use_anchors_ = true
 
 [node name="hud" parent="UI" unique_id=1669079572 instance=ExtResource("5_sk5k4")]
-anchors_preset = 12
-anchor_top = 1.0
-grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="LevelUi" parent="UI" unique_id=2049721090 instance=ExtResource("4_levelui")]

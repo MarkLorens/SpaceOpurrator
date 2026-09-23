@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cmmbairwn7wr7"]
 
-[ext_resource type="Script" path="res://scripts/ui/hud.gd" id="1_0mwgc"]
+[ext_resource type="Script" uid="uid://b67gujo0d4cc7" path="res://scripts/ui/hud.gd" id="1_0mwgc"]
 
 [node name="hud" type="Control" unique_id=1669079572]
 layout_mode = 3
@@ -11,6 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_0mwgc")
+startProgress = 30.0
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=2099147941]
 layout_mode = 1
