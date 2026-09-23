@@ -14,10 +14,37 @@ extends Control
 @export var puzzleTime: float = 10.0
 @export var timeoutPenalty: float = 10.0
 
+## Red vignette shows when the bar drops to this fraction of endTarget.
+@export var dangerRatio: float = 0.2
+
 var puzzleTimeLeft: float
+var vignette: ColorRect
 
 func _ready() -> void:
 	solve_button.pressed.connect(_on_solve_pressed)
+	# ponytail: quick test vignette built in code; move into hud.tscn if it stays.
+	vignette = ColorRect.new()
+	vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
+	vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# Code must be set before the shader is handed to the material, or it renders plain white.
+	var shader := Shader.new()
+	shader.code = """
+	shader_type canvas_item;
+	void fragment() {
+		float d = distance(UV, vec2(0.5)) * 1.4;
+		float pulse = 0.75 + 0.25 * sin(TIME * 4.0);
+		COLOR = vec4(0.8, 0.0, 0.0, smoothstep(0.45, 1.0, d) * pulse);
+	}
+	"""
+	var mat := ShaderMaterial.new()
+	mat.shader = shader
+	vignette.material = mat
+	vignette.visible = false
+	add_child(vignette)
+	move_child(vignette, 0) # behind the progress bar
+	# value_changed fires on host and client, so both see it.
+	progress_bar.value_changed.connect(func(v: float) -> void:
+		vignette.visible = v <= progress_bar.max_value * dangerRatio)
 	progress_bar.max_value = endTarget
 	progress_bar.value = startProgress
 	puzzleTimeLeft = puzzleTime
