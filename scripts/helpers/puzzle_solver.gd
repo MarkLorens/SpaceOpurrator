@@ -6,7 +6,7 @@ var correctSeq : Array[int]
 var submittedSeq: Array[int]
 
 func _ready() -> void:
-	NetworkManager.game_started.connect(func(): if multiplayer.is_server(): new_puzzle())
+	GameState.game_started.connect(func(): if multiplayer.is_server(): new_puzzle())
 
 ## Host only.
 func new_puzzle() -> void:
@@ -30,7 +30,7 @@ func solve_puzzle() -> bool:
 
 @rpc("any_peer", "call_local", "reliable")
 func _submit_press(num: int) -> void:
-	if NetworkManager.game_running:
+	if GameState.game_running:
 		submittedSeq.append(num)
 
 @rpc("authority", "call_remote", "reliable")

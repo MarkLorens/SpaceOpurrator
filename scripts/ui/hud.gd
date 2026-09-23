@@ -23,7 +23,7 @@ func _ready() -> void:
 	puzzleTimeLeft = puzzleTime
 
 func _process(delta: float) -> void:
-	if not NetworkManager.game_running or not multiplayer.is_server():
+	if not GameState.game_running or not multiplayer.is_server():
 		return
 	# ProgressBar clamps value to [0, max_value] itself.
 	progress_bar.value -= drainPerSecond * delta
@@ -40,7 +40,7 @@ func _on_solve_pressed() -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func _request_solve() -> void:
-	if not NetworkManager.game_running:
+	if not GameState.game_running:
 		return
 	if PuzzleSolver.solve_puzzle():
 		progress_bar.value += solveReward

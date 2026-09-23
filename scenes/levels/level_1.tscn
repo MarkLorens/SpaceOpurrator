@@ -1,13 +1,15 @@
 [gd_scene format=3 uid="uid://c7l1v3lb0ard0"]
 
-[ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level_1.gd" id="1_nsrm0"]
+[ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level/level_1.gd" id="1_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://bsow1seys8h0w" path="res://scenes/board/board.tscn" id="2_x42e6"]
 [ext_resource type="Script" uid="uid://ne06oxrw0moj" path="res://scripts/main/synced_camera.gd" id="3_6761a"]
 [ext_resource type="PackedScene" uid="uid://bieedpekf6xmd" path="res://scenes/buttons/button.tscn" id="4_6761a"]
+[ext_resource type="PackedScene" uid="uid://blny4fuhn70fp" path="res://scenes/levels/level_ui.tscn" id="4_levelui"]
+[ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/pause_menu.tscn" id="5_pause"]
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
 
 [node name="Level1" type="Node2D" unique_id=825060166]
-script = ExtResource("1_nsrm0")
+script = ExtResource("1_oc4kc")
 
 [node name="Board" parent="." unique_id=1723946669 instance=ExtResource("2_x42e6")]
 
@@ -50,6 +52,7 @@ offset_left = 16.0
 offset_top = 86.0
 offset_right = 120.0
 offset_bottom = 117.0
+action_mode = 0
 text = "Solve"
 metadata/_edit_use_anchors_ = true
 
@@ -58,3 +61,14 @@ anchors_preset = 12
 anchor_top = 1.0
 grow_vertical = 0
 metadata/_edit_use_anchors_ = true
+
+[node name="LevelUi" parent="UI" unique_id=2049721090 instance=ExtResource("4_levelui")]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 1
+
+[node name="PauseMenu" parent="UI" unique_id=1532350907 instance=ExtResource("5_pause")]
+
+[node name="UI2" type="CanvasLayer" parent="." unique_id=919110718]

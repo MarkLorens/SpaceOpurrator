@@ -31,12 +31,19 @@ extends Camera2D
 ## The shared start point shifts by this many screen-widths, so the client
 ## (always one screen to the right) starts on host_start_index + 1.
 @export var host_start_index := 0
+## How long after MY last movement I keep snapping (vs smoothing) and drop my own
+## network echoes. Authority is "newest mover wins"; this only hides my own echo.
+@export var takeover_grace_ms := 150
 
 var master_x: float = 0.0   # Authoritative shared world X, no offset applied.
 var display_x: float = 0.0  # Smoothed value actually written to position.x.
-var is_dragging := false
+var is_dragging := false     # Finger/mouse button down — only used for mouse drag detection.
 var offset_mode := false
 var screen_index := 0
+var _last_local_move_ms := 0  # When I last actually moved the view (not just held).
+# Whoever pressed their finger down most recently owns the camera; only their
+# drags move it, so two simultaneous draggers don't fight. Defaults to the host.
+var authority_id := 1
 
 
 func _ready() -> void:
@@ -86,13 +93,30 @@ func _input(event: InputEvent) -> void:
 
 
 func _apply_drag(delta_x: float) -> void:
+	# Only the current authority (last player to press down) moves the view.
+	if not _has_authority():
+		return
+	_last_local_move_ms = Time.get_ticks_msec()  # I'm the most recent mover now.
 	master_x = _clamp_master(master_x + delta_x)
 	display_x = master_x  # No lerp on the dragging side: keep local input snappy.
 	_broadcast_camera_x(master_x)
 
 
+func _has_authority() -> bool:
+	# Offline (editor / no peer) there's only me, so I always control.
+	if multiplayer.multiplayer_peer == null:
+		return true
+	return authority_id == multiplayer.get_unique_id()
+
+
+## True only while I actively moved the view very recently — NOT just holding a
+## finger still. Drives snap-vs-smoothing and dropping my own echoes.
+func _moving_locally() -> bool:
+	return Time.get_ticks_msec() - _last_local_move_ms < takeover_grace_ms
+
+
 func _process(delta: float) -> void:
-	if not is_dragging:
+	if not _moving_locally():
 		display_x = lerp(display_x, master_x, clampf(delta * lerp_speed, 0.0, 1.0))
 	
 	var offset_value : float
@@ -120,8 +144,35 @@ func set_screen_index(number: int) -> void:
 
 
 func _on_local_click() -> void:
+	_claim_authority()  # pressing down takes control of the camera
 	Input.vibrate_handheld(haptic_duration_ms)
 	_broadcast_click()
+
+
+## Pressing a finger down makes me the camera's authority. Applied locally right
+## away for responsiveness, then confirmed by the server (which resolves the
+## ordering if both players press at nearly the same moment).
+func _claim_authority() -> void:
+	authority_id = multiplayer.get_unique_id()
+	if multiplayer.multiplayer_peer == null:
+		return
+	if multiplayer.is_server():
+		set_authority.rpc(authority_id)
+	else:
+		request_authority.rpc_id(1)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func request_authority() -> void:
+	if not multiplayer.is_server():
+		return
+	authority_id = multiplayer.get_remote_sender_id()
+	set_authority.rpc(authority_id)
+
+
+@rpc("authority", "call_remote", "reliable")
+func set_authority(id: int) -> void:
+	authority_id = id
 
 
 # --- Networking ---
@@ -135,7 +186,7 @@ func _broadcast_camera_x(x: float) -> void:
 		return
 	
 	if multiplayer.is_server():
-		receive_camera_x.rpc(x)
+		receive_camera_x.rpc(x, multiplayer.get_unique_id())
 	else:
 		client_dragged.rpc_id(1, x)
 
@@ -154,21 +205,20 @@ func client_dragged(x: float) -> void:
 	if not multiplayer.is_server():
 		return
 
-	# Don't let an incoming update clobber a drag in progress on this side —
-	# local input stays authoritative for this device until the touch lifts.
-	if is_dragging:
+	# Only the current authority moves the view; ignore a stale drag from a
+	# client that just lost control. Relay it on, tagged so the sender can
+	# ignore its own echo.
+	if multiplayer.get_remote_sender_id() != authority_id:
 		return
 	master_x = x
-	receive_camera_x.rpc(x)
+	receive_camera_x.rpc(x, multiplayer.get_remote_sender_id())
 
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
-func receive_camera_x(x: float) -> void:
-	# Same guard: without this, the server's broadcast echoes back to the very
-	# peer that just sent the drag, and a slightly-stale echo can yank that
-	# peer's own camera backward mid-drag — a visible stutter on the side
-	# that's actively touching the screen.
-	if is_dragging:
+func receive_camera_x(x: float, origin: int) -> void:
+	# Drop my own echo (it would yank my camera backward mid-drag); apply the
+	# other player's movement immediately so the latest mover always wins.
+	if origin == multiplayer.get_unique_id():
 		return
 	master_x = x
 

@@ -1,24 +1,29 @@
 extends Node
-## Autoload singleton (NetworkManager).
-## Owns the ENetMultiplayerPeer connection for a simple 2-player LAN session
-## and exposes a human-readable status string for the UI to display.
+## Autoload NetworkManager: TRANSPORT ONLY.
+## Creates/destroys the ENetMultiplayerPeer, runs Bonjour LAN discovery, tracks
+## a human-readable status string, and forwards raw connection events. It knows
+## nothing about roles, levels or game flow — that lives in GameState, which
+## reacts to the signals below.
 
 const PORT := 8999
-const MAX_CLIENTS := 1 
+const MAX_CLIENTS := 1
 
 signal status_changed(status_text: String)
 signal lobbies_changed(lobbies: Dictionary)  # service name -> host IPv4
-signal level_should_start
-signal game_started
 
-var role: Role.Type = Role.Type.NONE
+# Raw connection lifecycle, consumed by GameState:
+signal peer_joined(id: int)     # server side: a client connected
+signal peer_left(id: int)       # server side: a client disconnected
+signal connected_to_host        # client side: connected to the server
+signal connection_failed        # client side: could not connect
+signal host_left                # client side: the server dropped
+
 var lobbies := {}
-## True once both players are connected (or solo mode kicked in). Gameplay waits on this.
-var game_running := false
 
 # iOS-only native plugin (native/bonjour): mDNSResponder advertise + NWBrowser browse.
 # Null in the editor / non-iOS builds, where the manual IP field is the fallback.
 var _bonjour: Object
+var _browsing := false
 
 var status: String = "Disconnected":
 	set(value):
@@ -30,23 +35,13 @@ func _ready() -> void:
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
-	multiplayer.server_disconnected.connect(_on_server_disconnected)
-	
-	# Added Bonjour 	
+	#multiplayer.server_disconnected.connect(_on_server_disconnected)
+
 	if Engine.has_singleton("Bonjour"):
 		_bonjour = Engine.get_singleton("Bonjour")
-		_bonjour.start_browsing()
+		start_browsing()
 	else:
 		set_process(false)
-
-	# Auto-connect for Debug > Customize Run Instances: give one instance
-	# `--host` and the other `--join` so F5 opens two already-connected windows.
-	# Deferred so the main scene has hooked up level_should_start first.
-	var args := OS.get_cmdline_user_args()
-	if "--host" in args:
-		host_game.call_deferred()
-	elif "--join" in args:
-		join_game.call_deferred("127.0.0.1")
 
 
 func _process(_delta: float) -> void:
@@ -59,116 +54,106 @@ func _process(_delta: float) -> void:
 		lobbies_changed.emit(lobbies)
 
 
-func host_game() -> void:
+# --- Transport actions (return true on success) ---
+
+func host() -> bool:
 	var peer := ENetMultiplayerPeer.new()
 	var err := peer.create_server(PORT, MAX_CLIENTS)
-	
 	if err != OK:
 		status = "Host failed (err %d)" % err
-		return
-		
+		return false
+
 	multiplayer.multiplayer_peer = peer
-	role = Role.Type.HOST
 	_stop_browsing()
-	
 	if _bonjour:
 		_bonjour.start_advertising("", PORT)  # "" = device name.
 
-	status = "Hosting on %s:%d" % [_get_local_ip(), PORT]
-	# Level + game start once the other player joins (_on_peer_connected).
+	status = "Hosting on %s:%d — waiting for a player…" % [_get_local_ip(), PORT]
+	return true
 
 
-func join_game(address: String) -> void:
+func join(address: String) -> bool:
 	var peer := ENetMultiplayerPeer.new()
 	var err := peer.create_client(address, PORT)
-	
 	if err != OK:
 		status = "Join failed (err %d)" % err
-		return
+		return false
 
 	multiplayer.multiplayer_peer = peer
-	role = Role.Type.CLIENT
-	
 	_stop_browsing()
 	status = "Connecting to %s..." % address
+	return true
 
 
-func disconnect_game() -> void:
-	if multiplayer.multiplayer_peer:
-		multiplayer.multiplayer_peer.close()
-		multiplayer.multiplayer_peer = null
-	role = Role.Type.NONE
-	game_running = false
+func leave() -> void:
+	# Detach the peer BEFORE closing it. Closing a server while the client is
+	# still the active multiplayer_peer makes Godot fire peer_disconnected
+	# synchronously, mid-close — re-entering teardown while ENet is still tearing
+	# itself down, which corrupts state and crashes on host exit. Holding our own
+	# reference keeps the peer alive so we can close it cleanly once detached.
+	var peer: MultiplayerPeer = multiplayer.multiplayer_peer
+	multiplayer.multiplayer_peer = null
+	if peer:
+		peer.close()
+
 	if _bonjour:
 		_bonjour.stop_advertising()
+
 	status = "Disconnected"
+
+	# Back to idle -> discover lobbies again for the menu.
+	start_browsing()
+
+
+## Resume LAN discovery. Safe to call repeatedly; clears any stale lobby list so
+## the menu starts fresh.
+func start_browsing() -> void:
+	if not _bonjour or _browsing:
+		return
+	lobbies.clear()
+	lobbies_changed.emit(lobbies)
+	set_process(true)
+	_bonjour.start_browsing()
+	_browsing = true
 
 
 func _stop_browsing() -> void:
-	if _bonjour:
-		_bonjour.stop_browsing()
-		set_process(false)
+	if not _bonjour or not _browsing:
+		return
+	_bonjour.stop_browsing()
+	set_process(false)
+	_browsing = false
 
+
+# --- Raw multiplayer signals -> forwarded, role-agnostic events ---
 
 func _on_peer_connected(id: int) -> void:
-	if role == Role.Type.HOST:
-		status = "Connected as Host (peer %d joined)" % id
-		level_should_start.emit()
-		# start_game waits for client_level_ready so the client's scene exists
-		# before any gameplay RPCs reach it.
+	status = "Player %d joined" % id
+	peer_joined.emit(id)
 
 
 func _on_peer_disconnected(id: int) -> void:
-	status = "Peer %d disconnected" % id
-	game_running = false
+	status = "Player %d left" % id
+	peer_left.emit(id)
 
 
 func _on_connected_to_server() -> void:
-	status = "Connected as Client"
-	
-	# Join succeeded -> enter Level 1.
-	level_should_start.emit()
+	status = "Connected"
+	connected_to_host.emit()
 
 
 func _on_connection_failed() -> void:
 	status = "Connection failed"
 	multiplayer.multiplayer_peer = null
-	role = Role.Type.NONE
+	connection_failed.emit()
+	# Couldn't join -> back to idle, so resume discovery for the menu.
+	start_browsing()
 
 
 func _on_server_disconnected() -> void:
 	status = "Host disconnected"
 	multiplayer.multiplayer_peer = null
-	role = Role.Type.NONE
-	game_running = false
-
-
-## Host tells both players the game is on. Reliable so the client can't miss it.
-@rpc("authority", "call_local", "reliable")
-func start_game() -> void:
-	game_running = true
-	game_started.emit()
-
-
-## Called by a level once it has loaded.
-## Client: tells the host it's ready, which starts the game for both.
-## No connection (e.g. F6 on a scene): debug builds play solo as host so
-## features can be tried without a second instance.
-func level_ready() -> void:
-	match role:
-		Role.Type.CLIENT:
-			client_level_ready.rpc_id(1)
-		Role.Type.NONE:
-			if OS.is_debug_build():
-				role = Role.Type.HOST
-				status = "Solo (debug)"
-				start_game()
-
-
-@rpc("any_peer", "call_remote", "reliable")
-func client_level_ready() -> void:
-	if multiplayer.is_server():
-		start_game.rpc()
+	host_left.emit()
 
 
 ## Best-effort guess at this device's Wi-Fi LAN address, so the host can read

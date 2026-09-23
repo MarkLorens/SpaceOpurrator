@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://blny4fuhn70fp"]
+
+[node name="LevelUi" type="Control" unique_id=1396185099]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=760268055]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -55.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_right = 75
+
+[node name="PauseButton" type="Button" parent="MarginContainer" unique_id=269602666]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Pause
+"
