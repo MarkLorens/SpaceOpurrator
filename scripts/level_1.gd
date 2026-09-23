@@ -8,4 +8,5 @@ extends Node2D
 @onready var camera: Camera2D = $Camera2D
 
 func _ready() -> void:
+	NetworkManager.level_ready()
 	camera.setup(NetworkManager.role)

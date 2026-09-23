@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bqxk8h2m5t7yf"]
 
-[ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 
 [node name="MainMenu" type="Control" unique_id=1947701498]
 layout_mode = 3
@@ -10,7 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-script = ExtResource("1_main")
+script = ExtResource("1_l6cm7")
 LEVEL_1_PATH = "uid://c7l1v3lb0ard0"
 
 [node name="ConnectionPanel" type="VBoxContainer" parent="." unique_id=837088202]
@@ -40,3 +40,11 @@ text = "Join"
 [node name="LobbyList" type="ItemList" parent="ConnectionPanel" unique_id=1725757424]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="." unique_id=9693175]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 270.0
+offset_right = 300.0
+offset_bottom = 294.0
+text = "Disconnected"

@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level_1.gd" id="1_nsrm0"]
 [ext_resource type="PackedScene" uid="uid://bsow1seys8h0w" path="res://scenes/board/board.tscn" id="2_x42e6"]
 [ext_resource type="Script" uid="uid://ne06oxrw0moj" path="res://scripts/main/synced_camera.gd" id="3_6761a"]
+[ext_resource type="PackedScene" uid="uid://bieedpekf6xmd" path="res://scenes/buttons/button.tscn" id="4_6761a"]
+[ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
 
 [node name="Level1" type="Node2D" unique_id=825060166]
 script = ExtResource("1_nsrm0")
@@ -12,7 +14,47 @@ script = ExtResource("1_nsrm0")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1730954771]
 position = Vector2(1311, 603)
 script = ExtResource("3_6761a")
-world_min_x = 0.0
-world_max_x = 10488.0
-side_screens = 1
-host_start_index = 1
+
+[node name="Area2D" parent="." unique_id=438774499 instance=ExtResource("4_6761a")]
+position = Vector2(1312, 605)
+btnValue = 2
+
+[node name="Area2D2" parent="." unique_id=184197354 instance=ExtResource("4_6761a")]
+position = Vector2(1200, 603)
+btnValue = 1
+
+[node name="Area2D3" parent="." unique_id=198184179 instance=ExtResource("4_6761a")]
+position = Vector2(1409, 603)
+btnValue = 3
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=905923254]
+
+[node name="StatusLabel" type="Label" parent="UI" unique_id=1516419490]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 300.0
+offset_bottom = 40.0
+text = "Disconnected"
+metadata/_edit_use_anchors_ = true
+
+[node name="OffsetModeCheckBox" type="CheckBox" parent="UI" unique_id=239131606]
+offset_left = 16.0
+offset_top = 50.0
+offset_right = 220.0
+offset_bottom = 74.0
+text = "Offset View Mode"
+metadata/_edit_use_anchors_ = true
+
+[node name="SolveButton" type="Button" parent="UI" unique_id=1420606149]
+offset_left = 16.0
+offset_top = 86.0
+offset_right = 120.0
+offset_bottom = 117.0
+text = "Solve"
+metadata/_edit_use_anchors_ = true
+
+[node name="hud" parent="UI" unique_id=1669079572 instance=ExtResource("5_sk5k4")]
+anchors_preset = 12
+anchor_top = 1.0
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
