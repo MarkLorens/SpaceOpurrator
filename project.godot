@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SpaceOpurraider"
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="uid://bqxk8h2m5t7yf"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

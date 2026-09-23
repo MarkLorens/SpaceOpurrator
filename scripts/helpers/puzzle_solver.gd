@@ -4,6 +4,10 @@ var correctSeq : Array[int]
 var submittedSeq: Array[int]
 
 func _ready() -> void:
+	new_puzzle()
+
+func new_puzzle() -> void:
+	submittedSeq.clear()
 	correctSeq = SequenceGenerator.generate_new_task()
 	print("new sequence: ", correctSeq)
 
@@ -15,6 +19,5 @@ func solve_puzzle() -> bool:
 	print("expected: ", correctSeq, " submitted: ", submittedSeq)
 	submittedSeq.clear()
 	if solved:
-		correctSeq = SequenceGenerator.generate_new_task()
-		print("new sequence: ", correctSeq)
+		new_puzzle()
 	return solved

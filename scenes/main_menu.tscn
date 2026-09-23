@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://iqaclfktpr27"]
+[gd_scene format=3 uid="uid://bqxk8h2m5t7yf"]
 
-[ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main_menu.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main/main.gd" id="1_main"]
 
 [node name="MainMenu" type="Control" unique_id=1947701498]
 layout_mode = 3
@@ -11,8 +11,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_main")
+LEVEL_1_PATH = "uid://c7l1v3lb0ard0"
 
 [node name="ConnectionPanel" type="VBoxContainer" parent="." unique_id=837088202]
+layout_mode = 0
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 260.0
