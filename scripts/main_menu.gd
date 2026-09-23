@@ -13,6 +13,10 @@ func _ready() -> void:
 	host_button.pressed.connect(_on_host_pressed)
 	join_button.pressed.connect(_on_join_pressed)
 	lobby_list.item_selected.connect(_on_lobby_selected)
+	if Engine.has_singleton("GameCenterKit"):
+		var game_center := Engine.get_singleton("GameCenterKit")
+		game_center.authenticated.connect(_on_authenticated)
+		game_center.authenticate()
 
 	NetworkManager.lobbies_changed.connect(_on_lobbies_changed)
 	NetworkManager.status_changed.connect(_on_status_changed)
@@ -20,6 +24,8 @@ func _ready() -> void:
 	#offset_checkbox.button_pressed = NetworkManager.offset_mode
 	_on_status_changed(NetworkManager.status)
 
+func _on_authenticated():
+	print("bruh")
 
 func _on_host_pressed() -> void:
 	GameState.host_game()

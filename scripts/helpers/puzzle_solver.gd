@@ -2,6 +2,9 @@ extends Node
 ## One shared puzzle, owned by the host. Clients send their button presses to
 ## the host and receive the current sequence back; only the host checks answers.
 
+## Fires on host and client whenever a new sequence is set.
+signal sequence_changed(seq: Array[int])
+
 var correctSeq : Array[int]
 var submittedSeq: Array[int]
 
@@ -12,7 +15,7 @@ func _ready() -> void:
 func new_puzzle() -> void:
 	submittedSeq.clear()
 	correctSeq = SequenceGenerator.generate_new_task()
-	print("new sequence: ", correctSeq)
+	sequence_changed.emit(correctSeq)
 	_set_sequence.rpc(correctSeq)
 
 ## Called by the buttons on either player; the press always lands on the host.
@@ -36,4 +39,4 @@ func _submit_press(num: int) -> void:
 @rpc("authority", "call_remote", "reliable")
 func _set_sequence(seq: Array[int]) -> void:
 	correctSeq = seq
-	print("new sequence (from host): ", correctSeq)
+	sequence_changed.emit(correctSeq)
