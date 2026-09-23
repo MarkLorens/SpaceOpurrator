@@ -1,11 +1,13 @@
 extends Control
 
-@onready var connection_panel: VBoxContainer = $UI/ConnectionPanel
-@onready var ip_edit: LineEdit = $UI/ConnectionPanel/IPEdit
-@onready var lobby_list: ItemList = $UI/ConnectionPanel/LobbyList
-@onready var host_button: Button = $UI/ConnectionPanel/HostButton
-@onready var join_button: Button = $UI/ConnectionPanel/JoinButton
-@onready var status_label: Label = $UI/StatusLabel
+@export_file var LEVEL_1_PATH
+
+@onready var connection_panel: VBoxContainer = $ConnectionPanel
+@onready var ip_edit: LineEdit = $ConnectionPanel/IPEdit
+@onready var lobby_list: ItemList = $ConnectionPanel/LobbyList
+@onready var host_button: Button = $ConnectionPanel/HostButton
+@onready var join_button: Button = $ConnectionPanel/JoinButton
+@onready var status_label: Label = $StatusLabel
 
 func _ready() -> void:
 	host_button.pressed.connect(_on_host_pressed)
@@ -14,11 +16,10 @@ func _ready() -> void:
 
 	NetworkManager.lobbies_changed.connect(_on_lobbies_changed)
 	NetworkManager.status_changed.connect(_on_status_changed)
-
-	# Seed with whatever's already known so a returning player isn't stuck with
-	# an empty list until the next discovery event.
-	_on_lobbies_changed(NetworkManager.lobbies)
+	
+	#offset_checkbox.button_pressed = NetworkManager.offset_mode
 	_on_status_changed(NetworkManager.status)
+
 
 func _on_host_pressed() -> void:
 	GameState.host_game()

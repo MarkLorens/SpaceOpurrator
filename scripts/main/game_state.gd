@@ -9,14 +9,18 @@ extends Node
 ## The UI calls host_game()/join_game()/leave_game(); everything else is
 ## reactions to NetworkManager signals.
 
-const MAIN_MENU := "uid://bqxk8h2m5t7yf"  # scenes/main.tscn
-const LOADING := "uid://cq2lo4dscrn0"     # scenes/loading_screen.tscn
-const LEVEL_1 := "uid://c7l1v3lb0ard0"    # scenes/levels/level_1.tscn
+const MAIN_MENU := "res://scenes/main_menu.tscn"  # scenes/main.tscn
+const LOADING := "res://scenes/loading_screen.tscn"     # scenes/loading_screen.tscn
+const LEVEL_1 := "res://scenes/levels/level_1.tscn"    # scenes/levels/level_1.tscn
 
 ## How long the host waits for the client to disconnect before closing anyway.
 const CLIENT_LEAVE_TIMEOUT := 2.0
 
+signal game_started
+
 var role: Role.Type = Role.Type.NONE
+## True once both players are connected. Gameplay waits on this.
+var game_running := false
 var _pending_host_close := false  # host is waiting for the client to leave first
 
 func _ready() -> void:
@@ -66,11 +70,11 @@ func _request_client_leave() -> void:
 
 func _on_peer_joined(_id: int) -> void:
 	if role == Role.Type.HOST:
-		_change_scene(LEVEL_1)
+		_start_game()
 
 
 func _on_connected_to_host() -> void:
-	_change_scene(LEVEL_1)
+	_start_game()
 
 
 func _on_peer_left(_id: int) -> void:
@@ -93,6 +97,12 @@ func _on_connection_failed() -> void:
 
 # --- Helpers ---
 
+func _start_game() -> void:
+	game_running = true
+	_change_scene(LEVEL_1)
+	game_started.emit()
+
+
 func _force_close_if_pending() -> void:
 	# The client never disconnected (crashed/froze) — close anyway so the host
 	# isn't stuck on the pause menu forever.
@@ -106,6 +116,7 @@ func _has_peers() -> bool:
 
 func _reset_to_menu() -> void:
 	_pending_host_close = false
+	game_running = false
 
 	NetworkManager.leave()
 	role = Role.Type.NONE
