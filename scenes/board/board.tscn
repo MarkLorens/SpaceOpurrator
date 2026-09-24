@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bsow1seys8h0w"]
 
-[ext_resource type="Texture2D" uid="uid://q5tss2lvo81v" path="res://assets/board.png" id="1_jnyf0"]
+[ext_resource type="Texture2D" uid="uid://bg43pr0iw2wn7" path="res://assets/control panel full.png" id="1_s78fa"]
 
 [node name="Board" type="Control" unique_id=308978416]
 layout_mode = 3
@@ -11,7 +11,7 @@ layout_mode = 0
 offset_right = 10488.0
 offset_bottom = 1206.0
 mouse_filter = 2
-texture = ExtResource("1_jnyf0")
+texture = ExtResource("1_s78fa")
 
 [node name="PhoneFrames" type="Control" parent="." unique_id=308978417]
 anchors_preset = 0

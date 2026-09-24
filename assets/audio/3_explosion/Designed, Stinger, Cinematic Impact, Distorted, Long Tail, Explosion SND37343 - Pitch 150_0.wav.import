@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dx1x7ito62na4"
+path="res://.godot/imported/Designed, Stinger, Cinematic Impact, Distorted, Long Tail, Explosion SND37343 - Pitch 150_0.wav-d44560fa3f5eea8c0bd7ed18f996eff4.sample"
+
+[deps]
+
+source_file="res://assets/audio/3_explosion/Designed, Stinger, Cinematic Impact, Distorted, Long Tail, Explosion SND37343 - Pitch 150_0.wav"
+dest_files=["res://.godot/imported/Designed, Stinger, Cinematic Impact, Distorted, Long Tail, Explosion SND37343 - Pitch 150_0.wav-d44560fa3f5eea8c0bd7ed18f996eff4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

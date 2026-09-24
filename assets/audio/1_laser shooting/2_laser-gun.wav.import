@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://chfdvdfhwsel6"
+path="res://.godot/imported/2_laser-gun.wav-e9670720919ae8cbd5a8129a9d269b12.sample"
+
+[deps]
+
+source_file="res://assets/audio/1_laser shooting/2_laser-gun.wav"
+dest_files=["res://.godot/imported/2_laser-gun.wav-e9670720919ae8cbd5a8129a9d269b12.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
