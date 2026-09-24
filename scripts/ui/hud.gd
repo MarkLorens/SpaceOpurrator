@@ -23,11 +23,14 @@ func _ready() -> void:
 	solve_button.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 	solve_button.button_down.connect(func() -> void:
 		_solve_press_pos = get_viewport().get_mouse_position())
+	
 	solve_button.pressed.connect(_on_solve_pressed)
+	
 	# ponytail: quick test vignette built in code; move into hud.tscn if it stays.
 	vignette = ColorRect.new()
 	vignette.set_anchors_preset(Control.PRESET_FULL_RECT)
 	vignette.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
 	# Code must be set before the shader is handed to the material, or it renders plain white.
 	var shader := Shader.new()
 	shader.code = """
@@ -38,15 +41,18 @@ func _ready() -> void:
 		COLOR = vec4(0.8, 0.0, 0.0, smoothstep(0.45, 1.0, d) * pulse);
 	}
 	"""
+	
 	var mat := ShaderMaterial.new()
 	mat.shader = shader
 	vignette.material = mat
 	vignette.visible = false
 	add_child(vignette)
 	move_child(vignette, 0) # behind the progress bar
+	
 	# value_changed fires on host and client, so both see it.
 	progress_bar.value_changed.connect(func(v: float) -> void:
 		vignette.visible = v <= progress_bar.max_value * dangerRatio)
+	
 	progress_bar.max_value = cfg.end_target
 	progress_bar.value = cfg.start_progress
 	puzzleTimeLeft = cfg.puzzle_time

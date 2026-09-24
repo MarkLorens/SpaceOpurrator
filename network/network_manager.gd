@@ -24,6 +24,7 @@ var lobbies := {}
 # Null in the editor / non-iOS builds, where the manual IP field is the fallback.
 var _bonjour: Object
 var _browsing := false
+var _room_name := ""  # Bonjour service name the host advertises (shown in lobbies).
 
 var status: String = "Disconnected":
 	set(value):
@@ -55,7 +56,7 @@ func _process(_delta: float) -> void:
 
 # --- Transport actions (return true on success) ---
 
-func host() -> bool:
+func host(room_name: String) -> bool:
 	var peer := ENetMultiplayerPeer.new()
 	var err := peer.create_server(PORT, MAX_CLIENTS)
 	if err != OK:
@@ -64,8 +65,8 @@ func host() -> bool:
 
 	multiplayer.multiplayer_peer = peer
 	_stop_browsing()
-	if _bonjour:
-		_bonjour.start_advertising("", PORT)  # "" = device name.
+	_room_name = room_name
+	set_advertising(true)
 
 	status = "Hosting on %s:%d — waiting for a player…" % [_get_local_ip(), PORT]
 	return true
@@ -92,8 +93,7 @@ func leave() -> void:
 	# host drops). So the actual teardown waits until the poll has finished.
 	_teardown_peer.call_deferred(multiplayer.multiplayer_peer)
 
-	if _bonjour:
-		_bonjour.stop_advertising()
+	set_advertising(false)
 
 	status = "Disconnected"
 
@@ -113,6 +113,16 @@ func _teardown_peer(peer: MultiplayerPeer) -> void:
 		multiplayer.multiplayer_peer = null
 	if peer:
 		peer.close()
+
+
+## Host: show/hide this room in other players' lobbies (hidden while full).
+func set_advertising(on: bool) -> void:
+	if not _bonjour:
+		return
+	if on:
+		_bonjour.start_advertising(_room_name, PORT)
+	else:
+		_bonjour.stop_advertising()
 
 
 ## Resume LAN discovery. Safe to call repeatedly; clears any stale lobby list so
