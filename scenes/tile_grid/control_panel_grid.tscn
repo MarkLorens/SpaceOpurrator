@@ -1,18 +1,55 @@
 [gd_scene format=3 uid="uid://bfmqgn1fikgyn"]
 
-[ext_resource type="Texture2D" uid="uid://ceph42xn14w1q" path="res://assets/space_opurrator_prototype_assets/button_green.png" id="1_kpi50"]
 [ext_resource type="Script" uid="uid://dpkt1v2di5f48" path="res://scripts/level/control_panel_grid.gd" id="2_grid"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u66px"]
-texture = ExtResource("1_kpi50")
-texture_region_size = Vector2i(64, 64)
-0:0/0 = 0
-
-[sub_resource type="TileSet" id="TileSet_fey80"]
-tile_shape = 2
-tile_size = Vector2i(256, 256)
-sources/0 = SubResource("TileSetAtlasSource_u66px")
-
-[node name="ControlPanelGrid" type="TileMapLayer" unique_id=162737333]
-tile_set = SubResource("TileSet_fey80")
+[node name="ControlPanelGrid" type="Node2D" unique_id=162737333]
+scale = Vector2(1.2138889, 1.1166667)
 script = ExtResource("2_grid")
+
+[node name="Panel01" type="Marker2D" parent="." unique_id=186204200]
+position = Vector2(1866, 252)
+
+[node name="Panel02" type="Marker2D" parent="." unique_id=1600261319]
+position = Vector2(2388, 252)
+
+[node name="Panel03" type="Marker2D" parent="." unique_id=1770008660]
+position = Vector2(2910, 252)
+
+[node name="Panel04" type="Marker2D" parent="." unique_id=1335719653]
+position = Vector2(3432, 252)
+
+[node name="Panel05" type="Marker2D" parent="." unique_id=50613511]
+position = Vector2(5190, 252)
+
+[node name="Panel06" type="Marker2D" parent="." unique_id=1511320125]
+position = Vector2(5712, 252)
+
+[node name="Panel07" type="Marker2D" parent="." unique_id=1140284176]
+position = Vector2(6234, 252)
+
+[node name="Panel08" type="Marker2D" parent="." unique_id=1326131857]
+position = Vector2(6756, 252)
+
+[node name="Panel09" type="Marker2D" parent="." unique_id=118309474]
+position = Vector2(2010, 678)
+
+[node name="Panel10" type="Marker2D" parent="." unique_id=39222728]
+position = Vector2(2532, 678)
+
+[node name="Panel11" type="Marker2D" parent="." unique_id=1230134066]
+position = Vector2(3054, 678)
+
+[node name="Panel12" type="Marker2D" parent="." unique_id=1993715167]
+position = Vector2(3576, 678)
+
+[node name="Panel13" type="Marker2D" parent="." unique_id=45782753]
+position = Vector2(5046, 678)
+
+[node name="Panel14" type="Marker2D" parent="." unique_id=1959244752]
+position = Vector2(5568, 678)
+
+[node name="Panel15" type="Marker2D" parent="." unique_id=178188993]
+position = Vector2(6090, 678)
+
+[node name="Panel16" type="Marker2D" parent="." unique_id=582232466]
+position = Vector2(6612, 678)

@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://c7l1v3lb0ard0"]
+[gd_scene format=3 uid="uid://c7l1v3lb0ard0"]
 
 [ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level/level.gd" id="1_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://bsow1seys8h0w" path="res://scenes/board/board.tscn" id="2_x42e6"]
@@ -25,7 +25,6 @@ position = Vector2(1311, 603)
 script = ExtResource("3_6761a")
 
 [node name="ControlPanelGrid" parent="." unique_id=162737333 instance=ExtResource("5_wtwp4")]
-tile_map_data = PackedByteArray("AAAKAAEAAAAAAAAAAAAKAAIAAAAAAAAAAAALAAIAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAAMAAIAAAAAAAAAAAANAAIAAAAAAAAAAAAOAAIAAAAAAAAAAAAPAAIAAAAAAAAAAAAOAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAAQAAIAAAAAAAAAAAAYAAEAAAAAAAAAAAAYAAIAAAAAAAAAAAAZAAIAAAAAAAAAAAAaAAIAAAAAAAAAAAAZAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAbAAIAAAAAAAAAAAAcAAIAAAAAAAAAAAAbAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAdAAIAAAAAAAAAAAAeAAIAAAAAAAAAAAAdAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAfAAIAAAAAAAAAAAAgAAIAAAAAAAAAAAAgAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAhAAIAAAAAAAAAAAA=")
 
 [node name="SolveButton" type="TextureButton" parent="." unique_id=1420606149]
 texture_filter = 1
@@ -80,10 +79,10 @@ position = Vector2(487, 353)
 position = Vector2(9793, 305)
 
 [node name="SequencedDone" parent="." unique_id=2145105100 instance=ExtResource("13_dnkej")]
-position = Vector2(4790, 241)
+position = Vector2(4663, 164)
 
 [node name="BackspaceButton" parent="." unique_id=1101563782 instance=ExtResource("13_mm8aj")]
-position = Vector2(5857, 297)
+position = Vector2(5742, 162)
 script = ExtResource("14_mm8aj")
 
 [editable path="SequencedDone"]

@@ -5,8 +5,6 @@
 [node name="Board" type="Control" unique_id=308978416]
 layout_mode = 3
 anchors_preset = 0
-offset_top = 1.0
-offset_bottom = 1.0
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1078474926]
 layout_mode = 0
