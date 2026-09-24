@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/victory_screen.gd" id="1_vs"]
+[ext_resource type="Script" path="res://scripts/ui/end_screen.gd" id="1_vs"]
 
-[node name="VictoryScreen" type="Control"]
+[node name="EndScreen" type="Control"]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15

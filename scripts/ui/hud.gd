@@ -4,7 +4,7 @@ extends Control
 
 @onready var progress_bar: ProgressBar = $ProgressBar
 @onready var solve_button: BaseButton = $"../../SolveButton" # world-space, centre of the board
-@onready var victory_screen: Control = $"../VictoryScreen"
+@onready var end_screen: Control = $"../EndScreen"
 
 # Only the host's values matter in a networked game.
 @export var endTarget: float = 100.0
@@ -68,6 +68,9 @@ func _process(delta: float) -> void:
 		progress_bar.value -= timeoutPenalty
 		PuzzleSolver.new_puzzle()
 		puzzleTimeLeft = puzzleTime
+	if progress_bar.value <= 0.0:
+		_end_game.rpc(false, progress_bar.value)
+		return
 	# ponytail: sends every frame; throttle to a fixed tick if bandwidth ever matters.
 	_sync_progress.rpc(progress_bar.value, endTarget)
 
@@ -84,16 +87,16 @@ func _request_solve() -> void:
 		progress_bar.value += solveReward
 		puzzleTimeLeft = puzzleTime
 		if progress_bar.value >= endTarget:
-			_win.rpc(progress_bar.value)
+			_end_game.rpc(true, progress_bar.value)
 
 @rpc("authority", "call_remote", "unreliable_ordered")
 func _sync_progress(value: float, max_value: float) -> void:
 	progress_bar.max_value = max_value
 	progress_bar.value = value
 
-## Host decides; both players stop and see the victory screen.
+## Host decides; both players stop and see the end screen.
 @rpc("authority", "call_local", "reliable")
-func _win(final_value: float) -> void:
+func _end_game(won: bool, final_value: float) -> void:
 	progress_bar.value = final_value
 	GameState.game_running = false
-	victory_screen.show_victory()
+	end_screen.show_result(won)

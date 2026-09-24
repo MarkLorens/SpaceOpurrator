@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/threats/threat_star.tscn" id="8_s8va5"]
 [ext_resource type="PackedScene" uid="uid://ykvmdwssq2xn" path="res://scenes/puzzle_instruction/puzzle_interface.tscn" id="9_dga24"]
 [ext_resource type="Texture2D" uid="uid://dl1xbso8h11f4" path="res://assets/space_opurrator_prototype_assets/button_red.png" id="11_btnred"]
-[ext_resource type="PackedScene" path="res://scenes/ui/victory_screen.tscn" id="12_victory"]
+[ext_resource type="PackedScene" path="res://scenes/ui/end_screen.tscn" id="12_end"]
 [ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="13_dnkej"]
 [ext_resource type="PackedScene" uid="uid://f43luoyfa7we" path="res://scenes/buttons/backspace_button.tscn" id="13_mm8aj"]
 [ext_resource type="Script" uid="uid://cfn0rvxo6eouf" path="res://scripts/ui/backspace_button.gd" id="14_mm8aj"]
@@ -66,7 +66,7 @@ text = "Offset View Mode"
 metadata/_edit_use_anchors_ = true
 
 [node name="hud" parent="UI" unique_id=1669079572 instance=ExtResource("5_sk5k4")]
-startProgress = 95.0
+startProgress = 10.0
 solveReward = 100.0
 metadata/_edit_use_anchors_ = true
 
@@ -79,7 +79,7 @@ grow_vertical = 1
 
 [node name="PauseMenu" parent="UI" unique_id=1532350907 instance=ExtResource("5_pause")]
 
-[node name="VictoryScreen" parent="UI" unique_id=1388327517 instance=ExtResource("12_victory")]
+[node name="EndScreen" parent="UI" unique_id=1388327517 instance=ExtResource("12_end")]
 
 [node name="UI2" type="CanvasLayer" parent="." unique_id=919110718]
 
