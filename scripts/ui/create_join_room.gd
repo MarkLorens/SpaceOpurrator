@@ -2,13 +2,17 @@ extends Control
 ## Host or join. Host asks for a room name first, then GameState opens the
 ## game room; Join goes to the lobby.
 
+@export_file var HOST_BACKGROUND 
+@export_file var CLIENT_BACKGROUND 
+
 @onready var choice: VBoxContainer = $CenterContainer/VBoxContainer
-@onready var host_button: Button = $CenterContainer/VBoxContainer/HBoxContainer/HostButton
-@onready var join_button: Button = $CenterContainer/VBoxContainer/HBoxContainer/JoinButton
+@onready var host_button: TextureButton = $CenterContainer/VBoxContainer/HBoxContainer/HostButton
+@onready var join_button: TextureButton = $CenterContainer/VBoxContainer/HBoxContainer/JoinButton
 @onready var name_panel: VBoxContainer = $CenterContainer/NamePanel
 @onready var name_edit: LineEdit = $CenterContainer/NamePanel/NameEdit
-@onready var create_button: Button = $CenterContainer/NamePanel/CreateButton
-@onready var cancel_button: Button = $CancelButton
+@onready var create_button: TextureButton = $CenterContainer/NamePanel/CreateButton
+@onready var cancel_button: TextureButton = $CancelButton
+@onready var background : TextureRect = $Background
 
 func _ready() -> void:
 	name_panel.hide()
@@ -24,6 +28,9 @@ func _ready() -> void:
 func _show_name_prompt() -> void:
 	choice.hide()
 	name_panel.show()
+	
+	background.texture = load(HOST_BACKGROUND)
+	
 	_update_create()
 	name_edit.grab_focus()
 
