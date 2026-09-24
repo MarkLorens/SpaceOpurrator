@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c618qybl80xex"
+path="res://.godot/imported/3_laser-heavy.wav-9a2035ee1a40b6ad75345ecf4f39aa4a.sample"
+
+[deps]
+
+source_file="res://assets/audio/1_laser shooting/3_laser-heavy.wav"
+dest_files=["res://.godot/imported/3_laser-heavy.wav-9a2035ee1a40b6ad75345ecf4f39aa4a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

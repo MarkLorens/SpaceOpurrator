@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bfmqgn1fikgyn"]
 
-[ext_resource type="Script" path="res://scripts/level/control_panel_grid.gd" id="2_grid"]
 [ext_resource type="Texture2D" uid="uid://ceph42xn14w1q" path="res://assets/space_opurrator_prototype_assets/button_green.png" id="1_kpi50"]
+[ext_resource type="Script" uid="uid://dpkt1v2di5f48" path="res://scripts/level/control_panel_grid.gd" id="2_grid"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u66px"]
 texture = ExtResource("1_kpi50")
@@ -10,7 +10,7 @@ texture_region_size = Vector2i(64, 64)
 
 [sub_resource type="TileSet" id="TileSet_fey80"]
 tile_shape = 2
-tile_size = Vector2i(258, 258)
+tile_size = Vector2i(256, 256)
 sources/0 = SubResource("TileSetAtlasSource_u66px")
 
 [node name="ControlPanelGrid" type="TileMapLayer" unique_id=162737333]
