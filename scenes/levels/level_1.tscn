@@ -1,12 +1,12 @@
-[gd_scene format=3 uid="uid://c7l1v3lb0ard0"]
+[gd_scene format=4 uid="uid://c7l1v3lb0ard0"]
 
 [ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level/level_1.gd" id="1_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://bsow1seys8h0w" path="res://scenes/board/board.tscn" id="2_x42e6"]
 [ext_resource type="Script" uid="uid://ne06oxrw0moj" path="res://scripts/main/synced_camera.gd" id="3_6761a"]
-[ext_resource type="PackedScene" uid="uid://bieedpekf6xmd" path="res://scenes/buttons/button.tscn" id="4_6761a"]
 [ext_resource type="PackedScene" uid="uid://blny4fuhn70fp" path="res://scenes/levels/level_ui.tscn" id="4_levelui"]
 [ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/pause_menu.tscn" id="5_pause"]
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
+[ext_resource type="PackedScene" uid="uid://bfmqgn1fikgyn" path="res://scenes/tile_grid/control_panel_grid.tscn" id="5_wtwp4"]
 [ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/threats/threat_star.tscn" id="8_s8va5"]
 [ext_resource type="PackedScene" uid="uid://ykvmdwssq2xn" path="res://scenes/puzzle_instruction/puzzle_interface.tscn" id="9_dga24"]
 [ext_resource type="Texture2D" uid="uid://dl1xbso8h11f4" path="res://assets/space_opurrator_prototype_assets/button_red.png" id="11_btnred"]
@@ -24,17 +24,9 @@ script = ExtResource("1_oc4kc")
 position = Vector2(1311, 603)
 script = ExtResource("3_6761a")
 
-[node name="Area2D" parent="." unique_id=438774499 instance=ExtResource("4_6761a")]
-position = Vector2(3003.0002, 523)
-btnValue = 1
-
-[node name="Area2D2" parent="." unique_id=184197354 instance=ExtResource("4_6761a")]
-position = Vector2(6656.0005, 409)
-btnValue = 2
-
-[node name="Area2D3" parent="." unique_id=198184179 instance=ExtResource("4_6761a")]
-position = Vector2(7701.0005, 539)
-btnValue = 3
+[node name="ControlPanelGrid" parent="." unique_id=162737333 instance=ExtResource("5_wtwp4")]
+position = Vector2(0, 3)
+tile_map_data = PackedByteArray("AAAKAAEAAAAAAAAAAAAKAAIAAAAAAAAAAAALAAIAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAAMAAIAAAAAAAAAAAANAAIAAAAAAAAAAAAOAAIAAAAAAAAAAAAPAAIAAAAAAAAAAAAOAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAAQAAIAAAAAAAAAAAAYAAEAAAAAAAAAAAAYAAIAAAAAAAAAAAAZAAIAAAAAAAAAAAAaAAIAAAAAAAAAAAAZAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAbAAIAAAAAAAAAAAAcAAIAAAAAAAAAAAAbAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAdAAIAAAAAAAAAAAAeAAIAAAAAAAAAAAAdAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAfAAIAAAAAAAAAAAAgAAIAAAAAAAAAAAAgAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAhAAIAAAAAAAAAAAA=")
 
 [node name="SolveButton" type="TextureButton" parent="." unique_id=1420606149]
 texture_filter = 1

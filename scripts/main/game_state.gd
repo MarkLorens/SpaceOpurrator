@@ -17,10 +17,15 @@ const LEVEL_1 := "res://scenes/levels/level_1.tscn"    # scenes/levels/level_1.t
 const CLIENT_LEAVE_TIMEOUT := 2.0
 
 signal game_started
+## Fires on the client when the host's session_seed arrives.
+signal session_seed_received
 
 var role: Role.Type = Role.Type.NONE
 ## True once both players are connected. Gameplay waits on this.
 var game_running := false
+## Host-picked seed for any randomness both players must agree on (e.g. button
+## layout). 0 = not received yet.
+var session_seed := 0
 var _pending_host_close := false  # host is waiting for the client to leave first
 
 func _ready() -> void:
@@ -99,6 +104,9 @@ func _on_connection_failed() -> void:
 
 func _start_game() -> void:
 	game_running = true
+	if role == Role.Type.HOST:
+		session_seed = randi() | 1  # never 0
+		_set_session_seed.rpc(session_seed)
 	_change_scene(LEVEL_1)
 	game_started.emit()
 
@@ -117,6 +125,7 @@ func _has_peers() -> bool:
 func _reset_to_menu() -> void:
 	_pending_host_close = false
 	game_running = false
+	session_seed = 0
 
 	NetworkManager.leave()
 	role = Role.Type.NONE
@@ -126,3 +135,9 @@ func _reset_to_menu() -> void:
 
 func _change_scene(uid: String) -> void:
 	get_tree().change_scene_to_file(uid)
+
+
+@rpc("authority", "call_remote", "reliable")
+func _set_session_seed(value: int) -> void:
+	session_seed = value
+	session_seed_received.emit()
