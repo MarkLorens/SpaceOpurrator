@@ -11,14 +11,24 @@ var correctSeq : Array[int]
 var submittedSeq: Array[int]
 
 func _ready() -> void:
-	GameState.game_started.connect(func(): if multiplayer.is_server(): new_puzzle())
+	GameState.level_started.connect(func(): if multiplayer.is_server(): new_puzzle())
 
 ## Host only.
 func new_puzzle() -> void:
 	_set_submitted.rpc([] as Array[int])
-	correctSeq = SequenceGenerator.generate_new_task()
+	correctSeq = generate_sequence(GameState.level)
 	sequence_changed.emit(correctSeq)
 	_set_sequence.rpc(correctSeq)
+
+## No repeats until every symbol has been used once.
+func generate_sequence(cfg: LevelConfig) -> Array[int]:
+	var seq: Array[int] = []
+	while seq.size() < cfg.sequence_length:
+		var pool: Array[int] = []
+		pool.assign(range(1, cfg.symbol_count + 1))
+		pool.shuffle()
+		seq.append_array(pool)
+	return seq.slice(0, cfg.sequence_length)
 
 ## Called by the buttons on either player; the press always lands on the host.
 func build_correct_seq(num: int) -> void:

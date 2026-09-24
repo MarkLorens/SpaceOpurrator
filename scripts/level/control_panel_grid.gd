@@ -6,21 +6,18 @@ extends TileMapLayer
 ## same layout without sending positions.
 
 @export var button_scene: PackedScene = preload("res://scenes/buttons/button.tscn")
-@export var button_count := 6
 ## Half the button's on-screen size (64px sprite * scale 5 / 2). Cells whose
 ## button would cross a phone edge (every base viewport width) are skipped.
 @export var button_radius := 160.0
 
 func _ready() -> void:
 	visible = false
+	# GameState sets the seed before loading the level on both peers.
 	if GameState.session_seed == 0:
-		if GameState.role == Role.Type.CLIENT:
-			await GameState.session_seed_received
-		else:
-			GameState.session_seed = randi() | 1  # solo / editor run
-	_spawn_buttons(GameState.session_seed)
+		GameState.session_seed = randi() | 1  # solo / editor run
+	_spawn_buttons(GameState.session_seed, GameState.level.button_count)
 
-func _spawn_buttons(seed_value: int) -> void:
+func _spawn_buttons(seed_value: int, button_count: int) -> void:
 	# Project base width, NOT get_viewport_rect(): with stretch aspect "expand" a
 	# wider phone reports a wider viewport, which would filter different cells
 	# and desync the layout between players.

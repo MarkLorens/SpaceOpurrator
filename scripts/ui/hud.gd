@@ -6,21 +6,14 @@ extends Control
 @onready var solve_button: BaseButton = $"../../SolveButton" # world-space, centre of the board
 @onready var end_screen: Control = $"../EndScreen"
 
-# Only the host's values matter in a networked game.
-@export var endTarget: float = 100.0
-@export var startProgress: float = 70.0
-@export var drainPerSecond: float = 1.0
-@export var solveReward: float = 10.0
-## Seconds the player has to solve the current puzzle before losing timeoutPenalty.
-@export var puzzleTime: float = 10.0
-@export var timeoutPenalty: float = 10.0
-
-## Red vignette shows when the bar drops to this fraction of endTarget.
+## Red vignette shows when the bar drops to this fraction of the end target.
 @export var dangerRatio: float = 0.2
 
 ## Max screen-pixel travel between press and release that still counts as a tap.
 @export var tap_max_distance: float = 20.0
 
+## Bar tuning for this level. Only the host's copy drives the numbers.
+var cfg: LevelConfig = GameState.level
 var puzzleTimeLeft: float
 var vignette: ColorRect
 var _solve_press_pos: Vector2
@@ -54,25 +47,25 @@ func _ready() -> void:
 	# value_changed fires on host and client, so both see it.
 	progress_bar.value_changed.connect(func(v: float) -> void:
 		vignette.visible = v <= progress_bar.max_value * dangerRatio)
-	progress_bar.max_value = endTarget
-	progress_bar.value = startProgress
-	puzzleTimeLeft = puzzleTime
+	progress_bar.max_value = cfg.end_target
+	progress_bar.value = cfg.start_progress
+	puzzleTimeLeft = cfg.puzzle_time
 
 func _process(delta: float) -> void:
 	if not GameState.game_running or not multiplayer.is_server():
 		return
 	# ProgressBar clamps value to [0, max_value] itself.
-	progress_bar.value -= drainPerSecond * delta
+	progress_bar.value -= cfg.drain_per_second * delta
 	puzzleTimeLeft -= delta
 	if puzzleTimeLeft <= 0.0:
-		progress_bar.value -= timeoutPenalty
+		progress_bar.value -= cfg.timeout_penalty
 		PuzzleSolver.new_puzzle()
-		puzzleTimeLeft = puzzleTime
+		puzzleTimeLeft = cfg.puzzle_time
 	if progress_bar.value <= 0.0:
 		_end_game.rpc(false, progress_bar.value)
 		return
 	# ponytail: sends every frame; throttle to a fixed tick if bandwidth ever matters.
-	_sync_progress.rpc(progress_bar.value, endTarget)
+	_sync_progress.rpc(progress_bar.value, cfg.end_target)
 
 func _on_solve_pressed() -> void:
 	if get_viewport().get_mouse_position().distance_to(_solve_press_pos) > tap_max_distance:
@@ -84,9 +77,9 @@ func _request_solve() -> void:
 	if not GameState.game_running:
 		return
 	if PuzzleSolver.solve_puzzle():
-		progress_bar.value += solveReward
-		puzzleTimeLeft = puzzleTime
-		if progress_bar.value >= endTarget:
+		progress_bar.value += cfg.solve_reward
+		puzzleTimeLeft = cfg.puzzle_time
+		if progress_bar.value >= cfg.end_target:
 			_end_game.rpc(true, progress_bar.value)
 
 @rpc("authority", "call_remote", "unreliable_ordered")

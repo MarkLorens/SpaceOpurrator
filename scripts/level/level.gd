@@ -1,5 +1,6 @@
 extends Node2D
-## Level 1: the shared board both peers pan across after connecting.
+## Shared scene for every level: the board both peers pan across. Per-level
+## tuning lives in GameState.level (a LevelConfig), read by the nodes that need it.
 ## Configures this peer's synced camera for its role and wires the pause button.
 ## The session itself (leaving, the other player dropping, returning to the
 ## menu) is owned by GameState — this level only cares about gameplay + pause.
