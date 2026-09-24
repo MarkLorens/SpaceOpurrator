@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://c20vn0knnktml"]
+
+[ext_resource type="Script" uid="uid://xfgn7nkcoe4q" path="res://scripts/ui/game_room.gd" id="1_room"]
+
+[node name="GameRoom" type="Control" unique_id=1249566157]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_room")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1413220079]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=212079363]
+layout_mode = 2
+theme_override_constants/separation = 80
+
+[node name="RoomLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1293816298]
+layout_mode = 2
+theme_override_font_sizes/font_size = 112
+horizontal_alignment = 1
+
+[node name="Players" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1115451143]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="HostStatus" type="Label" parent="CenterContainer/VBoxContainer/Players" unique_id=2106714275]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+horizontal_alignment = 1
+
+[node name="CopilotStatus" type="Label" parent="CenterContainer/VBoxContainer/Players" unique_id=1172169882]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+horizontal_alignment = 1
+
+[node name="Buttons" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1961205105]
+layout_mode = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="ReadyButton" type="Button" parent="CenterContainer/VBoxContainer/Buttons" unique_id=1432658649]
+custom_minimum_size = Vector2(420, 120)
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+toggle_mode = true
+text = "Ready"
+
+[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer/Buttons" unique_id=1855416639]
+custom_minimum_size = Vector2(420, 120)
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+disabled = true
+text = "Start"
+
+[node name="CancelButton" type="Button" parent="." unique_id=1711693336]
+custom_minimum_size = Vector2(240, 100)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = 280.0
+offset_bottom = 140.0
+theme_override_font_sizes/font_size = 48
+text = "Cancel"

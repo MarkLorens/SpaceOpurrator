@@ -12,38 +12,29 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_l6cm7")
 
-[node name="ConnectionPanel" type="VBoxContainer" parent="." unique_id=837088202]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 260.0
-offset_bottom = 140.0
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=608748644]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -404.5
+offset_right = 404.5
+offset_bottom = 353.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 300
 
-[node name="TitleLabel" type="Label" parent="ConnectionPanel" unique_id=1811194071]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2033377048]
 layout_mode = 2
-text = "Multiplayer Camera Sync"
+theme_override_constants/separation = 100
 
-[node name="IPEdit" type="LineEdit" parent="ConnectionPanel" unique_id=1111460422]
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=811804289]
 layout_mode = 2
-text = "127.0.0.1"
-placeholder_text = "127.0.0.1"
+theme_override_font_sizes/font_size = 128
+text = "SPACE 
+OPURRAIDER"
+horizontal_alignment = 1
 
-[node name="HostButton" type="Button" parent="ConnectionPanel" unique_id=1116650294]
+[node name="PlayButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1526890580]
 layout_mode = 2
-text = "Host"
-
-[node name="JoinButton" type="Button" parent="ConnectionPanel" unique_id=737834803]
-layout_mode = 2
-text = "Join"
-
-[node name="LobbyList" type="ItemList" parent="ConnectionPanel" unique_id=1725757424]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-
-[node name="StatusLabel" type="Label" parent="." unique_id=9693175]
-layout_mode = 0
-offset_left = 16.0
-offset_top = 270.0
-offset_right = 300.0
-offset_bottom = 294.0
-text = "Disconnected"
+theme_override_font_sizes/font_size = 64
+text = "Play"
