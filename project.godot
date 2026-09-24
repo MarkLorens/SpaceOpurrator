@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 NetworkManager="*uid://cdd5jm0apwsmk"
-SequenceGenerator="*uid://dgmmmfdyycsdk"
 GameState="*uid://bbk1if4dggjc5"
 PuzzleSolver="*uid://b16wdruviytax"
 

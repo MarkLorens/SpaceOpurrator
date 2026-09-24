@@ -1,7 +1,5 @@
 extends Control
 
-@export_file var LEVEL_1_PATH
-
 @onready var connection_panel: VBoxContainer = $ConnectionPanel
 @onready var ip_edit: LineEdit = $ConnectionPanel/IPEdit
 @onready var lobby_list: ItemList = $ConnectionPanel/LobbyList

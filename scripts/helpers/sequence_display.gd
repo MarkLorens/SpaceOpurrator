@@ -8,8 +8,6 @@ enum Source { SUBMITTED, TARGET }
 ## Icon for each sequence value: symbols[n] is drawn for value n.
 @export var symbols: Array[Texture2D]
 @export var symbol_size := Vector2(128, 128)
-## Most symbols the row will show; extra entries are ignored.
-@export var max_symbols := 3
 
 @onready var row: HBoxContainer = $Symbols
 
@@ -25,7 +23,7 @@ func show_sequence(seq: Array[int]) -> void:
 	for child in row.get_children():
 		child.queue_free()
 	
-	for value in seq.slice(0, max_symbols):
+	for value in seq:  # bounded by the level's sequence_length
 		var icon := TextureRect.new()
 		icon.texture = symbols[value] if value >= 0 and value < symbols.size() else null
 		icon.custom_minimum_size = symbol_size

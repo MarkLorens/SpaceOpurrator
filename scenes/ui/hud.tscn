@@ -11,7 +11,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_0mwgc")
-startProgress = 30.0
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=2099147941]
 layout_mode = 1
