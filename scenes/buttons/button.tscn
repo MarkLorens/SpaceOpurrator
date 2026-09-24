@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_fey80"]
 radius = 2.660075
 
-[node name="Area2D" type="Area2D" unique_id=438774499]
+[node name="Button" type="Area2D" unique_id=438774499]
 scale = Vector2(5, 5)
 script = ExtResource("1_0j123")
 

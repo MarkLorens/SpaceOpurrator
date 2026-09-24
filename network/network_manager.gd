@@ -85,15 +85,12 @@ func join(address: String) -> bool:
 
 
 func leave() -> void:
-	# Detach the peer BEFORE closing it. Closing a server while the client is
-	# still the active multiplayer_peer makes Godot fire peer_disconnected
-	# synchronously, mid-close — re-entering teardown while ENet is still tearing
-	# itself down, which corrupts state and crashes on host exit. Holding our own
-	# reference keeps the peer alive so we can close it cleanly once detached.
-	var peer: MultiplayerPeer = multiplayer.multiplayer_peer
-	multiplayer.multiplayer_peer = null
-	if peer:
-		peer.close()
+	# leave() is often reached from INSIDE a multiplayer callback: GameState
+	# resets to the menu from peer_disconnected (host vanished) or from the
+	# host's "please leave" RPC. Those fire while SceneMultiplayer is mid-poll,
+	# and swapping out the peer there crashes (segfault on the client when the
+	# host drops). So the actual teardown waits until the poll has finished.
+	_teardown_peer.call_deferred(multiplayer.multiplayer_peer)
 
 	if _bonjour:
 		_bonjour.stop_advertising()
@@ -102,6 +99,20 @@ func leave() -> void:
 
 	# Back to idle -> discover lobbies again for the menu.
 	start_browsing()
+
+
+## Deferred half of leave(). Takes the peer that was active when leave() ran,
+## so a host()/join() that happens before this runs is left untouched.
+func _teardown_peer(peer: MultiplayerPeer) -> void:
+	# Detach the peer BEFORE closing it. Closing a server while the client is
+	# still the active multiplayer_peer makes Godot fire peer_disconnected
+	# synchronously, mid-close — re-entering teardown while ENet is still tearing
+	# itself down, which corrupts state and crashes on host exit. Holding our own
+	# reference keeps the peer alive so we can close it cleanly once detached.
+	if multiplayer.multiplayer_peer == peer:
+		multiplayer.multiplayer_peer = null
+	if peer:
+		peer.close()
 
 
 ## Resume LAN discovery. Safe to call repeatedly; clears any stale lobby list so
@@ -143,7 +154,7 @@ func _on_connected_to_server() -> void:
 
 func _on_connection_failed() -> void:
 	status = "Connection failed"
-	multiplayer.multiplayer_peer = null
+	_teardown_peer.call_deferred(multiplayer.multiplayer_peer)  # mid-poll, see leave()
 	connection_failed.emit()
 	# Couldn't join -> back to idle, so resume discovery for the menu.
 	start_browsing()
@@ -151,7 +162,7 @@ func _on_connection_failed() -> void:
 
 func _on_server_disconnected() -> void:
 	status = "Host disconnected"
-	multiplayer.multiplayer_peer = null
+	_teardown_peer.call_deferred(multiplayer.multiplayer_peer)  # mid-poll, see leave()
 	host_left.emit()
 
 
