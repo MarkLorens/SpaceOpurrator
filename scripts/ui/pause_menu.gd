@@ -3,34 +3,47 @@ extends Control
 ## (set in the scene) so its buttons AND its incoming pause/resume RPC keep
 ## working while the rest of the tree is paused.
 ##
-## Either player can pause or resume; the state is mirrored to the other peer,
-## so both freeze and both see this menu. Exiting hands off to GameState, which
-## owns the session and the return-to-menu transition.
+## Either player can pause; both freeze. Only the player who paused sees
+## Resume — the other sees a "the other player paused" screen until they
+## resume. Exiting hands off to GameState, which owns the session and the
+## return-to-menu transition.
 
+@onready var own_menu: Control = $CenterContainer
+@onready var remote_menu: Control = $RemotePaused
 @onready var resume_button: Button = $CenterContainer/VBoxContainer/ResumeButton
 @onready var exit_button: Button = $CenterContainer/VBoxContainer/ExitButton
+@onready var remote_exit_button: Button = $RemotePaused/VBoxContainer/ExitButton
+
+## Peer id of whoever paused; 0 = not paused.
+var paused_by := 0
 
 func _ready() -> void:
 	hide()
 	resume_button.pressed.connect(resume)
 	exit_button.pressed.connect(exit)
+	remote_exit_button.pressed.connect(exit)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if visible:
-			resume()
-		else:
+		if paused_by == 0:
 			pause()
+		else:
+			resume()  # ignored unless I'm the one who paused
 		get_viewport().set_input_as_handled()
 
 # --- Public: called by the local player (button / Esc) ---
 
 func pause() -> void:
-	_set_paused(true)
+	if paused_by != 0:
+		return
+	
+	_set_paused_by(_my_id())
 	_broadcast_paused(true)
 
 func resume() -> void:
-	_set_paused(false)
+	if paused_by != _my_id():
+		return
+	_set_paused_by(0)
 	_broadcast_paused(false)
 
 func exit() -> void:
@@ -41,9 +54,16 @@ func exit() -> void:
 
 # --- Shared pause state (local or remote) ---
 
-func _set_paused(is_pause: bool) -> void:
-	visible = is_pause
-	get_tree().paused = is_pause
+func _set_paused_by(id: int) -> void:
+	paused_by = id
+	visible = id != 0
+	own_menu.visible = id == _my_id()
+	remote_menu.visible = id != 0 and id != _my_id()
+	get_tree().paused = id != 0
+
+func _my_id() -> int:
+	# Solo / editor run: no peer, treat me as the host.
+	return multiplayer.get_unique_id() if multiplayer.multiplayer_peer else 1
 
 func _broadcast_paused(is_pause: bool) -> void:
 	# Solo / editor run: no peer to tell.
@@ -54,4 +74,10 @@ func _broadcast_paused(is_pause: bool) -> void:
 @rpc("any_peer", "call_remote", "reliable")
 func _remote_set_paused(p: bool) -> void:
 	# Mirror the other player's pause/resume without re-broadcasting (no echo).
-	_set_paused(p)
+	var sender := multiplayer.get_remote_sender_id()
+	if p:
+		# Both paused at once: the lower id (the host) keeps control on both sides.
+		if paused_by == 0 or sender < paused_by:
+			_set_paused_by(sender)
+	elif paused_by == sender:
+		_set_paused_by(0)
