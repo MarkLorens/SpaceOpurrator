@@ -70,17 +70,14 @@ func _input(event: InputEvent) -> void:
 	# (e.g. ColorRect, which defaults to mouse_filter = STOP) can never swallow
 	# a drag before it reaches the camera. This keeps panning working across
 	# the entire world width, not just the gaps between UI elements.
-	
-	if event is InputEventScreenDrag:
-		_apply_drag(-event.relative.x)
-		get_viewport().set_input_as_handled()
-		
-	elif event is InputEventScreenTouch:
-		is_dragging = event.pressed
-		if event.pressed:
-			_on_local_click()
-			
-	elif event is InputEventMouseButton:
+	#
+	# Mouse events only. On phones Godot also turns every touch into a mouse
+	# event (input_devices/pointing/emulate_mouse_from_touch, on by default, and
+	# the TapArea buttons rely on it), so handling ScreenTouch/ScreenDrag too
+	# made every drag move the camera twice and every tap buzz and send its RPCs
+	# twice.
+
+	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			is_dragging = event.pressed
 			if event.pressed:
