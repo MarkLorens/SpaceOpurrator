@@ -1,8 +1,6 @@
 extends TapArea
 
-@export var btnValue: int = 0
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	super()
-	tapped.connect(func() -> void: PuzzleSolver.build_correct_seq(btnValue))
+	tapped.connect(PuzzleSolver.remove_last_press)

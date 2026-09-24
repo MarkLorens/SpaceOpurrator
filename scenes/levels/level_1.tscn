@@ -9,9 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
 [ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/threats/threat_star.tscn" id="8_s8va5"]
 [ext_resource type="PackedScene" uid="uid://ykvmdwssq2xn" path="res://scenes/puzzle_instruction/puzzle_interface.tscn" id="9_dga24"]
-[ext_resource type="Script" uid="uid://dgug8k4s6rthb" path="res://scripts/puzzle_interface.gd" id="10_qxy0u"]
 [ext_resource type="Texture2D" uid="uid://dl1xbso8h11f4" path="res://assets/space_opurrator_prototype_assets/button_red.png" id="11_btnred"]
 [ext_resource type="PackedScene" path="res://scenes/ui/victory_screen.tscn" id="12_victory"]
+[ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="13_dnkej"]
+[ext_resource type="PackedScene" uid="uid://f43luoyfa7we" path="res://scenes/buttons/backspace_button.tscn" id="13_mm8aj"]
+[ext_resource type="Script" uid="uid://cfn0rvxo6eouf" path="res://scripts/ui/backspace_button.gd" id="14_mm8aj"]
 
 [node name="Level1" type="Node2D" unique_id=825060166]
 script = ExtResource("1_oc4kc")
@@ -86,4 +88,12 @@ position = Vector2(487, 353)
 
 [node name="PuzzleInterface" parent="." unique_id=744080779 instance=ExtResource("9_dga24")]
 position = Vector2(9793, 305)
-script = ExtResource("10_qxy0u")
+
+[node name="SequencedDone" parent="." unique_id=2145105100 instance=ExtResource("13_dnkej")]
+position = Vector2(4790, 241)
+
+[node name="BackspaceButton" parent="." unique_id=1101563782 instance=ExtResource("13_mm8aj")]
+position = Vector2(5857, 297)
+script = ExtResource("14_mm8aj")
+
+[editable path="SequencedDone"]

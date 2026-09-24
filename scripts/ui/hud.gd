@@ -18,10 +18,18 @@ extends Control
 ## Red vignette shows when the bar drops to this fraction of endTarget.
 @export var dangerRatio: float = 0.2
 
+## Max screen-pixel travel between press and release that still counts as a tap.
+@export var tap_max_distance: float = 20.0
+
 var puzzleTimeLeft: float
 var vignette: ColorRect
+var _solve_press_pos: Vector2
 
 func _ready() -> void:
+	# Fire on release so a drag that starts on the button can be told apart from a tap.
+	solve_button.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+	solve_button.button_down.connect(func() -> void:
+		_solve_press_pos = get_viewport().get_mouse_position())
 	solve_button.pressed.connect(_on_solve_pressed)
 	# ponytail: quick test vignette built in code; move into hud.tscn if it stays.
 	vignette = ColorRect.new()
@@ -64,6 +72,8 @@ func _process(delta: float) -> void:
 	_sync_progress.rpc(progress_bar.value, endTarget)
 
 func _on_solve_pressed() -> void:
+	if get_viewport().get_mouse_position().distance_to(_solve_press_pos) > tap_max_distance:
+		return  # It was a drag, not a tap.
 	_request_solve.rpc_id(1)
 
 @rpc("any_peer", "call_local", "reliable")

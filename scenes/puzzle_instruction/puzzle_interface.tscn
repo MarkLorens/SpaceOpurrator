@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://ykvmdwssq2xn"]
 
+[ext_resource type="Script" uid="uid://dgug8k4s6rthb" path="res://scripts/puzzle_interface.gd" id="1_pi"]
+
 [node name="PuzzleInterface" type="Node2D" unique_id=744080779]
+script = ExtResource("1_pi")
 
 [node name="instruction" type="Label" parent="." unique_id=1731694661]
 offset_right = 40.0
