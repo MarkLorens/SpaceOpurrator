@@ -16,18 +16,18 @@ func _ready() -> void:
 ## Host only.
 func new_puzzle() -> void:
 	_set_submitted.rpc([] as Array[int])
-	correctSeq = generate_sequence(GameState.level)
+	correctSeq = generate_sequence(GameState.level, GameState.session_seed)
 	sequence_changed.emit(correctSeq)
 	_set_sequence.rpc(correctSeq)
 
-## No repeats until every symbol has been used once.
-func generate_sequence(cfg: LevelConfig) -> Array[int]:
+## Values are pool indices of this level's live buttons. No repeats until every
+## live button has been used once.
+func generate_sequence(cfg: LevelConfig, seed_value: int) -> Array[int]:
+	var live := cfg.live_buttons(seed_value)
 	var seq: Array[int] = []
-	while seq.size() < cfg.sequence_length:
-		var pool: Array[int] = []
-		pool.assign(range(1, cfg.symbol_count + 1))
-		pool.shuffle()
-		seq.append_array(pool)
+	while seq.size() < cfg.sequence_length and not live.is_empty():
+		live.shuffle()
+		seq.append_array(live)
 	return seq.slice(0, cfg.sequence_length)
 
 ## Called by the buttons on either player; the press always lands on the host.
