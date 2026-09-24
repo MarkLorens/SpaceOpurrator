@@ -51,7 +51,10 @@ func _ready() -> void:
 	
 	# value_changed fires on host and client, so both see it.
 	progress_bar.value_changed.connect(func(v: float) -> void:
-		vignette.visible = v <= progress_bar.max_value * dangerRatio)
+		var danger := v <= progress_bar.max_value * dangerRatio
+		if danger != vignette.visible:
+			AudioManager.set_low_time(danger)
+		vignette.visible = danger)
 	
 	progress_bar.max_value = cfg.end_target
 	progress_bar.value = cfg.start_progress

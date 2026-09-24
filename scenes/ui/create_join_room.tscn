@@ -1,6 +1,21 @@
 [gd_scene format=3 uid="uid://brhca5o40vqxk"]
 
-[ext_resource type="Script" path="res://scripts/ui/create_join_room.gd" id="1_cjr"]
+[ext_resource type="Script" uid="uid://bf60qbfy1cgk2" path="res://scripts/ui/create_join_room.gd" id="1_cjr"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="2_active"]
+[ext_resource type="FontFile" uid="uid://c1o2oirbn4c7n" path="res://assets/fonts/pixel-stick/PixelStick-Regular.otf" id="2_ir6ml"]
+[ext_resource type="Texture2D" uid="uid://c4o2ivayyovro" path="res://assets/ui/center_board.png" id="2_o6i6t"]
+[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/Inactive Button.png" id="4_inactive"]
+[ext_resource type="Texture2D" uid="uid://d05gpflg3kvh" path="res://assets/ui/Text Field.png" id="5_field"]
+
+[sub_resource type="FontVariation" id="FontVariation_field"]
+base_font = ExtResource("3_font")
+spacing_glyph = 10
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_field"]
+content_margin_left = 60.0
+content_margin_right = 60.0
+texture = ExtResource("5_field")
 
 [node name="CreateJoinRoom" type="Control" unique_id=1277439663]
 layout_mode = 3
@@ -10,12 +25,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cjr")
+HOST_BACKGROUND = "uid://dojelupd6r6ii"
+CLIENT_BACKGROUND = "uid://cl2g41ofhrtb8"
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=2004398558]
+[node name="Background" type="TextureRect" parent="." unique_id=1042660141]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_o6i6t")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=2004398558]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -610.0
+offset_top = -226.5
+offset_right = 610.0
+offset_bottom = 226.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -25,7 +57,9 @@ theme_override_constants/separation = 100
 
 [node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1953360332]
 layout_mode = 2
-theme_override_font_sizes/font_size = 128
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_ir6ml")
+theme_override_font_sizes/font_size = 100
 text = "Will you host the mission
 or join another’s mission?"
 horizontal_alignment = 1
@@ -35,49 +69,122 @@ layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="HostButton" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=788345954]
+[node name="HostButton" type="TextureButton" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=788345954]
+texture_filter = 1
+custom_minimum_size = Vector2(560, 160)
 layout_mode = 2
+texture_normal = ExtResource("2_active")
+texture_pressed = ExtResource("4_inactive")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/HostButton" unique_id=802526952]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 80
 text = "Host"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="JoinButton" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=1197993993]
+[node name="JoinButton" type="TextureButton" parent="CenterContainer/VBoxContainer/HBoxContainer" unique_id=1197993993]
+texture_filter = 1
+custom_minimum_size = Vector2(560, 160)
 layout_mode = 2
+texture_normal = ExtResource("2_active")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer/JoinButton" unique_id=562309277]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 80
 text = "Join"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="NamePanel" type="VBoxContainer" parent="CenterContainer"]
+[node name="NamePanel" type="VBoxContainer" parent="CenterContainer" unique_id=912586520]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 60
 
-[node name="PromptLabel" type="Label" parent="CenterContainer/NamePanel"]
+[node name="PromptLabel" type="Label" parent="CenterContainer/NamePanel" unique_id=1520743174]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_ir6ml")
 theme_override_font_sizes/font_size = 96
-text = "Name your mission"
+text = "Pilot’s name"
 horizontal_alignment = 1
 
-[node name="NameEdit" type="LineEdit" parent="CenterContainer/NamePanel"]
-custom_minimum_size = Vector2(900, 120)
+[node name="NameEdit" type="LineEdit" parent="CenterContainer/NamePanel" unique_id=337158609]
+texture_filter = 1
+custom_minimum_size = Vector2(900, 185)
 layout_mode = 2
-theme_override_font_sizes/font_size = 64
+theme_override_colors/font_color = Color(0.05, 0.12, 0.24, 1)
+theme_override_colors/font_placeholder_color = Color(0.05, 0.12, 0.24, 0.4)
+theme_override_colors/caret_color = Color(0.05, 0.12, 0.24, 1)
+theme_override_fonts/font = SubResource("FontVariation_field")
+theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxTexture_field")
+theme_override_styles/focus = SubResource("StyleBoxTexture_field")
 placeholder_text = "Room name"
 alignment = 1
 max_length = 24
 
-[node name="CreateButton" type="Button" parent="CenterContainer/NamePanel"]
-custom_minimum_size = Vector2(420, 110)
+[node name="CreateButton" type="TextureButton" parent="CenterContainer/NamePanel" unique_id=32032981]
+texture_filter = 1
+custom_minimum_size = Vector2(560, 160)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 64
 disabled = true
-text = "Create"
+texture_normal = ExtResource("2_active")
+texture_disabled = ExtResource("4_inactive")
+stretch_mode = 5
 
-[node name="CancelButton" type="Button" parent="."]
-custom_minimum_size = Vector2(240, 100)
+[node name="Label" type="Label" parent="CenterContainer/NamePanel/CreateButton" unique_id=734740863]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 64
+text = "Create"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CancelButton" type="TextureButton" parent="." unique_id=1468019200]
+texture_filter = 1
+custom_minimum_size = Vector2(350, 100)
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
-offset_right = 280.0
+offset_right = 390.0
 offset_bottom = 140.0
+texture_normal = ExtResource("2_active")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CancelButton" unique_id=1057253645]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 48
 text = "Cancel"
+horizontal_alignment = 1
+vertical_alignment = 1
