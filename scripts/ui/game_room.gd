@@ -3,6 +3,7 @@ extends Control
 ## button unlocks. All state lives in GameState and is re-read on room_changed.
 
 @onready var room_label: Label = $CenterContainer/VBoxContainer/RoomLabel
+@onready var ip_label: Label = $CenterContainer/VBoxContainer/IPLabel
 @onready var host_status: Label = $CenterContainer/VBoxContainer/Players/HostStatus
 @onready var copilot_status: Label = $CenterContainer/VBoxContainer/Players/CopilotStatus
 @onready var ready_button: Button = $CenterContainer/VBoxContainer/Buttons/ReadyButton
@@ -11,6 +12,8 @@ extends Control
 
 func _ready() -> void:
 	start_button.visible = GameState.role == Role.Type.HOST
+	# Fallback for when the co-pilot's lobby never discovers this room.
+	ip_label.text = "Co-pilot can't find the room? Join by IP: %s" % NetworkManager.get_local_ip()
 	ready_button.toggled.connect(GameState.set_ready)
 	start_button.pressed.connect(GameState.start_game)
 	cancel_button.pressed.connect(GameState.leave_game)
@@ -32,6 +35,7 @@ func _refresh() -> void:
 	copilot_status.text = "Co-pilot: " + _status_text(copilot_ready)
 
 	var full := GameState.ready_by_peer.size() == 2
+	ip_label.visible = GameState.role == Role.Type.HOST and not full
 	ready_button.disabled = not full
 	
 	# Mirror the host's view (e.g. flags reset when a co-pilot leaves) without re-sending.
