@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://boph2temcr7yl"
+path="res://.godot/imported/1_laser-beam.wav-7efb57f8401b5b4397bdc3e61133e381.sample"
+
+[deps]
+
+source_file="res://assets/audio/1_laser shooting/1_laser-beam.wav"
+dest_files=["res://.godot/imported/1_laser-beam.wav-7efb57f8401b5b4397bdc3e61133e381.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

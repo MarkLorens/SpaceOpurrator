@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://brhca5o40vqxk"]
 
-[ext_resource type="Script" path="res://scripts/ui/create_join_room.gd" id="1_cjr"]
+[ext_resource type="Script" uid="uid://bf60qbfy1cgk2" path="res://scripts/ui/create_join_room.gd" id="1_cjr"]
 
 [node name="CreateJoinRoom" type="Control" unique_id=1277439663]
 layout_mode = 3
@@ -45,18 +45,18 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 80
 text = "Join"
 
-[node name="NamePanel" type="VBoxContainer" parent="CenterContainer"]
+[node name="NamePanel" type="VBoxContainer" parent="CenterContainer" unique_id=912586520]
 visible = false
 layout_mode = 2
 theme_override_constants/separation = 60
 
-[node name="PromptLabel" type="Label" parent="CenterContainer/NamePanel"]
+[node name="PromptLabel" type="Label" parent="CenterContainer/NamePanel" unique_id=1520743174]
 layout_mode = 2
 theme_override_font_sizes/font_size = 96
 text = "Name your mission"
 horizontal_alignment = 1
 
-[node name="NameEdit" type="LineEdit" parent="CenterContainer/NamePanel"]
+[node name="NameEdit" type="LineEdit" parent="CenterContainer/NamePanel" unique_id=337158609]
 custom_minimum_size = Vector2(900, 120)
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
@@ -64,7 +64,7 @@ placeholder_text = "Room name"
 alignment = 1
 max_length = 24
 
-[node name="CreateButton" type="Button" parent="CenterContainer/NamePanel"]
+[node name="CreateButton" type="Button" parent="CenterContainer/NamePanel" unique_id=32032981]
 custom_minimum_size = Vector2(420, 110)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -72,7 +72,7 @@ theme_override_font_sizes/font_size = 64
 disabled = true
 text = "Create"
 
-[node name="CancelButton" type="Button" parent="."]
+[node name="CancelButton" type="Button" parent="." unique_id=1468019200]
 custom_minimum_size = Vector2(240, 100)
 layout_mode = 0
 offset_left = 40.0

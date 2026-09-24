@@ -7,7 +7,7 @@ extends Node2D
 
 @onready var camera: Camera2D = $Camera2D
 @onready var pause_menu: Control = $UI/PauseMenu
-@onready var pause_button: Button = $UI/LevelUi/MarginContainer/PauseButton
+@onready var pause_button: TextureButton = $UI/LevelUi/MarginContainer/PauseButton
 
 func _ready() -> void:
 	camera.setup(GameState.role)
