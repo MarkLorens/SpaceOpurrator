@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://b30tevqiiola3"]
 
 [ext_resource type="Script" uid="uid://dv7bys0jx1xnq" path="res://scripts/helpers/sequence_display.gd" id="1_seqdisp"]
-[ext_resource type="Texture2D" uid="uid://ceph42xn14w1q" path="res://assets/space_opurrator_prototype_assets/button_green.png" id="2_green"]
-[ext_resource type="Texture2D" uid="uid://dywrk1apyhq65" path="res://assets/space_opurrator_prototype_assets/button_yellow.png" id="3_yellow"]
-[ext_resource type="Texture2D" uid="uid://dl1xbso8h11f4" path="res://assets/space_opurrator_prototype_assets/button_red.png" id="4_red"]
 
 [node name="SequencedDone" type="Node2D" unique_id=2145105100]
 script = ExtResource("1_seqdisp")
-symbols = Array[Texture2D]([null, ExtResource("2_green"), ExtResource("3_yellow"), ExtResource("4_red")])
 
 [node name="Symbols" type="HBoxContainer" parent="." unique_id=547186959]
 theme_override_constants/separation = 24

@@ -5,6 +5,7 @@ extends TileMapLayer
 ## Both players shuffle the cells with GameState.session_seed, so they get the
 ## same layout without sending positions.
 
+## Shared by every button; the level's ButtonDefs supply what differs.
 @export var button_scene: PackedScene = preload("res://scenes/buttons/button.tscn")
 ## Half the button's on-screen size (64px sprite * scale 5 / 2). Cells whose
 ## button would cross a phone edge (every base viewport width) are skipped.
@@ -15,9 +16,10 @@ func _ready() -> void:
 	# GameState sets the seed before loading the level on both peers.
 	if GameState.session_seed == 0:
 		GameState.session_seed = randi() | 1  # solo / editor run
-	_spawn_buttons(GameState.session_seed, GameState.level.button_count)
+	_spawn_buttons(GameState.session_seed, GameState.level)
 
-func _spawn_buttons(seed_value: int, button_count: int) -> void:
+func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
+	var picked := cfg.pick_buttons(seed_value)
 	# Project base width, NOT get_viewport_rect(): with stretch aspect "expand" a
 	# wider phone reports a wider viewport, which would filter different cells
 	# and desync the layout between players.
@@ -36,10 +38,12 @@ func _spawn_buttons(seed_value: int, button_count: int) -> void:
 		cells[i] = cells[j]
 		cells[j] = tmp
 
-	if cells.size() < button_count:
-		push_warning("ControlPanelGrid: only %d usable cells for %d buttons" % [cells.size(), button_count])
-	for i in mini(button_count, cells.size()):
+	# The puzzle already assumes every picked button is on the panel.
+	if cells.size() < picked.size():
+		push_error("ControlPanelGrid: only %d usable cells for %d buttons; paint more cells" % [cells.size(), picked.size()])
+	for i in mini(picked.size(), cells.size()):
 		var button := button_scene.instantiate()
-		button.btnValue = i + 1
+		button.btnValue = picked[i]
+		button.def = cfg.button_pool[picked[i]]
 		button.position = to_global(map_to_local(cells[i]))
 		get_parent().add_child.call_deferred(button)
