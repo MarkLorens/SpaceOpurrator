@@ -30,6 +30,35 @@ theme_override_font_sizes/font_size = 96
 text = "Join a mission"
 horizontal_alignment = 1
 
+[node name="IPHint" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Room not showing? Enter the IP shown on the host's screen:"
+horizontal_alignment = 1
+
+[node name="IPRow" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="IPEdit" type="LineEdit" parent="VBoxContainer/IPRow"]
+custom_minimum_size = Vector2(600, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+placeholder_text = "192.168.1.5"
+virtual_keyboard_type = 7
+
+[node name="JoinButton" type="Button" parent="VBoxContainer/IPRow"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Join IP"
+
+[node name="StatusLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+
 [node name="EmptyLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
@@ -47,28 +76,6 @@ size_flags_horizontal = 6
 theme_override_constants/h_separation = 40
 theme_override_constants/v_separation = 40
 columns = 3
-
-[node name="IPRow" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 30
-alignment = 1
-
-[node name="IPEdit" type="LineEdit" parent="VBoxContainer/IPRow"]
-custom_minimum_size = Vector2(600, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-placeholder_text = "127.0.0.1"
-
-[node name="JoinButton" type="Button" parent="VBoxContainer/IPRow"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Join IP"
-
-[node name="StatusLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
 
 [node name="CancelButton" type="Button" parent="."]
 custom_minimum_size = Vector2(240, 100)
