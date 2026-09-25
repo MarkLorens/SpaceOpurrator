@@ -30,7 +30,7 @@ func show_sequence(seq: Array[Vector2i]) -> void:
 		row.remove_child(child)  # out now, so the row doesn't size around old icons this frame
 		child.queue_free()
 	
-	var defs := GameState.level.button_defs()
+	var defs := GameState.level.button_pool
 	for step in seq:  # bounded by the target's length
 		var box := HBoxContainer.new()
 		box.add_theme_constant_override("separation", 0)

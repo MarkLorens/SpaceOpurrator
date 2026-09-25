@@ -7,7 +7,7 @@ extends TapArea
 const COMPONENT_TAP_MAX_TIME := 0.4
 
 ## Set by ControlPanelGrid before the button enters the tree.
-var btnValue := 0  # index in the level's button_defs()
+var btnValue := 0  # index in the level's button_pool
 var def: ButtonDef
 ## On-screen scale for item art (unclick/click), which is drawn at the panel
 ## texture's resolution. Set by ControlPanelGrid to its own stretch.

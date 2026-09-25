@@ -3,7 +3,7 @@ extends Node
 ## host and receive the current sequence back; only the host checks answers.
 ##
 ## A sequence is a list of steps, each Vector2i(component, tool): values are
-## indices into GameState.level.button_defs(), and tool is NO_TOOL for a plain
+## indices into GameState.level.button_pool, and tool is NO_TOOL for a plain
 ## tap. A tool + component step goes in when a tool's gesture completes while a
 ## component is held — on either phone, so one player can hold while the other
 ## works the tool.
@@ -25,8 +25,7 @@ var submittedSeq: Array[Vector2i]
 var current_threat: ThreatDef
 ## The component tools act on: the most recently pressed one still held.
 var held_component := NONE
-var _sequence_index := -1  # last handwritten sequence, so it isn't picked twice in a row
-var _threat_index := -1
+var _threat_index := -1  # so the same threat isn't shown twice in a row
 # Host only.
 var _held: Array[int] = []  # held components, oldest first
 var _used_in_combo: Array[int] = []  # held components already paired with a tool; their release isn't a tap
@@ -35,7 +34,6 @@ func _ready() -> void:
 	GameState.level_started.connect(func():
 		_held.clear()
 		_used_in_combo.clear()
-		_sequence_index = -1
 		_threat_index = -1
 		_set_held(NONE)
 		if multiplayer.is_server(): new_puzzle())
@@ -44,12 +42,7 @@ func _ready() -> void:
 func new_puzzle() -> void:
 	_set_submitted.rpc([] as Array[Vector2i])
 	var cfg := GameState.level
-	var seq: Array[Vector2i]
-	if cfg.sequences.is_empty():
-		seq = generate_sequence(cfg, GameState.session_seed)
-	else:
-		_sequence_index = _pick_other(cfg.sequences.size(), _sequence_index)
-		seq = sequence_steps(cfg, _sequence_index)
+	var seq := generate_sequence(cfg, GameState.session_seed)
 	_threat_index = _pick_other(cfg.threats.size(), _threat_index)
 	_set_sequence.rpc(seq, _threat_index)
 
@@ -60,24 +53,10 @@ func _pick_other(count: int, last: int) -> int:
 	var i := randi() % (count - 1)
 	return i + 1 if last >= 0 and i >= last else i
 
-## A handwritten sequence as step values.
-func sequence_steps(cfg: LevelConfig, sequence_index: int) -> Array[Vector2i]:
-	var defs := cfg.button_defs()
-	var seq: Array[Vector2i] = []
-	for step in cfg.sequences[sequence_index].steps:
-		if not step or not step.component or step.component.is_tool():
-			push_warning("Level sequence %d has a step without a component; skipping it" % sequence_index)
-			continue
-		if step.tool and not step.tool.is_tool():
-			push_warning("Level sequence %d pairs a component with a non-tool; treating it as a tap" % sequence_index)
-		var tool := defs.find(step.tool) if step.tool and step.tool.is_tool() else NO_TOOL
-		seq.append(Vector2i(defs.find(step.component), tool))
-	return seq
-
 ## Random steps from this level's live buttons. Any live component, sometimes
 ## paired with any live tool that has a gesture. Repeats are fine.
 func generate_sequence(cfg: LevelConfig, seed_value: int) -> Array[Vector2i]:
-	var defs := cfg.button_defs()
+	var defs := cfg.button_pool
 	var components: Array[int] = []
 	var tools: Array[int] = []
 	for value in cfg.live_buttons(seed_value):
