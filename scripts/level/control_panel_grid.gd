@@ -25,6 +25,7 @@ func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 	# wider phone reports a wider viewport, which would filter different markers
 	# and desync the layout between players.
 	var screen_w: float = ProjectSettings.get_setting("display/window/size/viewport_width")
+	
 	# Child order comes from the scene file, so it's the same on both peers.
 	var spots: Array[Vector2] = []
 	for marker in get_children():
@@ -43,9 +44,11 @@ func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 	# The puzzle already assumes every picked button is on the panel.
 	if spots.size() < picked.size():
 		push_error("ControlPanelGrid: only %d usable panels for %d buttons; add markers" % [spots.size(), picked.size()])
+	
 	for i in mini(picked.size(), spots.size()):
 		var button := button_scene.instantiate()
 		button.btnValue = picked[i]
 		button.def = cfg.button_pool[picked[i]]
+		button.art_scale = scale  # item art is drawn at the panel texture's resolution
 		button.position = spots[i]
 		get_parent().add_child.call_deferred(button)

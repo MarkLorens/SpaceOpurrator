@@ -6,4 +6,6 @@
 script = ExtResource("1_seqdisp")
 
 [node name="Symbols" type="HBoxContainer" parent="." unique_id=547186959]
+offset_top = -64.0
+offset_bottom = 64.0
 theme_override_constants/separation = 24

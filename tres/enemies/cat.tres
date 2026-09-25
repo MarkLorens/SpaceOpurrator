@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ThreatDef" format=3]
+[gd_resource type="Resource" script_class="ThreatDef" format=3 uid="uid://rc2hj0ctqbuy"]
 
-[ext_resource type="Script" path="res://scripts/level/threat_def.gd" id="1_def"]
+[ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="1_def"]
 [ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="2_sprite"]
 
 [resource]

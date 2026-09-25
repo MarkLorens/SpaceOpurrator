@@ -32,13 +32,16 @@ extends Resource
 func pick_buttons(seed_value: int) -> Array[int]:
 	var picked: Array[int] = []
 	picked.assign(range(button_pool.size()))
+	
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
+	
 	for i in range(picked.size() - 1, 0, -1):  # Fisher-Yates with the shared rng
 		var j := rng.randi_range(0, i)
 		var tmp := picked[i]
 		picked[i] = picked[j]
 		picked[j] = tmp
+	
 	return picked.slice(0, button_count)
 
 

@@ -19,8 +19,8 @@ const GAME_ROOM := "res://scenes/ui/game_room.tscn"
 ## Every level shares this scene; what differs lives in LEVELS.
 const LEVEL := "res://scenes/levels/level.tscn"
 const LEVELS: Array[LevelConfig] = [
-	preload("res://scenes/levels/level_1.tres"),
-	preload("res://scenes/levels/level_2.tres"),
+	preload("res://tres/level/level_1.tres"),
+	preload("res://tres/level/level_2.tres")
 ]
 
 ## How long the host waits for the client to disconnect before closing anyway.

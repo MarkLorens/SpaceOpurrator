@@ -6,3 +6,6 @@ extends Resource
 
 ## Drawn on the button and in the sequence display.
 @export var icon: Texture2D
+## Control-panel art: the button at rest, and while pressed.
+@export var unclick: Texture2D
+@export var click: Texture2D
