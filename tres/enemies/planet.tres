@@ -7,4 +7,3 @@
 script = ExtResource("1_def")
 display_name = "Planet"
 sprite = ExtResource("2_sprite")
-sequence = Array[int]([3, 1, 2])

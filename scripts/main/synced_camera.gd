@@ -72,10 +72,10 @@ func _input(event: InputEvent) -> void:
 	# the entire world width, not just the gaps between UI elements.
 	#
 	# Mouse events only. On phones Godot also turns every touch into a mouse
-	# event (input_devices/pointing/emulate_mouse_from_touch, on by default, and
-	# the TapArea buttons rely on it), so handling ScreenTouch/ScreenDrag too
-	# made every drag move the camera twice and every tap buzz and send its RPCs
-	# twice.
+	# event (input_devices/pointing/emulate_mouse_from_touch, on by default), so
+	# handling ScreenTouch/ScreenDrag too made every drag move the camera twice
+	# and every tap buzz and send its RPCs twice. (TapArea buttons go the other
+	# way: touch only, with desktop clicks emulated as touches.)
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
