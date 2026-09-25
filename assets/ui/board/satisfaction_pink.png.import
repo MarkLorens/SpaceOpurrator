@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg43pr0iw2wn7"
-path="res://.godot/imported/control panel full.png-39ad5464925731fc5a92e86efcd67997.ctex"
+uid="uid://cj0lwbyqjyxqy"
+path="res://.godot/imported/satisfaction_pink.png-1787c61165084c69b9e5ff6e14c3350d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/control panel full.png"
-dest_files=["res://.godot/imported/control panel full.png-39ad5464925731fc5a92e86efcd67997.ctex"]
+source_file="res://assets/ui/board/satisfaction_pink.png"
+dest_files=["res://.godot/imported/satisfaction_pink.png-1787c61165084c69b9e5ff6e14c3350d.ctex"]
 
 [params]
 

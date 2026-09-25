@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://f43luoyfa7we"]
 
-[ext_resource type="Texture2D" uid="uid://da1nqabpdm5rt" path="res://assets/ui/backspace.png" id="1_6n7e0"]
+[ext_resource type="Texture2D" uid="uid://da1nqabpdm5rt" path="res://assets/ui/button/backspace.png" id="1_6n7e0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lu0y3"]
 size = Vector2(48.5, 34.5)

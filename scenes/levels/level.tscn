@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level/level.gd" id="1_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://bsow1seys8h0w" path="res://scenes/board/board.tscn" id="2_x42e6"]
 [ext_resource type="Script" uid="uid://ne06oxrw0moj" path="res://scripts/main/synced_camera.gd" id="3_6761a"]
+[ext_resource type="Texture2D" uid="uid://do717fw1ol66h" path="res://assets/ui/board/control_panel_empty.png" id="3_mq31s"]
 [ext_resource type="PackedScene" uid="uid://blny4fuhn70fp" path="res://scenes/levels/level_ui.tscn" id="4_levelui"]
 [ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/ui/pause_menu.tscn" id="5_pause"]
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
@@ -14,11 +15,17 @@
 [ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="13_dnkej"]
 [ext_resource type="PackedScene" uid="uid://f43luoyfa7we" path="res://scenes/buttons/backspace_button.tscn" id="13_mm8aj"]
 [ext_resource type="Script" uid="uid://cfn0rvxo6eouf" path="res://scripts/ui/backspace_button.gd" id="14_mm8aj"]
+[ext_resource type="Script" path="res://scripts/ui/satisfaction_bar.gd" id="20_satbar"]
+[ext_resource type="Texture2D" uid="uid://crmagda5wa52q" path="res://assets/ui/board/satisfaction_orange.png" id="21_satorange"]
+[ext_resource type="Texture2D" uid="uid://cj0lwbyqjyxqy" path="res://assets/ui/board/satisfaction_pink.png" id="22_satpink"]
 
 [node name="Level" type="Node2D" unique_id=825060166]
 script = ExtResource("1_oc4kc")
 
 [node name="Board" parent="." unique_id=1723946669 instance=ExtResource("2_x42e6")]
+
+[node name="TextureRect" parent="Board" index="0" unique_id=1078474926]
+texture = ExtResource("3_mq31s")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1730954771]
 position = Vector2(1311, 603)
@@ -36,6 +43,21 @@ action_mode = 0
 texture_normal = ExtResource("11_btnred")
 ignore_texture_size = true
 stretch_mode = 5
+
+[node name="SatisfactionBar" type="Control" parent="."]
+process_mode = 3
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 4726.875
+offset_top = 970.3833
+offset_right = 5578.875
+offset_bottom = 1031.3833
+scale = Vector2(1.2138889, 1.1166667)
+mouse_filter = 2
+script = ExtResource("20_satbar")
+orange_texture = ExtResource("21_satorange")
+pink_texture = ExtResource("22_satpink")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=905923254]
 
@@ -68,19 +90,13 @@ grow_horizontal = 0
 grow_vertical = 1
 
 [node name="PauseMenu" parent="UI" unique_id=633759355 instance=ExtResource("5_pause")]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -6.1035156e-05
-offset_right = 6.1035156e-05
 
 [node name="EndScreen" parent="UI" unique_id=1388327517 instance=ExtResource("12_end")]
 
 [node name="UI2" type="CanvasLayer" parent="." unique_id=919110718]
 
 [node name="Enemy" parent="." unique_id=915317815 instance=ExtResource("8_s8va5")]
+texture_filter = 1
 position = Vector2(735, 581)
 
 [node name="PuzzleInterface" parent="." unique_id=744080779 instance=ExtResource("9_dga24")]
@@ -93,7 +109,9 @@ position = Vector2(4650, 161)
 offset_right = 942.0
 
 [node name="BackspaceButton" parent="." unique_id=1101563782 instance=ExtResource("13_mm8aj")]
+texture_filter = 1
 position = Vector2(5745, 163)
 script = ExtResource("14_mm8aj")
 
+[editable path="Board"]
 [editable path="SequencedDone"]

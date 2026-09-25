@@ -1,11 +1,10 @@
 [gd_scene format=3 uid="uid://eq01lox8c6ka"]
 
 [ext_resource type="Script" uid="uid://mr2t7wod1d54" path="res://scripts/ui/lobby.gd" id="1_lobby"]
-[ext_resource type="Texture2D" uid="uid://cl2g41ofhrtb8" path="res://assets/ui/client_board.png" id="2_efll3"]
+[ext_resource type="Texture2D" uid="uid://cl2g41ofhrtb8" path="res://assets/ui/board/client_board.png" id="2_efll3"]
 [ext_resource type="FontFile" uid="uid://c1o2oirbn4c7n" path="res://assets/fonts/pixel-stick/PixelStick-Regular.otf" id="3_2rbxb"]
-[ext_resource type="Texture2D" uid="uid://m7b7h3tohymd" path="res://assets/ui/Right Arrow Button.png" id="3_5t5el"]
-[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="4_bthuv"]
-[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="5_bnidf"]
+[ext_resource type="Texture2D" uid="uid://m7b7h3tohymd" path="res://assets/ui/button/Right Arrow Button.png" id="3_5t5el"]
+[ext_resource type="Texture2D" uid="uid://bn62qo5tj8tiw" path="res://assets/ui/button/close button.png" id="99_close"]
 
 [node name="Lobby" type="Control" unique_id=1148429837]
 layout_mode = 3
@@ -97,30 +96,18 @@ text = "Join IP"
 
 [node name="CancelButton" type="TextureButton" parent="." unique_id=1197882765]
 texture_filter = 1
-custom_minimum_size = Vector2(350, 100)
+custom_minimum_size = Vector2(132, 132)
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
-offset_right = 390.0
-offset_bottom = 140.0
-texture_normal = ExtResource("4_bthuv")
+offset_right = 172.0
+offset_bottom = 172.0
+texture_normal = ExtResource("99_close")
+ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CancelButton" unique_id=1802478171]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
-theme_override_fonts/font = ExtResource("5_bnidf")
-theme_override_font_sizes/font_size = 48
-text = "Cancel"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1695113915]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0

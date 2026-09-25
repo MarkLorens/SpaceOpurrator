@@ -1,43 +1,80 @@
 [gd_scene format=3 uid="uid://dat7jyfu6ud7d"]
 
-[node name="LoadingScreen" type="Control" unique_id=770011001]
+[ext_resource type="Script" uid="uid://dk82d8c46vfef" path="res://scripts/ui/loading_screen.gd" id="1_load"]
+[ext_resource type="Texture2D" uid="uid://curx48t2yp7y" path="res://assets/ui/main_bg.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://y4btyxpx22s4" path="res://assets/ui/Path.png" id="3_path"]
+[ext_resource type="Texture2D" uid="uid://dc1e1kf6ucvvh" path="res://assets/ui/planet.png" id="4_planet"]
+[ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="5_cat"]
+[ext_resource type="FontFile" uid="uid://c1o2oirbn4c7n" path="res://assets/fonts/pixel-stick/PixelStick-Regular.otf" id="6_font"]
+
+[sub_resource type="Curve2D" id="Curve2D_route"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 8, 286.2, 0, 0, 0, 0, 26.4, 242.2, 0, 0, 0, 0, 50.1, 202.6, 0, 0, 0, 0, 82.5, 171.1, 0, 0, 0, 0, 120.5, 153.3, 0, 0, 0, 0, 158, 148, 0, 0, 0, 0, 191.8, 148.2, 0, 0, 0, 0, 222.5, 153.5, 0, 0, 0, 0, 252.5, 165.9, 0, 0, 0, 0, 281.8, 182.2, 0, 0, 0, 0, 308.8, 198.6, 0, 0, 0, 0, 334.2, 215.6, 0, 0, 0, 0, 361.2, 236.8, 0, 0, 0, 0, 389.8, 260, 0, 0, 0, 0, 417.5, 279.5, 0, 0, 0, 0, 445.2, 294.5, 0, 0, 0, 0, 473.8, 307.5, 0, 0, 0, 0, 500.8, 317.9, 0, 0, 0, 0, 525.5, 325.5, 0, 0, 0, 0, 549.5, 331.2, 0, 0, 0, 0, 573.5, 333.5, 0, 0, 0, 0, 598.2, 333.5, 0, 0, 0, 0, 624.5, 333.5, 0, 0, 0, 0, 650, 329.8, 0, 0, 0, 0, 670.5, 315.5, 0, 0, 0, 0, 682.8, 291.5, 0, 0, 0, 0, 687, 265.2, 0, 0, 0, 0, 687, 241.2, 0, 0, 0, 0, 683.5, 219.5, 0, 0, 0, 0, 672.8, 200.8, 0, 0, 0, 0, 654.5, 186.5, 0, 0, 0, 0, 632.8, 174.8, 0, 0, 0, 0, 609.5, 163.2, 0, 0, 0, 0, 585.9, 151.6, 0, 0, 0, 0, 561.5, 139.5, 0, 0, 0, 0, 536.4, 124.2, 0, 0, 0, 0, 515.8, 104, 0, 0, 0, 0, 506, 81.5, 0, 0, 0, 0, 511.2, 57.9, 0, 0, 0, 0, 530.8, 33.9, 0, 0, 0, 0, 557.8, 15.6, 0, 0, 0, 0, 585.5, 6.8, 0, 0, 0, 0, 613.2, 4, 0, 0, 0, 0, 641.8, 3.5, 0, 0, 0, 0, 668.8, 5, 0, 0, 0, 0, 693.5, 9.5, 0, 0, 0, 0, 718.2, 16.2, 0, 0, 0, 0, 745.7, 25.7, 0, 0, 0, 0, 773.9, 39.6, 0, 0, 0, 0, 797.8, 57.2, 0, 0, 0, 0, 818.4, 77.8, 0, 0, 0, 0, 839.4, 103.4, 0, 0, 0, 0, 861.1, 132.8, 0, 0, 0, 0, 882.2, 162.5, 0, 0, 0, 0, 903.6, 192.9, 0, 0, 0, 0, 926.2, 224.6, 0, 0, 0, 0, 947, 252.5, 0, 0, 0, 0, 965.8, 273.5, 0, 0, 0, 0, 985, 290.8, 0, 0, 0, 0, 1006.2, 305, 0, 0, 0, 0, 1031.8, 314.8, 0, 0, 0, 0, 1061.8, 320, 0, 0, 0, 0, 1091.8, 321.5, 0, 0, 0, 0, 1120.2, 320.9, 0, 0, 0, 0, 1148.8, 315.8, 0, 0, 0, 0, 1174.7, 302.3, 0, 0, 0, 0, 1196.2, 279.8, 0, 0, 0, 0, 1213.3, 249.7, 0, 0, 0, 0, 1225.2, 218, 0, 0, 0, 0, 1233.5, 189.9, 0, 0, 0, 0, 1241.8, 164, 0, 0, 0, 0, 1253.4, 137.8, 0, 0, 0, 0, 1268, 111.5, 0, 0, 0, 0, 1283, 87.1, 0, 0, 0, 0, 1301, 66.5, 0, 0, 0, 0, 1324.2, 53, 0, 0, 0, 0, 1351.2, 47, 0, 0, 0, 0, 1380.5, 45.5, 0, 0, 0, 0, 1410.5, 45.5)
+}
+point_count = 79
+
+[node name="LoadingScreen" type="Control" unique_id=1620250015]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_load")
 
-[node name="Dim" type="ColorRect" parent="." unique_id=83785003]
-visible = false
+[node name="Background" type="TextureRect" parent="." unique_id=658443274]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.6)
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=955796767]
+[node name="Stage" type="Node2D" parent="." unique_id=486890337]
+position = Vector2(1311, 603)
+
+[node name="Route" type="Node2D" parent="Stage" unique_id=1396543391]
+position = Vector2(-432, -166)
+scale = Vector2(0.7, 0.7)
+
+[node name="PathArt" type="Sprite2D" parent="Stage/Route" unique_id=1861539923]
+texture = ExtResource("3_path")
+centered = false
+
+[node name="Planet" type="Sprite2D" parent="Stage/Route" unique_id=1454711498]
+position = Vector2(1540.5, 35.5)
+scale = Vector2(2.6, 2.6)
+texture = ExtResource("4_planet")
+
+[node name="Path2D" type="Path2D" parent="Stage/Route" unique_id=666025001]
+curve = SubResource("Curve2D_route")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Stage/Route/Path2D" unique_id=111085691]
+position = Vector2(8, 286.2)
+rotates = false
+loop = false
+
+[node name="Cat" type="Sprite2D" parent="Stage/Route/Path2D/PathFollow2D" unique_id=1661449241]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_cat")
+
+[node name="Label" type="Label" parent="." unique_id=1951003295]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_top = 0.75
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.75
+offset_top = -60.0
+offset_bottom = 60.0
 grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1484890665]
-layout_mode = 2
-theme_override_constants/separation = 128
-
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=221342933]
-layout_mode = 2
-theme_override_font_sizes/font_size = 80
-text = "Waiting for your co-pilot..."
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.972549, 0.827451, 0.6078431, 1)
+theme_override_fonts/font = ExtResource("6_font")
+theme_override_font_sizes/font_size = 96
+text = "Preparing your spaceship..."
 horizontal_alignment = 1
-
-[node name="CancelButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1940445372]
-custom_minimum_size = Vector2(420, 110)
-layout_mode = 2
-theme_override_font_sizes/font_size = 48
-text = "Cancel"
+vertical_alignment = 1

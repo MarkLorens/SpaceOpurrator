@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://da1nqabpdm5rt"
-path="res://.godot/imported/backspace.png-82174d7db15e10e7f38fff37870a4f93.ctex"
+uid="uid://crmagda5wa52q"
+path="res://.godot/imported/satisfaction_orange.png-e12df763687b1a5084ac6488b99450b6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/backspace.png"
-dest_files=["res://.godot/imported/backspace.png-82174d7db15e10e7f38fff37870a4f93.ctex"]
+source_file="res://assets/ui/board/satisfaction_orange.png"
+dest_files=["res://.godot/imported/satisfaction_orange.png-e12df763687b1a5084ac6488b99450b6.ctex"]
 
 [params]
 
