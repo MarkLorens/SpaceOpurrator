@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csyegqslxk7fj"
-path="res://.godot/imported/Pause Button.png-742a44946216ce27325ff6c85ca83f7e.ctex"
+uid="uid://m7b7h3tohymd"
+path="res://.godot/imported/Right Arrow Button.png-c17e7699a6c1b9273edfa5371740d3ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/Pause Button.png"
-dest_files=["res://.godot/imported/Pause Button.png-742a44946216ce27325ff6c85ca83f7e.ctex"]
+source_file="res://assets/ui/button/Right Arrow Button.png"
+dest_files=["res://.godot/imported/Right Arrow Button.png-c17e7699a6c1b9273edfa5371740d3ff.ctex"]
 
 [params]
 

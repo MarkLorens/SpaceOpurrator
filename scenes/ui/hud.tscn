@@ -13,6 +13,7 @@ mouse_filter = 2
 script = ExtResource("1_0mwgc")
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=2099147941]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0

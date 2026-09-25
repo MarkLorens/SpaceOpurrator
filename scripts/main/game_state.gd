@@ -5,7 +5,7 @@ extends Node
 ## into game flow, and drives the scene transitions:
 ##   menu -> create/join -> host: name the room -> game room (wait for co-pilot)
 ##                       -> join: lobby -> tap a room -> game room
-##   game room: both Ready, host presses Start  -> level 1
+##   game room: both Ready, host presses Start  -> loading screen -> level 1
 ##   level won -> Next (either player)          -> next level
 ##   leave / drop                               -> main menu
 ## The UI calls host_game()/join_game()/set_ready()/start_game()/leave_game();
@@ -15,6 +15,8 @@ const MAIN_MENU := "res://scenes/main_menu.tscn"
 const CREATE_JOIN := "res://scenes/ui/create_join_room.tscn"
 const LOBBY := "res://scenes/ui/lobby.tscn"
 const GAME_ROOM := "res://scenes/ui/game_room.tscn"
+## Shown between the game room and level 1; it calls enter_level() when done.
+const LOADING := "res://scenes/ui/loading_screen.tscn"
 
 ## Every level shares this scene; what differs lives in LEVELS.
 const LEVEL := "res://scenes/levels/level.tscn"
@@ -119,7 +121,7 @@ func can_start() -> bool:
 ## Host only: starts level 1 for both players.
 func start_game() -> void:
 	if can_start():
-		start_level(0)
+		start_level(0, true)  # via the loading screen
 
 
 @rpc("authority", "call_local", "reliable")
@@ -171,8 +173,8 @@ func _on_connection_failed() -> void:
 # --- Levels ---
 
 ## Host only: loads level `index` on both peers with a fresh layout seed.
-func start_level(index: int) -> void:
-	_load_level.rpc(index, randi() | 1)  # seed never 0
+func start_level(index: int, show_loading := false) -> void:
+	_load_level.rpc(index, randi() | 1, show_loading)  # seed never 0
 
 
 func has_next_level() -> bool:
@@ -192,12 +194,23 @@ func _request_next_level() -> void:
 
 
 @rpc("authority", "call_local", "reliable")
-func _load_level(index: int, seed_value: int) -> void:
+func _load_level(index: int, seed_value: int, show_loading: bool) -> void:
 	level_index = index
 	session_seed = seed_value
 	in_room = false
-	game_running = true
 	get_tree().paused = false  # the end screen paused the previous level
+	if show_loading:
+		_change_scene(LOADING)  # the loading screen calls enter_level() when it finishes
+	else:
+		enter_level()
+
+
+## Switches to the level chosen by _load_level. Both peers run the same fixed-
+## length loading screen, so they arrive within a frame or two of each other.
+func enter_level() -> void:
+	if role == Role.Type.NONE:
+		return  # session ended while loading
+	game_running = true
 	_change_scene(LEVEL)
 	level_started.emit()
 

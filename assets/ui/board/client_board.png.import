@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nunkol084ag0"
-path="res://.godot/imported/Active Button.png-cc456099f50404d88a679310dcdf97e5.ctex"
+uid="uid://cl2g41ofhrtb8"
+path="res://.godot/imported/client_board.png-9b61ed0cc6b1c7921ba12edeee2112a8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/Active Button.png"
-dest_files=["res://.godot/imported/Active Button.png-cc456099f50404d88a679310dcdf97e5.ctex"]
+source_file="res://assets/ui/board/client_board.png"
+dest_files=["res://.godot/imported/client_board.png-9b61ed0cc6b1c7921ba12edeee2112a8.ctex"]
 
 [params]
 
