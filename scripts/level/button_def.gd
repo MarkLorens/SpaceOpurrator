@@ -9,3 +9,5 @@ extends Resource
 ## Control-panel art: the button at rest, and while pressed.
 @export var unclick: Texture2D
 @export var click: Texture2D
+## Played on the phone that tapped it.
+@export var sfx: AudioStream

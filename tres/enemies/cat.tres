@@ -2,9 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="1_def"]
 [ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="2_sprite"]
+[ext_resource type="AudioStream" uid="uid://ddry0kop82m4x" path="res://assets/audio/2_enemy/1_cat.wav" id="3_sound"]
 
 [resource]
 script = ExtResource("1_def")
 display_name = "Cat"
 sprite = ExtResource("2_sprite")
+sound = ExtResource("3_sound")
+sound_volume = 5
 sequence = Array[int]([2, 1, 3])

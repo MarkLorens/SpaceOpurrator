@@ -16,7 +16,10 @@ func _ready() -> void:
 		_use_item_art()
 	elif def:
 		sprite.texture = def.icon  # old defs without panel art
-	tapped.connect(func() -> void: PuzzleSolver.build_correct_seq(btnValue))
+	tapped.connect(func() -> void:
+		if def:
+			AudioManager.play_sfx(def.sfx)
+		PuzzleSolver.build_correct_seq(btnValue))
 
 ## Panel shows unclick at rest and click while held. The icon is only for the
 ## sequence display.

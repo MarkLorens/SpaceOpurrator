@@ -1,7 +1,39 @@
 [gd_scene format=3 uid="uid://dxaglilp6as0u"]
 
 [ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="1_1oo2n"]
-[ext_resource type="Script" path="res://scripts/level/threat.gd" id="2_threat"]
+[ext_resource type="Script" uid="uid://dy6b765a6x2pu" path="res://scripts/level/threat.gd" id="2_threat"]
+[ext_resource type="Texture2D" uid="uid://b4ppq0r8wlwbm" path="res://assets/Explosion/Explode1.png" id="10_boom"]
+[ext_resource type="Texture2D" uid="uid://cw33l4c5vfjmw" path="res://assets/Explosion/Explode2.png" id="11_boom"]
+[ext_resource type="Texture2D" uid="uid://c43g1r1goq3ho" path="res://assets/Explosion/Explode3.png" id="12_boom"]
+[ext_resource type="Texture2D" uid="uid://6umvw5y1er5o" path="res://assets/Explosion/Explode4.png" id="13_boom"]
+[ext_resource type="Texture2D" uid="uid://22dgxck5f7e5" path="res://assets/Explosion/Explode5.png" id="14_boom"]
+[ext_resource type="Texture2D" uid="uid://w2yqgikweypl" path="res://assets/Explosion/Explode6.png" id="15_boom"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_boom"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_boom")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_boom")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_boom")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_boom")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_boom")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_boom")
+}],
+"loop": false,
+"name": &"boom",
+"speed": 14.0
+}]
 
 [node name="ThreatStar" type="Node2D" unique_id=915317815]
 script = ExtResource("2_threat")
@@ -9,3 +41,15 @@ script = ExtResource("2_threat")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=708624969]
 texture_filter = 1
 texture = ExtResource("1_1oo2n")
+
+[node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1273280293]
+rect = Rect2(-420, -360, 840, 720)
+
+[node name="EnemySound" type="AudioStreamPlayer" parent="." unique_id=1373774120]
+
+[node name="Explosion" type="AnimatedSprite2D" parent="." unique_id=1502238871]
+visible = false
+texture_filter = 1
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_boom")
+animation = &"boom"
