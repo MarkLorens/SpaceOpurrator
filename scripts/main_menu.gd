@@ -1,6 +1,6 @@
 extends Control
 
-@onready var play_button: Button = $MarginContainer/VBoxContainer/PlayButton
+@onready var play_button: TextureButton = $CenterContainer/VBoxContainer/PlayButton
 
 func _ready() -> void:
 	play_button.pressed.connect(func() -> void:

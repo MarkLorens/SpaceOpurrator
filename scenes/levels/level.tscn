@@ -1,16 +1,16 @@
-[gd_scene format=4 uid="uid://c7l1v3lb0ard0"]
+[gd_scene format=3 uid="uid://c7l1v3lb0ard0"]
 
 [ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level/level.gd" id="1_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://bsow1seys8h0w" path="res://scenes/board/board.tscn" id="2_x42e6"]
 [ext_resource type="Script" uid="uid://ne06oxrw0moj" path="res://scripts/main/synced_camera.gd" id="3_6761a"]
 [ext_resource type="PackedScene" uid="uid://blny4fuhn70fp" path="res://scenes/levels/level_ui.tscn" id="4_levelui"]
-[ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/pause_menu.tscn" id="5_pause"]
+[ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/ui/pause_menu.tscn" id="5_pause"]
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
 [ext_resource type="PackedScene" uid="uid://bfmqgn1fikgyn" path="res://scenes/tile_grid/control_panel_grid.tscn" id="5_wtwp4"]
-[ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/threats/threat_star.tscn" id="8_s8va5"]
+[ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/enemies/enemy.tscn" id="8_s8va5"]
 [ext_resource type="PackedScene" uid="uid://ykvmdwssq2xn" path="res://scenes/puzzle_instruction/puzzle_interface.tscn" id="9_dga24"]
 [ext_resource type="Texture2D" uid="uid://dl1xbso8h11f4" path="res://assets/space_opurrator_prototype_assets/button_red.png" id="11_btnred"]
-[ext_resource type="PackedScene" path="res://scenes/ui/end_screen.tscn" id="12_end"]
+[ext_resource type="PackedScene" uid="uid://bhn17qul7st3o" path="res://scenes/ui/end_screen.tscn" id="12_end"]
 [ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="13_dnkej"]
 [ext_resource type="PackedScene" uid="uid://f43luoyfa7we" path="res://scenes/buttons/backspace_button.tscn" id="13_mm8aj"]
 [ext_resource type="Script" uid="uid://cfn0rvxo6eouf" path="res://scripts/ui/backspace_button.gd" id="14_mm8aj"]
@@ -25,8 +25,6 @@ position = Vector2(1311, 603)
 script = ExtResource("3_6761a")
 
 [node name="ControlPanelGrid" parent="." unique_id=162737333 instance=ExtResource("5_wtwp4")]
-position = Vector2(0, 3)
-tile_map_data = PackedByteArray("AAAKAAEAAAAAAAAAAAAKAAIAAAAAAAAAAAALAAIAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAAMAAIAAAAAAAAAAAANAAIAAAAAAAAAAAAOAAIAAAAAAAAAAAAPAAIAAAAAAAAAAAAOAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAPAAEAAAAAAAAAAAAQAAEAAAAAAAAAAAAQAAIAAAAAAAAAAAAYAAEAAAAAAAAAAAAYAAIAAAAAAAAAAAAZAAIAAAAAAAAAAAAaAAIAAAAAAAAAAAAZAAEAAAAAAAAAAAAaAAEAAAAAAAAAAAAbAAIAAAAAAAAAAAAcAAIAAAAAAAAAAAAbAAEAAAAAAAAAAAAcAAEAAAAAAAAAAAAdAAIAAAAAAAAAAAAeAAIAAAAAAAAAAAAdAAEAAAAAAAAAAAAeAAEAAAAAAAAAAAAfAAIAAAAAAAAAAAAgAAIAAAAAAAAAAAAgAAEAAAAAAAAAAAAfAAEAAAAAAAAAAAAhAAIAAAAAAAAAAAA=")
 
 [node name="SolveButton" type="TextureButton" parent="." unique_id=1420606149]
 texture_filter = 1
@@ -42,6 +40,7 @@ stretch_mode = 5
 [node name="UI" type="CanvasLayer" parent="." unique_id=905923254]
 
 [node name="StatusLabel" type="Label" parent="UI" unique_id=1516419490]
+visible = false
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 300.0
@@ -50,6 +49,7 @@ text = "Disconnected"
 metadata/_edit_use_anchors_ = true
 
 [node name="OffsetModeCheckBox" type="CheckBox" parent="UI" unique_id=239131606]
+visible = false
 offset_left = 16.0
 offset_top = 50.0
 offset_right = 220.0
@@ -67,23 +67,33 @@ anchor_bottom = 0.0
 grow_horizontal = 0
 grow_vertical = 1
 
-[node name="PauseMenu" parent="UI" unique_id=1532350907 instance=ExtResource("5_pause")]
+[node name="PauseMenu" parent="UI" unique_id=633759355 instance=ExtResource("5_pause")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.1035156e-05
+offset_right = 6.1035156e-05
 
 [node name="EndScreen" parent="UI" unique_id=1388327517 instance=ExtResource("12_end")]
 
 [node name="UI2" type="CanvasLayer" parent="." unique_id=919110718]
 
-[node name="ThreatStar" parent="." unique_id=915317815 instance=ExtResource("8_s8va5")]
-position = Vector2(487, 353)
+[node name="Enemy" parent="." unique_id=915317815 instance=ExtResource("8_s8va5")]
+position = Vector2(735, 581)
 
 [node name="PuzzleInterface" parent="." unique_id=744080779 instance=ExtResource("9_dga24")]
-position = Vector2(9793, 305)
+position = Vector2(9597, 573)
 
 [node name="SequencedDone" parent="." unique_id=2145105100 instance=ExtResource("13_dnkej")]
-position = Vector2(4790, 241)
+position = Vector2(4650, 161)
+
+[node name="Symbols" parent="SequencedDone" index="0" unique_id=547186959]
+offset_right = 942.0
 
 [node name="BackspaceButton" parent="." unique_id=1101563782 instance=ExtResource("13_mm8aj")]
-position = Vector2(5857, 297)
+position = Vector2(5745, 163)
 script = ExtResource("14_mm8aj")
 
 [editable path="SequencedDone"]

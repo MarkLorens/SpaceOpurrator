@@ -68,7 +68,7 @@ func host(room_name: String) -> bool:
 	_room_name = room_name
 	set_advertising(true)
 
-	status = "Hosting on %s:%d — waiting for a player…" % [_get_local_ip(), PORT]
+	status = "Hosting on %s:%d — waiting for a player…" % [get_local_ip(), PORT]
 	return true
 
 
@@ -137,10 +137,23 @@ func start_browsing() -> void:
 	_browsing = true
 
 
+## Start a brand-new search. Bonjour queries back off to minutes apart over
+## time, so a search left running since app launch hears about a new room only
+## if it catches the host's few announcements, which phones on Wi-Fi often miss.
+## A fresh search queries right away. Call when the lobby opens.
+func restart_browsing() -> void:
+	_stop_browsing()
+	start_browsing()
+
+
 func _stop_browsing() -> void:
 	if not _bonjour or not _browsing:
 		return
 	_bonjour.stop_browsing()
+	# Drop what the old search queued but we never read, so a room that just
+	# vanished can't reappear in the next search's list.
+	while _bonjour.get_pending_event_count() > 0:
+		_bonjour.pop_pending_event()
 	set_process(false)
 	_browsing = false
 
@@ -176,9 +189,17 @@ func _on_server_disconnected() -> void:
 	host_left.emit()
 
 
-## Best-effort guess at this device's Wi-Fi LAN address, so the host can read
-## it off-screen instead of digging through iOS Settings > Wi-Fi.
-func _get_local_ip() -> String:
+## Best-effort guess at this device's Wi-Fi LAN address, shown on the host's
+## room screen so the co-pilot can join by IP when Bonjour discovery fails.
+## Prefers en0 (Wi-Fi on iOS/macOS): with mobile data on, the cellular
+## interface also has a private-looking 10.x address that the co-pilot can't
+## reach.
+func get_local_ip() -> String:
+	for iface in IP.get_local_interfaces():
+		if iface.name == "en0":
+			for address in iface.addresses:
+				if address.is_valid_ip_address() and address.count(".") == 3 and not address.begins_with("169.254."):
+					return address
 	for address in IP.get_local_addresses():
 		if address.begins_with("192.168.") or address.begins_with("10.") or address.begins_with("172."):
 			return address

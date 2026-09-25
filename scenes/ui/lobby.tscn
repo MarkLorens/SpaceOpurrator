@@ -1,8 +1,13 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://eq01lox8c6ka"]
 
-[ext_resource type="Script" path="res://scripts/ui/lobby.gd" id="1_lobby"]
+[ext_resource type="Script" uid="uid://mr2t7wod1d54" path="res://scripts/ui/lobby.gd" id="1_lobby"]
+[ext_resource type="Texture2D" uid="uid://cl2g41ofhrtb8" path="res://assets/ui/client_board.png" id="2_efll3"]
+[ext_resource type="FontFile" uid="uid://c1o2oirbn4c7n" path="res://assets/fonts/pixel-stick/PixelStick-Regular.otf" id="3_2rbxb"]
+[ext_resource type="Texture2D" uid="uid://m7b7h3tohymd" path="res://assets/ui/Right Arrow Button.png" id="3_5t5el"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="4_bthuv"]
+[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="5_bnidf"]
 
-[node name="Lobby" type="Control"]
+[node name="Lobby" type="Control" unique_id=1148429837]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,7 +16,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lobby")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=1285420198]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_efll3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1638482607]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,58 +38,105 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer" unique_id=9334021]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("3_2rbxb")
 theme_override_font_sizes/font_size = 96
-text = "Join a mission"
+text = "Find your pilot"
 horizontal_alignment = 1
 
-[node name="EmptyLabel" type="Label" parent="VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="VBoxContainer" unique_id=2093247235]
+visible = false
 layout_mode = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+
+[node name="EmptyLabel" type="Label" parent="VBoxContainer" unique_id=1224977873]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_font_sizes/font_size = 48
 text = "Searching for rooms..."
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=1659280745]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="RoomGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer"]
+[node name="RoomGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer" unique_id=1436306308]
 layout_mode = 2
 size_flags_horizontal = 6
-theme_override_constants/h_separation = 40
-theme_override_constants/v_separation = 40
+theme_override_constants/h_separation = 60
+theme_override_constants/v_separation = 30
 columns = 3
 
-[node name="IPRow" type="HBoxContainer" parent="VBoxContainer"]
+[node name="IPHint" type="Label" parent="VBoxContainer" unique_id=871235923]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Enter the IP shown on the host's screen"
+horizontal_alignment = 1
+
+[node name="IPRow" type="HBoxContainer" parent="VBoxContainer" unique_id=1381170017]
 layout_mode = 2
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="IPEdit" type="LineEdit" parent="VBoxContainer/IPRow"]
+[node name="IPEdit" type="LineEdit" parent="VBoxContainer/IPRow" unique_id=956834800]
 custom_minimum_size = Vector2(600, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
-placeholder_text = "127.0.0.1"
+placeholder_text = "192.168.1.5"
+virtual_keyboard_type = 7
 
-[node name="JoinButton" type="Button" parent="VBoxContainer/IPRow"]
+[node name="JoinButton" type="Button" parent="VBoxContainer/IPRow" unique_id=1182174062]
 custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Join IP"
 
-[node name="StatusLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
-
-[node name="CancelButton" type="Button" parent="."]
-custom_minimum_size = Vector2(240, 100)
+[node name="CancelButton" type="TextureButton" parent="." unique_id=1197882765]
+texture_filter = 1
+custom_minimum_size = Vector2(350, 100)
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
-offset_right = 280.0
+offset_right = 390.0
 offset_bottom = 140.0
+texture_normal = ExtResource("4_bthuv")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CancelButton" unique_id=1802478171]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("5_bnidf")
 theme_override_font_sizes/font_size = 48
 text = "Cancel"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1695113915]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -250.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="NextButton" type="TextureButton" parent="MarginContainer" unique_id=803459025]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+texture_normal = ExtResource("3_5t5el")
+stretch_mode = 5

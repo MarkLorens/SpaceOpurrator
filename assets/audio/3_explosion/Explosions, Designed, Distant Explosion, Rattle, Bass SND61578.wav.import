@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bmnem6njb5m4w"
+path="res://.godot/imported/Explosions, Designed, Distant Explosion, Rattle, Bass SND61578.wav-3371affefca2bd8ec53a06b2bb9f5211.sample"
+
+[deps]
+
+source_file="res://assets/audio/3_explosion/Explosions, Designed, Distant Explosion, Rattle, Bass SND61578.wav"
+dest_files=["res://.godot/imported/Explosions, Designed, Distant Explosion, Rattle, Bass SND61578.wav-3371affefca2bd8ec53a06b2bb9f5211.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

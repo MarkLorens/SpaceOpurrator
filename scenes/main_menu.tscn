@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://bqxk8h2m5t7yf"]
 
 [ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="2_bqqt6"]
+[ext_resource type="FontFile" uid="uid://cq0cur5rppn7y" path="res://assets/fonts/retro-pixel/Retro Pixel - Italic.ttf" id="2_wu84c"]
+[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="3_wu84c"]
 
 [node name="MainMenu" type="Control" unique_id=1947701498]
 layout_mode = 3
@@ -12,29 +15,53 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_l6cm7")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=608748644]
+[node name="Background" type="TextureRect" parent="." unique_id=1753331229]
+visible = false
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -404.5
-offset_right = 404.5
-offset_bottom = 353.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-theme_override_constants/margin_top = 300
+grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2033377048]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=840469325]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=2033377048]
 layout_mode = 2
 theme_override_constants/separation = 100
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer" unique_id=811804289]
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=811804289]
 layout_mode = 2
-theme_override_font_sizes/font_size = 128
+theme_override_colors/font_color = Color(0, 0, 0, 0.78431374)
+theme_override_fonts/font = ExtResource("2_wu84c")
+theme_override_font_sizes/font_size = 160
 text = "SPACE 
-OPURRAIDER"
+OPURRATOR"
 horizontal_alignment = 1
 
-[node name="PlayButton" type="Button" parent="MarginContainer/VBoxContainer" unique_id=1526890580]
+[node name="PlayButton" type="TextureButton" parent="CenterContainer/VBoxContainer" unique_id=1998507778]
+texture_filter = 1
+custom_minimum_size = Vector2(63, 217)
 layout_mode = 2
-theme_override_font_sizes/font_size = 64
+texture_normal = ExtResource("2_bqqt6")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/PlayButton" unique_id=1245533361]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("3_wu84c")
+theme_override_font_sizes/font_size = 100
 text = "Play"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bx16y1f8dnu8m"
+path="res://.godot/imported/default level music.wav-353b9f51b514073ab942d0c5add7bded.sample"
+
+[deps]
+
+source_file="res://assets/music/Level/default level music.wav"
+dest_files=["res://.godot/imported/default level music.wav-353b9f51b514073ab942d0c5add7bded.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
