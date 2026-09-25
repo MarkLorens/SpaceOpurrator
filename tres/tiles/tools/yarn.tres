@@ -8,6 +8,7 @@
 
 [resource]
 script = ExtResource("1_def")
+kind = 1
 icon = ExtResource("4_icon")
 unclick = ExtResource("2_unclick")
 click = ExtResource("3_click")

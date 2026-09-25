@@ -1,7 +1,7 @@
 class_name ThreatDef
 extends Resource
-## One predefined puzzle: the threat that appears and the sequence that stops it.
-## Listed per level in LevelConfig.threats.
+## A threat shown while players solve a puzzle. Purely visual: each round shows
+## a random one from LevelConfig.threats.
 
 @export var display_name := ""
 @export var sprite: Texture2D

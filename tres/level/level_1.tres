@@ -3,14 +3,67 @@
 [ext_resource type="Script" uid="uid://dksvq7y3gkxdu" path="res://scripts/level/level_config.gd" id="1_cfg"]
 [ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="2_def"]
 [ext_resource type="Resource" uid="uid://b3shf04o5cpyy" path="res://tres/tiles/component/battery.tres" id="2_qnba2"]
-[ext_resource type="Resource" path="res://tres/tiles/component/bomb.tres" id="3_sqrfq"]
-[ext_resource type="Resource" path="res://tres/tiles/component/catnip.tres" id="4_sqrfq"]
+[ext_resource type="Resource" uid="uid://c5cvwi67mtcvd" path="res://tres/tiles/component/bomb.tres" id="3_sqrfq"]
+[ext_resource type="Resource" uid="uid://bfgw5aj8jo6c0" path="res://tres/tiles/component/catnip.tres" id="4_sqrfq"]
 [ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="6_tdef"]
-[ext_resource type="Resource" path="res://tres/enemies/dog.tres" id="7_dog"]
+[ext_resource type="Resource" uid="uid://bcqpca6myt3jn" path="res://tres/enemies/dog.tres" id="7_dog"]
 [ext_resource type="Resource" uid="uid://rc2hj0ctqbuy" path="res://tres/enemies/cat.tres" id="8_cat"]
+[ext_resource type="Resource" uid="uid://cbpdsg3h4sgcl" path="res://tres/tiles/tools/engine.tres" id="9_engine"]
+[ext_resource type="Script" uid="uid://76y1s1yx52yo" path="res://scripts/level/puzzle_step.gd" id="10_step"]
+[ext_resource type="Script" uid="uid://dwyqj72iyuey7" path="res://scripts/level/puzzle_sequence.gd" id="11_seq"]
+
+[sub_resource type="Resource" id="PuzzleStep_1_1"]
+script = ExtResource("10_step")
+component = ExtResource("2_qnba2")
+
+[sub_resource type="Resource" id="PuzzleStep_1_2"]
+script = ExtResource("10_step")
+component = ExtResource("3_sqrfq")
+
+[sub_resource type="Resource" id="PuzzleStep_1_3"]
+script = ExtResource("10_step")
+component = ExtResource("4_sqrfq")
+
+[sub_resource type="Resource" id="PuzzleSequence_1"]
+script = ExtResource("11_seq")
+steps = Array[ExtResource("10_step")]([SubResource("PuzzleStep_1_1"), SubResource("PuzzleStep_1_2"), SubResource("PuzzleStep_1_3")])
+
+[sub_resource type="Resource" id="PuzzleStep_2_1"]
+script = ExtResource("10_step")
+component = ExtResource("3_sqrfq")
+
+[sub_resource type="Resource" id="PuzzleStep_2_2"]
+script = ExtResource("10_step")
+component = ExtResource("2_qnba2")
+
+[sub_resource type="Resource" id="PuzzleStep_2_3"]
+script = ExtResource("10_step")
+component = ExtResource("4_sqrfq")
+
+[sub_resource type="Resource" id="PuzzleSequence_2"]
+script = ExtResource("11_seq")
+steps = Array[ExtResource("10_step")]([SubResource("PuzzleStep_2_1"), SubResource("PuzzleStep_2_2"), SubResource("PuzzleStep_2_3")])
+
+[sub_resource type="Resource" id="PuzzleStep_3_1"]
+script = ExtResource("10_step")
+component = ExtResource("2_qnba2")
+
+[sub_resource type="Resource" id="PuzzleStep_3_2"]
+script = ExtResource("10_step")
+component = ExtResource("3_sqrfq")
+tool = ExtResource("9_engine")
+
+[sub_resource type="Resource" id="PuzzleStep_3_3"]
+script = ExtResource("10_step")
+component = ExtResource("4_sqrfq")
+
+[sub_resource type="Resource" id="PuzzleSequence_3"]
+script = ExtResource("11_seq")
+steps = Array[ExtResource("10_step")]([SubResource("PuzzleStep_3_1"), SubResource("PuzzleStep_3_2"), SubResource("PuzzleStep_3_3")])
 
 [resource]
 script = ExtResource("1_cfg")
+sequences = Array[ExtResource("11_seq")]([SubResource("PuzzleSequence_1"), SubResource("PuzzleSequence_2"), SubResource("PuzzleSequence_3")])
 button_pool = Array[ExtResource("2_def")]([ExtResource("2_qnba2"), ExtResource("3_sqrfq"), ExtResource("4_sqrfq")])
 threats = Array[ExtResource("6_tdef")]([ExtResource("7_dog"), ExtResource("8_cat")])
 start_progress = 60.0
