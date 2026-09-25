@@ -4,9 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://pqq5xgv2ywya" path="res://assets/items/engine/unclick.png" id="2_unclick"]
 [ext_resource type="Texture2D" uid="uid://4yctngo73gpu" path="res://assets/items/engine/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://os81gw8r81kh" path="res://assets/icon/engine_icon.png" id="4_icon"]
+[ext_resource type="Script" uid="uid://b1e54w7qxeya1" path="res://scripts/level/gestures/tap_count_gesture.gd" id="5_taps"]
+
+[sub_resource type="Resource" id="Resource_taps"]
+script = ExtResource("5_taps")
+taps = 4
 
 [resource]
 script = ExtResource("1_def")
+kind = 1
 icon = ExtResource("4_icon")
 unclick = ExtResource("2_unclick")
 click = ExtResource("3_click")
+gesture = SubResource("Resource_taps")

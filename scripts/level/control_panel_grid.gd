@@ -21,6 +21,7 @@ func _ready() -> void:
 
 func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 	var picked := cfg.pick_buttons(seed_value)
+	var defs := cfg.button_defs()
 	# Project base width, NOT get_viewport_rect(): with stretch aspect "expand" a
 	# wider phone reports a wider viewport, which would filter different markers
 	# and desync the layout between players.
@@ -48,7 +49,7 @@ func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 	for i in mini(picked.size(), spots.size()):
 		var button := button_scene.instantiate()
 		button.btnValue = picked[i]
-		button.def = cfg.button_pool[picked[i]]
+		button.def = defs[picked[i]]
 		button.art_scale = scale  # item art is drawn at the panel texture's resolution
 		button.position = spots[i]
 		get_parent().add_child.call_deferred(button)
