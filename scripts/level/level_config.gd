@@ -12,6 +12,9 @@ extends Resource
 @export var button_count := 3
 ## How many of the spawned buttons appear in sequences; the rest are decoys.
 @export var symbol_count := 3
+## Predefined puzzles. When set, each round shows one of these threats and asks
+## for its sequence; when empty, sequences are random (sequence_length long).
+@export var threats: Array[ThreatDef] = []
 
 @export_group("Progress bar")
 @export var end_target := 100.0

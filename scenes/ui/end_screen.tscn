@@ -16,7 +16,6 @@ grow_vertical = 2
 script = ExtResource("1_vs")
 
 [node name="Dim" type="ColorRect" parent="." unique_id=675144866]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +34,7 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1373700060]
 layout_mode = 2
-theme_override_constants/separation = 128
+theme_override_constants/separation = 100
 
 [node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=882718255]
 layout_mode = 2
@@ -45,7 +44,10 @@ theme_override_font_sizes/font_size = 160
 text = "Victory!"
 horizontal_alignment = 1
 
-[node name="NextButton" type="TextureButton" parent="CenterContainer/VBoxContainer" unique_id=590317431]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=7701650]
+layout_mode = 2
+
+[node name="NextButton" type="TextureButton" parent="CenterContainer/VBoxContainer/VBoxContainer" unique_id=590317431]
 visible = false
 texture_filter = 1
 custom_minimum_size = Vector2(560, 160)
@@ -54,7 +56,7 @@ texture_normal = ExtResource("3_e4cmn")
 texture_pressed = ExtResource("4_dlhjq")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/NextButton" unique_id=243814663]
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/NextButton" unique_id=243814663]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,7 +70,7 @@ text = "NEXT LEVEL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExitButton" type="TextureButton" parent="CenterContainer/VBoxContainer" unique_id=814167422]
+[node name="ExitButton" type="TextureButton" parent="CenterContainer/VBoxContainer/VBoxContainer" unique_id=814167422]
 texture_filter = 1
 custom_minimum_size = Vector2(560, 160)
 layout_mode = 2
@@ -76,7 +78,7 @@ texture_normal = ExtResource("3_e4cmn")
 texture_pressed = ExtResource("4_dlhjq")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/ExitButton" unique_id=829225611]
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/ExitButton" unique_id=829225611]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

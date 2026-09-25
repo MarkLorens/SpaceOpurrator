@@ -6,9 +6,13 @@ extends Node
 signal sequence_changed(seq: Array[int])
 ## Fires on host and client whenever the entered sequence changes (press, reset).
 signal submitted_changed(seq: Array[int])
+## Fires on host and client with each new puzzle's threat (null on random levels).
+signal threat_changed(threat: ThreatDef)
 
 var correctSeq : Array[int]
 var submittedSeq: Array[int]
+var current_threat: ThreatDef
+var _threat_index := -1  # index into GameState.level.threats; -1 = random puzzle
 
 func _ready() -> void:
 	GameState.level_started.connect(func(): if multiplayer.is_server(): new_puzzle())
@@ -16,9 +20,35 @@ func _ready() -> void:
 ## Host only.
 func new_puzzle() -> void:
 	_set_submitted.rpc([] as Array[int])
-	correctSeq = generate_sequence(GameState.level, GameState.session_seed)
-	sequence_changed.emit(correctSeq)
-	_set_sequence.rpc(correctSeq)
+	var cfg := GameState.level
+	var threat_index := -1
+	var seq: Array[int]
+	if cfg.threats.is_empty():
+		seq = generate_sequence(cfg, GameState.session_seed)
+	else:
+		threat_index = _pick_threat(cfg)
+		seq = threat_sequence(cfg, threat_index)
+	_set_sequence.rpc(seq, threat_index)
+
+## Random threat, never the same one twice in a row.
+func _pick_threat(cfg: LevelConfig) -> int:
+	var count := cfg.threats.size()
+	if count == 1:
+		return 0
+	var i := randi() % (count - 1)
+	return i + 1 if _threat_index >= 0 and i >= _threat_index else i
+
+## A threat's sequence as button values (pool indices). Designers write 1-based
+## button numbers, so 1 = button_pool[0].
+func threat_sequence(cfg: LevelConfig, threat_index: int) -> Array[int]:
+	var threat := cfg.threats[threat_index]
+	var live := cfg.live_buttons(GameState.session_seed)
+	var seq: Array[int] = []
+	for number in threat.sequence:
+		if not live.has(number - 1):
+			push_warning("Threat '%s' asks for button %d, which isn't on this level's panel" % [threat.display_name, number])
+		seq.append(number - 1)
+	return seq
 
 ## Values are pool indices of this level's live buttons. No repeats until every
 ## live button has been used once.
@@ -62,9 +92,13 @@ func _backspace() -> void:
 		submittedSeq.pop_back()
 		_set_submitted.rpc(submittedSeq)
 
-@rpc("authority", "call_remote", "reliable")
-func _set_sequence(seq: Array[int]) -> void:
+@rpc("authority", "call_local", "reliable")
+func _set_sequence(seq: Array[int], threat_index: int) -> void:
 	correctSeq = seq
+	_threat_index = threat_index
+	var threats := GameState.level.threats
+	current_threat = threats[threat_index] if threat_index >= 0 and threat_index < threats.size() else null
+	threat_changed.emit(current_threat)
 	sequence_changed.emit(correctSeq)
 
 @rpc("authority", "call_local", "reliable")

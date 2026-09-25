@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ykvmdwssq2xn"]
 
 [ext_resource type="Script" uid="uid://dgug8k4s6rthb" path="res://scripts/puzzle_interface.gd" id="1_pi"]
+[ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="2_seq"]
 
 [node name="PuzzleInterface" type="Node2D" unique_id=744080779]
 script = ExtResource("1_pi")
@@ -10,3 +11,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 150
 text = "FIX IT"
+
+[node name="TargetSequence" parent="." instance=ExtResource("2_seq")]
+position = Vector2(0, 220)
+source = 1

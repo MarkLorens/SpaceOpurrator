@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brgvfwhd078or"
-path="res://.godot/imported/enemy in space cropped_cat.png-520c6d6e1bd62e09ff059979ed0d577f.ctex"
+uid="uid://baa2715ltnt6"
+path="res://.godot/imported/dog.png-15a896266fb304cb3681415e0fa43aeb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy in space cropped_cat.png"
-dest_files=["res://.godot/imported/enemy in space cropped_cat.png-520c6d6e1bd62e09ff059979ed0d577f.ctex"]
+source_file="res://assets/threats/dog.png"
+dest_files=["res://.godot/imported/dog.png-15a896266fb304cb3681415e0fa43aeb.ctex"]
 
 [params]
 

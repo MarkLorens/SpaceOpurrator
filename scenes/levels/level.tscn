@@ -74,7 +74,7 @@ grow_vertical = 1
 [node name="UI2" type="CanvasLayer" parent="." unique_id=919110718]
 
 [node name="ThreatStar" parent="." unique_id=915317815 instance=ExtResource("8_s8va5")]
-position = Vector2(487, 353)
+position = Vector2(847, 517)
 
 [node name="PuzzleInterface" parent="." unique_id=744080779 instance=ExtResource("9_dga24")]
 position = Vector2(9793, 305)
