@@ -15,6 +15,7 @@ const MAIN_MENU := "res://scenes/main_menu.tscn"
 const CREATE_JOIN := "res://scenes/ui/create_join_room.tscn"
 const LOBBY := "res://scenes/ui/lobby.tscn"
 const GAME_ROOM := "res://scenes/ui/game_room.tscn"
+
 ## Every level shares this scene; what differs lives in LEVELS.
 const LEVEL := "res://scenes/levels/level.tscn"
 const LEVELS: Array[LevelConfig] = [

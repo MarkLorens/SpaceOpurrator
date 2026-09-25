@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="2_bqqt6"]
+[ext_resource type="FontFile" uid="uid://cq0cur5rppn7y" path="res://assets/fonts/retro-pixel/Retro Pixel - Italic.ttf" id="2_wu84c"]
 [ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="3_wu84c"]
 
 [node name="MainMenu" type="Control" unique_id=1947701498]
@@ -37,9 +38,11 @@ theme_override_constants/separation = 100
 
 [node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=811804289]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_wu84c")
 theme_override_font_sizes/font_size = 128
 text = "SPACE 
-OPURRAIDER"
+OPURRATOR"
 horizontal_alignment = 1
 
 [node name="PlayButton" type="TextureButton" parent="CenterContainer/VBoxContainer" unique_id=1998507778]
