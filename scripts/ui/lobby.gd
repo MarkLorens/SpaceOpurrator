@@ -4,14 +4,26 @@ extends Control
 ## discovery is unreliable on some phones/networks, and the host's room screen
 ## shows its IP for exactly this.
 
+const CARD_TEXTURE := preload("res://assets/ui/Text Field.png")
+const CARD_FONT := preload("res://assets/fonts/retro-pixel/Retro Pixel.otf")
+const CARD_TEXT_COLOR := Color(0.05, 0.12, 0.24)
+
+## Text Field.png is 180x37; keep this ratio so the pixel art isn't squashed.
+@export var card_size := Vector2(630, 130)
+@export var card_font_size := 56
+
+var _card_font := FontVariation.new()
+
 @onready var grid: GridContainer = $VBoxContainer/ScrollContainer/RoomGrid
 @onready var empty_label: Label = $VBoxContainer/EmptyLabel
 @onready var ip_edit: LineEdit = $VBoxContainer/IPRow/IPEdit
 @onready var ip_join_button: Button = $VBoxContainer/IPRow/JoinButton
 @onready var status_label: Label = $VBoxContainer/StatusLabel
-@onready var cancel_button: Button = $CancelButton
+@onready var cancel_button: TextureButton = $CancelButton
 
 func _ready() -> void:
+	_card_font.base_font = CARD_FONT
+	_card_font.spacing_glyph = 8
 	ip_join_button.pressed.connect(_join_typed_ip)
 	ip_edit.text_submitted.connect(func(_t: String) -> void: _join_typed_ip())
 	cancel_button.pressed.connect(GameState.leave_game)
@@ -25,15 +37,31 @@ func _on_lobbies_changed(lobbies: Dictionary) -> void:
 	for child in grid.get_children():
 		child.queue_free()
 	for room_name in lobbies:
-		var card := Button.new()
-		card.text = room_name
-		card.custom_minimum_size = Vector2(560, 240)
-		card.add_theme_font_size_override("font_size", 56)
-		card.clip_text = true
+		var card := _make_card(room_name)
 		var address: String = lobbies[room_name]
 		card.pressed.connect(func() -> void: GameState.join_game(address))
 		grid.add_child(card)
 	empty_label.visible = lobbies.is_empty()
+
+func _make_card(room_name: String) -> TextureButton:
+	var card := TextureButton.new()
+	card.texture_normal = CARD_TEXTURE
+	card.ignore_texture_size = true
+	card.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+	card.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	card.custom_minimum_size = card_size
+	var label := Label.new()
+	label.text = room_name
+	label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.clip_text = true
+	label.add_theme_font_override("font", _card_font)
+	label.add_theme_font_size_override("font_size", card_font_size)
+	label.add_theme_color_override("font_color", CARD_TEXT_COLOR)
+	card.add_child(label)
+	return card
+
 
 func _input(event: InputEvent) -> void:
 	# iOS only hides the keyboard when the field loses focus, and tapping empty

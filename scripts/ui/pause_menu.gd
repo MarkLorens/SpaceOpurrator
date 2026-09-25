@@ -10,9 +10,9 @@ extends Control
 
 @onready var own_menu: Control = $CenterContainer
 @onready var remote_menu: Control = $RemotePaused
-@onready var resume_button: Button = $CenterContainer/VBoxContainer/ResumeButton
-@onready var exit_button: Button = $CenterContainer/VBoxContainer/ExitButton
-@onready var remote_exit_button: Button = $RemotePaused/VBoxContainer/ExitButton
+@onready var resume_button: TextureButton = $CenterContainer/VBoxContainer/VBoxContainer/ResumeButton
+@onready var exit_button: TextureButton = $CenterContainer/VBoxContainer/VBoxContainer/ExitButton
+@onready var remote_exit_button: TextureButton = $RemotePaused/VBoxContainer/ExitButton
 
 ## Peer id of whoever paused; 0 = not paused.
 var paused_by := 0
