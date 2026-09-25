@@ -1,0 +1,148 @@
+[gd_scene format=3 uid="uid://bl7kw5vgn51si"]
+
+[ext_resource type="Script" uid="uid://kvoe5jculr1y" path="res://scripts/ui/pause_menu.gd" id="1_pm"]
+[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="2_5d2l8"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="3_7l7mv"]
+[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/Inactive Button.png" id="4_v4r4p"]
+[ext_resource type="FontFile" uid="uid://c1o2oirbn4c7n" path="res://assets/fonts/pixel-stick/PixelStick-Regular.otf" id="5_7l7mv"]
+
+[node name="PauseMenu" type="Control" unique_id=633759355]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pm")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1113859519]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1619950306]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1557561934]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1243830917]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_5d2l8")
+theme_override_font_sizes/font_size = 96
+text = "PAWSED"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=1305127235]
+layout_mode = 2
+
+[node name="ResumeButton" type="TextureButton" parent="CenterContainer/VBoxContainer/VBoxContainer" unique_id=501851385]
+texture_filter = 1
+custom_minimum_size = Vector2(560, 160)
+layout_mode = 2
+texture_normal = ExtResource("3_7l7mv")
+texture_pressed = ExtResource("4_v4r4p")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/ResumeButton" unique_id=423324460]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_5d2l8")
+theme_override_font_sizes/font_size = 80
+text = "RESUME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="CenterContainer/VBoxContainer/VBoxContainer" unique_id=469139979]
+texture_filter = 1
+custom_minimum_size = Vector2(560, 160)
+layout_mode = 2
+texture_normal = ExtResource("3_7l7mv")
+texture_pressed = ExtResource("4_v4r4p")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer/ExitButton" unique_id=1142757929]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_5d2l8")
+theme_override_font_sizes/font_size = 80
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RemotePaused" type="CenterContainer" parent="." unique_id=1095555414]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RemotePaused" unique_id=2111974906]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="RemotePaused/VBoxContainer" unique_id=458881232]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MessageLabel" type="Label" parent="RemotePaused/VBoxContainer/VBoxContainer" unique_id=1209353105]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("5_7l7mv")
+theme_override_font_sizes/font_size = 56
+text = "mission"
+horizontal_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="RemotePaused/VBoxContainer/VBoxContainer" unique_id=543910676]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_5d2l8")
+theme_override_font_sizes/font_size = 96
+text = "PAWSED"
+horizontal_alignment = 1
+
+[node name="ExitButton" type="TextureButton" parent="RemotePaused/VBoxContainer" unique_id=1541178542]
+texture_filter = 1
+custom_minimum_size = Vector2(560, 160)
+layout_mode = 2
+texture_normal = ExtResource("3_7l7mv")
+texture_pressed = ExtResource("4_v4r4p")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="RemotePaused/VBoxContainer/ExitButton" unique_id=1710601071]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("2_5d2l8")
+theme_override_font_sizes/font_size = 80
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
