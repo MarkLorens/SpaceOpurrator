@@ -1,6 +1,7 @@
 extends Node
 ## Autoload AudioManager (scenes/audio_manager.tscn): background music and
-## one-shot sound effects (play_sfx).
+## one-shot sound effects (play_sfx). Every Godot button (BaseButton) in the
+## game clicks when pressed; give one the metadata "no_click_sfx" to opt out.
 ## Picks the track from whichever scene is showing, so screens don't have to
 ## call it: main menu = menu music, matchmaking screens = the same music a bit
 ## quieter, level = level music. The HUD switches to low-time music in danger.
@@ -16,6 +17,8 @@ extends Node
 ## (e.g. an enemy's sound on screen), and how fast it dips/returns.
 @export var duck_db := -12.0
 @export var duck_time := 0.4
+## Played by every UI button (and panel buttons without their own sound).
+@export var button_click_sfx: AudioStream = preload("res://assets/audio/4_buttons/general/general_button_click.wav")
 
 const SILENT_DB := -40.0
 ## One-shot sounds that can overlap (e.g. quick button taps).
@@ -39,6 +42,7 @@ func _ready() -> void:
 		var p := AudioStreamPlayer.new()
 		add_child(p)
 		_sfx.append(p)
+	get_tree().node_added.connect(_on_node_added)
 	get_tree().scene_changed.connect(_on_scene_changed)
 	_on_scene_changed()
 
@@ -53,6 +57,15 @@ func _on_scene_changed() -> void:
 			play_music(MAIN_MENU_MUSIC, matchmaking_volume_db)
 		GameState.LEVEL:
 			play_music(LEVEL_MUSIC)
+
+## Hooks up the click for every button as it enters the tree, including ones
+## made in code (e.g. lobby room cards). Finger-down, like the panel buttons.
+func _on_node_added(node: Node) -> void:
+	if node is BaseButton and not node.has_meta("no_click_sfx"):
+		node.button_down.connect(play_click)
+
+func play_click() -> void:
+	play_sfx(button_click_sfx)
 
 ## Plays a one-shot sound on a free voice; if all are busy, the oldest-started
 ## voice (the first) is reused.

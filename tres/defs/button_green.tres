@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="1_def"]
 [ext_resource type="Texture2D" uid="uid://ceph42xn14w1q" path="res://assets/space_opurrator_prototype_assets/button_green.png" id="2_icon"]
+[ext_resource type="AudioStream" uid="uid://btrrtm7rql52t" path="res://assets/audio/4_buttons/general/general_button_click.wav" id="9_sfx"]
 
 [resource]
 script = ExtResource("1_def")
 icon = ExtResource("2_icon")
+sfx = ExtResource("9_sfx")
