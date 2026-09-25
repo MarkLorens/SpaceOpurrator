@@ -7,11 +7,20 @@
 script = ExtResource("1_pi")
 
 [node name="instruction" type="Label" parent="." unique_id=1731694661]
-offset_right = 40.0
-offset_bottom = 23.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -102.5
+offset_right = 194.0
+offset_bottom = 102.5
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 150
 text = "FIX IT"
 
-[node name="TargetSequence" parent="." instance=ExtResource("2_seq")]
+[node name="TargetSequence" parent="." unique_id=1163888117 instance=ExtResource("2_seq")]
 position = Vector2(0, 220)
 source = 1

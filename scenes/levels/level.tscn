@@ -67,17 +67,24 @@ anchor_bottom = 0.0
 grow_horizontal = 0
 grow_vertical = 1
 
-[node name="PauseMenu" parent="UI" unique_id=1532350907 instance=ExtResource("5_pause")]
+[node name="PauseMenu" parent="UI" unique_id=633759355 instance=ExtResource("5_pause")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.1035156e-05
+offset_right = 6.1035156e-05
 
 [node name="EndScreen" parent="UI" unique_id=1388327517 instance=ExtResource("12_end")]
 
 [node name="UI2" type="CanvasLayer" parent="." unique_id=919110718]
 
 [node name="ThreatStar" parent="." unique_id=915317815 instance=ExtResource("8_s8va5")]
-position = Vector2(847, 517)
+position = Vector2(735, 581)
 
 [node name="PuzzleInterface" parent="." unique_id=744080779 instance=ExtResource("9_dga24")]
-position = Vector2(9793, 305)
+position = Vector2(9597, 573)
 
 [node name="SequencedDone" parent="." unique_id=2145105100 instance=ExtResource("13_dnkej")]
 position = Vector2(4663, 164)
