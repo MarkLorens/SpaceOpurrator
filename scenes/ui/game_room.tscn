@@ -34,6 +34,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -120.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -41,7 +42,11 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 60
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=135924616]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer" unique_id=1378195135]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = ExtResource("4_stick")
@@ -49,16 +54,25 @@ theme_override_font_sizes/font_size = 96
 text = "Waiting for your co-pilot"
 horizontal_alignment = 1
 
-[node name="Players" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="TipLabel" type="Label" parent="CenterContainer/VBoxContainer/VBoxContainer" unique_id=876969200]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("4_stick")
+theme_override_font_sizes/font_size = 64
+text = "Get Ready to Start!"
+horizontal_alignment = 1
+
+[node name="Players" type="HBoxContainer" parent="CenterContainer/VBoxContainer" unique_id=781581631]
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="Player1" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Players"]
+[node name="Player1" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Players" unique_id=1294534593]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="NameLabel" type="Label" parent="CenterContainer/VBoxContainer/Players/Player1"]
+[node name="NameLabel" type="Label" parent="CenterContainer/VBoxContainer/Players/Player1" unique_id=1358232039]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = ExtResource("4_stick")
@@ -66,32 +80,32 @@ theme_override_font_sizes/font_size = 56
 text = "Player 1"
 horizontal_alignment = 1
 
-[node name="ReadyPill" type="TextureButton" parent="CenterContainer/VBoxContainer/Players/Player1"]
+[node name="ReadyPill" type="TextureButton" parent="CenterContainer/VBoxContainer/Players/Player1" unique_id=2044359619]
 texture_filter = 1
 custom_minimum_size = Vector2(560, 160)
 layout_mode = 2
-texture_normal = ExtResource("5_inactive")
+texture_normal = ExtResource("2_sd0tt")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/Players/Player1/ReadyPill"]
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/Players/Player1/ReadyPill" unique_id=400758756]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.49803922, 0.5254902, 0.7764706, 1)
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = SubResource("FontVariation_spaced")
 theme_override_font_sizes/font_size = 72
 text = "READY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Player2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Players"]
+[node name="Player2" type="VBoxContainer" parent="CenterContainer/VBoxContainer/Players" unique_id=745290701]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="NameLabel" type="Label" parent="CenterContainer/VBoxContainer/Players/Player2"]
+[node name="NameLabel" type="Label" parent="CenterContainer/VBoxContainer/Players/Player2" unique_id=504481244]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = ExtResource("4_stick")
@@ -99,21 +113,21 @@ theme_override_font_sizes/font_size = 56
 text = "Player 2"
 horizontal_alignment = 1
 
-[node name="ReadyPill" type="TextureButton" parent="CenterContainer/VBoxContainer/Players/Player2"]
+[node name="ReadyPill" type="TextureButton" parent="CenterContainer/VBoxContainer/Players/Player2" unique_id=159928547]
 texture_filter = 1
 custom_minimum_size = Vector2(560, 160)
 layout_mode = 2
-texture_normal = ExtResource("5_inactive")
+texture_normal = ExtResource("2_sd0tt")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/Players/Player2/ReadyPill"]
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/Players/Player2/ReadyPill" unique_id=426785864]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.49803922, 0.5254902, 0.7764706, 1)
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = SubResource("FontVariation_spaced")
 theme_override_font_sizes/font_size = 72
 text = "READY"
@@ -127,7 +141,7 @@ theme_override_fonts/font = ExtResource("4_stick")
 theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 
-[node name="StartMargin" type="MarginContainer" parent="."]
+[node name="StartMargin" type="MarginContainer" parent="." unique_id=1903217101]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -135,13 +149,13 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -280.0
-offset_top = -220.0
+offset_top = -332.0
 offset_right = 280.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_bottom = 60
+theme_override_constants/margin_bottom = 240
 
-[node name="StartButton" type="TextureButton" parent="StartMargin"]
+[node name="StartButton" type="TextureButton" parent="StartMargin" unique_id=1906706784]
 texture_filter = 1
 custom_minimum_size = Vector2(560, 160)
 layout_mode = 2
@@ -150,7 +164,7 @@ texture_normal = ExtResource("2_sd0tt")
 texture_disabled = ExtResource("5_inactive")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="StartMargin/StartButton"]
+[node name="Label" type="Label" parent="StartMargin/StartButton" unique_id=427183086]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

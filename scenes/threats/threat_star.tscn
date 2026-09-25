@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://dxaglilp6as0u"]
 
-[ext_resource type="Texture2D" uid="uid://bnxilcfa4mkwf" path="res://assets/space_opurrator_prototype_assets/star.png" id="1_1oo2n"]
+[ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="1_1oo2n"]
+[ext_resource type="Script" path="res://scripts/level/threat.gd" id="2_threat"]
 
 [node name="ThreatStar" type="Node2D" unique_id=915317815]
+script = ExtResource("2_threat")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=708624969]
 texture_filter = 1
-scale = Vector2(5, 5)
 texture = ExtResource("1_1oo2n")

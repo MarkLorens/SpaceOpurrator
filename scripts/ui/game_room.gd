@@ -13,7 +13,8 @@ const INACTIVE_TEXTURE := preload("res://assets/ui/Inactive Button.png")
 const ACTIVE_TEXT_COLOR := Color("ffd294")
 const INACTIVE_TEXT_COLOR := Color("7f86c6")
 
-@onready var title_label: Label = $CenterContainer/VBoxContainer/TitleLabel
+@onready var title_label: Label = $CenterContainer/VBoxContainer/VBoxContainer/TitleLabel
+@onready var tip_label: Label = $CenterContainer/VBoxContainer/VBoxContainer/TipLabel
 @onready var ip_label: Label = $CenterContainer/VBoxContainer/IPLabel
 @onready var p1_name: Label = $CenterContainer/VBoxContainer/Players/Player1/NameLabel
 @onready var p1_pill: TextureButton = $CenterContainer/VBoxContainer/Players/Player1/ReadyPill
@@ -53,21 +54,30 @@ func _refresh() -> void:
 
 	var full := GameState.ready_by_peer.size() == 2
 	title_label.text = GameState.room_name if full else "Waiting for your co-pilot"
+	tip_label.visible = true if full else false
 	ip_label.visible = _is_host and not full
 
-	p1_name.text = "Player 1 (You)" if _is_host else "Player 1"
-	p2_name.text = "Player 2" if _is_host else "Player 2 (You)"
+	p1_name.text = "You" if _is_host else "Player 1"
+	p2_name.text = "Player 2" if _is_host else "You"
 	_set_pill(p1_pill, host_ready == true, _is_host and full)
 	_set_pill(p2_pill, copilot_ready == true, not _is_host and full)
 
 	start_button.disabled = not GameState.can_start()
-	start_button.get_node("Label").add_theme_color_override("font_color",
-			INACTIVE_TEXT_COLOR if start_button.disabled else ACTIVE_TEXT_COLOR)
+	start_button.get_node("Label").add_theme_color_override(
+		"font_color", INACTIVE_TEXT_COLOR if start_button.disabled else ACTIVE_TEXT_COLOR
+	)
 
 ## Ready = pink with cream text; not ready (or not here) = navy with muted text.
 ## Only your own pill is tappable, and only once both players are in the room.
 func _set_pill(pill: TextureButton, is_ready: bool, tappable: bool) -> void:
-	pill.texture_normal = ACTIVE_TEXTURE if is_ready else INACTIVE_TEXTURE
-	pill.get_node("Label").add_theme_color_override("font_color",
-			ACTIVE_TEXT_COLOR if is_ready else INACTIVE_TEXT_COLOR)
+	# Texture
+	pill.texture_normal = INACTIVE_TEXTURE if is_ready else ACTIVE_TEXTURE
+	
+	# Label
+	var label = pill.get_node("Label")
+	label.add_theme_color_override("font_color", INACTIVE_TEXT_COLOR if is_ready else ACTIVE_TEXT_COLOR)
+	label.text = "YOU ARE READY" if is_ready else "READY"
+	label.add_theme_font_size_override("font_size", 48 if is_ready else 72)
+	
+	# Untappable
 	pill.mouse_filter = Control.MOUSE_FILTER_STOP if tappable else Control.MOUSE_FILTER_IGNORE
