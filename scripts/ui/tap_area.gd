@@ -4,6 +4,8 @@ extends Area2D
 ## since pressing it — so dragging the board across a button doesn't press it.
 
 signal tapped
+## True while a finger is down on this button; false on release or once it turns into a drag.
+signal held_changed(held: bool)
 
 ## Max screen-pixel travel between press and release that still counts as a tap.
 @export var tap_max_distance := 20.0
@@ -16,6 +18,7 @@ func _ready() -> void:
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		_press_pos = event.position
+		held_changed.emit(true)
 
 # _input (not input_event) so the release is seen even if the finger ends off the button.
 func _input(event: InputEvent) -> void:
@@ -24,6 +27,8 @@ func _input(event: InputEvent) -> void:
 		
 	if event is InputEventMouseMotion and event.position.distance_to(_press_pos) > tap_max_distance:
 		_press_pos = Vector2.INF  # Moved too far: it's a drag, cancel the tap.
+		held_changed.emit(false)
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		_press_pos = Vector2.INF
+		held_changed.emit(false)
 		tapped.emit()

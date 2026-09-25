@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ButtonDef" format=3 uid="uid://b3shf04o5cpyy"]
+
+[ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="1_def"]
+[ext_resource type="Texture2D" uid="uid://exo0eeeebmkr" path="res://assets/icon/battery_icon.png" id="2_aj2me"]
+[ext_resource type="Texture2D" uid="uid://drktb0ctwdfh8" path="res://assets/items/battery/unclick.png" id="2_unclick"]
+[ext_resource type="Texture2D" uid="uid://crqxqsoqtrhl8" path="res://assets/items/battery/click.png" id="3_click"]
+
+[resource]
+script = ExtResource("1_def")
+icon = ExtResource("2_aj2me")
+unclick = ExtResource("2_unclick")
+click = ExtResource("3_click")

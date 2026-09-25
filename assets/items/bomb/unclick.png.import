@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg43pr0iw2wn7"
-path="res://.godot/imported/control panel full.png-4889aac9ba69e25b2628d28bfdc0edab.ctex"
+uid="uid://c8o66o8mjcq2w"
+path="res://.godot/imported/unclick.png-93e732a7433216673083a26deca4e70f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/control panel full.png"
-dest_files=["res://.godot/imported/control panel full.png-4889aac9ba69e25b2628d28bfdc0edab.ctex"]
+source_file="res://assets/items/bomb/unclick.png"
+dest_files=["res://.godot/imported/unclick.png-93e732a7433216673083a26deca4e70f.ctex"]
 
 [params]
 
