@@ -5,8 +5,8 @@ extends Control
 ## the tree is paused.
 
 @onready var title_label: Label = $CenterContainer/VBoxContainer/TitleLabel
-@onready var next_button: TextureButton = $CenterContainer/VBoxContainer/NextButton
-@onready var exit_button: TextureButton = $CenterContainer/VBoxContainer/ExitButton
+@onready var next_button: TextureButton = $CenterContainer/VBoxContainer/VBoxContainer/NextButton
+@onready var exit_button: TextureButton = $CenterContainer/VBoxContainer/VBoxContainer/ExitButton
 
 func _ready() -> void:
 	hide()

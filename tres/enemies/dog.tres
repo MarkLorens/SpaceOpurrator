@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ThreatDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/level/threat_def.gd" id="1_def"]
+[ext_resource type="Texture2D" uid="uid://baa2715ltnt6" path="res://assets/threats/dog.png" id="2_sprite"]
+
+[resource]
+script = ExtResource("1_def")
+display_name = "Dog"
+sprite = ExtResource("2_sprite")
+sequence = Array[int]([1, 2, 3])
