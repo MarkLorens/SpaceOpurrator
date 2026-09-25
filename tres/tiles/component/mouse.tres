@@ -4,9 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://bo0orj15tcgn1" path="res://assets/items/mouse/unclick.png" id="2_unclick"]
 [ext_resource type="Texture2D" uid="uid://lonnp1gvtnqr" path="res://assets/items/mouse/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://7kijyjypp41t" path="res://assets/icon/mouse_icon.png" id="4_icon"]
+[ext_resource type="AudioStream" uid="uid://bixuc6egrys3j" path="res://assets/audio/4_buttons/components/10_mouse_toy.wav" id="9_sfx"]
 
 [resource]
 script = ExtResource("1_def")
 icon = ExtResource("4_icon")
 unclick = ExtResource("2_unclick")
 click = ExtResource("3_click")
+sfx = ExtResource("9_sfx")

@@ -23,6 +23,13 @@ func _ready() -> void:
 		_use_item_art()
 	elif def:
 		sprite.texture = def.icon  # old defs without panel art
+		
+	# Sound on finger-down, so holds and tools make a sound too. The step itself
+	# is recorded by hold/release (components) or the gesture (tools).
+	pressed.connect(func() -> void:
+		if def:
+			AudioManager.play_sfx(def.sfx))
+
 	if def and def.is_tool():
 		_setup_tool()
 	else:

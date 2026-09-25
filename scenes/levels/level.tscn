@@ -3,19 +3,19 @@
 [ext_resource type="Script" uid="uid://83gbbeesm247" path="res://scripts/level/level.gd" id="1_oc4kc"]
 [ext_resource type="PackedScene" uid="uid://bsow1seys8h0w" path="res://scenes/board/board.tscn" id="2_x42e6"]
 [ext_resource type="Script" uid="uid://ne06oxrw0moj" path="res://scripts/main/synced_camera.gd" id="3_6761a"]
-[ext_resource type="Texture2D" uid="uid://do717fw1ol66h" path="res://assets/ui/board/control_panel_empty.png" id="3_mq31s"]
 [ext_resource type="PackedScene" uid="uid://blny4fuhn70fp" path="res://scenes/levels/level_ui.tscn" id="4_levelui"]
 [ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/ui/pause_menu.tscn" id="5_pause"]
+[ext_resource type="Texture2D" uid="uid://cgy8tvlji2r51" path="res://assets/ui/button/central_button/central_button.png" id="5_qhnmj"]
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
 [ext_resource type="PackedScene" uid="uid://bfmqgn1fikgyn" path="res://scenes/tile_grid/control_panel_grid.tscn" id="5_wtwp4"]
+[ext_resource type="Texture2D" uid="uid://cjxirbf7avdpp" path="res://assets/ui/button/central_button/central_button_pressed.png" id="6_jyre1"]
 [ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/enemies/enemy.tscn" id="8_s8va5"]
 [ext_resource type="PackedScene" uid="uid://ykvmdwssq2xn" path="res://scenes/puzzle_instruction/puzzle_interface.tscn" id="9_dga24"]
-[ext_resource type="Texture2D" uid="uid://dl1xbso8h11f4" path="res://assets/space_opurrator_prototype_assets/button_red.png" id="11_btnred"]
 [ext_resource type="PackedScene" uid="uid://bhn17qul7st3o" path="res://scenes/ui/end_screen.tscn" id="12_end"]
 [ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="13_dnkej"]
 [ext_resource type="PackedScene" uid="uid://f43luoyfa7we" path="res://scenes/buttons/backspace_button.tscn" id="13_mm8aj"]
 [ext_resource type="Script" uid="uid://cfn0rvxo6eouf" path="res://scripts/ui/backspace_button.gd" id="14_mm8aj"]
-[ext_resource type="Script" path="res://scripts/ui/satisfaction_bar.gd" id="20_satbar"]
+[ext_resource type="Script" uid="uid://2nqwir06mwy7" path="res://scripts/ui/satisfaction_bar.gd" id="20_satbar"]
 [ext_resource type="Texture2D" uid="uid://crmagda5wa52q" path="res://assets/ui/board/satisfaction_orange.png" id="21_satorange"]
 [ext_resource type="Texture2D" uid="uid://cj0lwbyqjyxqy" path="res://assets/ui/board/satisfaction_pink.png" id="22_satpink"]
 
@@ -23,9 +23,6 @@
 script = ExtResource("1_oc4kc")
 
 [node name="Board" parent="." unique_id=1723946669 instance=ExtResource("2_x42e6")]
-
-[node name="TextureRect" parent="Board" index="0" unique_id=1078474926]
-texture = ExtResource("3_mq31s")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1730954771]
 position = Vector2(1311, 603)
@@ -35,16 +32,17 @@ script = ExtResource("3_6761a")
 
 [node name="SolveButton" type="TextureButton" parent="." unique_id=1420606149]
 texture_filter = 1
-offset_left = 5116.0
-offset_top = 475.0
-offset_right = 5372.0
-offset_bottom = 731.0
+offset_left = 4968.0
+offset_top = 379.0
+offset_right = 5511.0
+offset_bottom = 858.0
 action_mode = 0
-texture_normal = ExtResource("11_btnred")
+texture_normal = ExtResource("5_qhnmj")
+texture_pressed = ExtResource("6_jyre1")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="SatisfactionBar" type="Control" parent="."]
+[node name="SatisfactionBar" type="Control" parent="." unique_id=2000698439]
 process_mode = 3
 texture_filter = 1
 layout_mode = 3

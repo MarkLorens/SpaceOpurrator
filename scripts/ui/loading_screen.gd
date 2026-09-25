@@ -11,6 +11,7 @@ extends Control
 @onready var cat: Sprite2D = $Stage/Route/Path2D/PathFollow2D/Cat
 
 func _ready() -> void:
+	AudioManager.fade_out_music(duration)  # menu music eases out over the whole trip
 	_center_stage()
 	get_viewport().size_changed.connect(_center_stage)
 	follower.progress_ratio = 0.0

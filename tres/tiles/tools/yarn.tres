@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bycw2ebb4lrlx" path="res://assets/items/yarn/unclick.png" id="2_unclick"]
 [ext_resource type="Texture2D" uid="uid://buj53tj6xvsv" path="res://assets/items/yarn/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://c6n7me78cgbh6" path="res://assets/icon/yarn_icon.png" id="4_icon"]
+[ext_resource type="AudioStream" uid="uid://yv7xnqyj3jp1" path="res://assets/audio/4_buttons/tools/2_purr.wav" id="9_sfx"]
 
 [resource]
 script = ExtResource("1_def")
@@ -11,3 +12,4 @@ kind = 1
 icon = ExtResource("4_icon")
 unclick = ExtResource("2_unclick")
 click = ExtResource("3_click")
+sfx = ExtResource("9_sfx")

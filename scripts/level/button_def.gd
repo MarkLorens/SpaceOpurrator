@@ -15,6 +15,8 @@ enum Kind { COMPONENT, TOOL }
 ## Control-panel art: the button at rest, and while pressed.
 @export var unclick: Texture2D
 @export var click: Texture2D
+## Played on the phone that tapped it.
+@export var sfx: AudioStream
 ## Tools only: what the player does on the tool while a component is held.
 ## A tool without one can't complete a step (and random puzzles skip it).
 @export var gesture: ButtonGesture

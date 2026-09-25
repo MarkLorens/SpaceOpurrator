@@ -17,6 +17,9 @@ signal sequence_changed(seq: Array[Vector2i])
 signal submitted_changed(seq: Array[Vector2i])
 ## Fires on host and client with each new puzzle's threat (null if the level has none).
 signal threat_changed(threat: ThreatDef)
+## Fires on host and client when the players enter the right sequence, just
+## before the next puzzle arrives.
+signal puzzle_solved
 ## Fires on host and client when the held component changes (NONE = nothing held).
 signal held_component_changed(value: int)
 
@@ -120,6 +123,8 @@ func solve_puzzle() -> bool:
 	_set_submitted.rpc([] as Array[Vector2i])
 
 	if solved:
+		# Same reliable channel as _set_sequence, so peers hear this before the next threat.
+		_announce_solved.rpc()
 		new_puzzle()
 
 	return solved
@@ -173,6 +178,10 @@ func _set_sequence(seq: Array[Vector2i], threat_index: int) -> void:
 	current_threat = threats[threat_index] if threat_index >= 0 and threat_index < threats.size() else null
 	threat_changed.emit(current_threat)
 	sequence_changed.emit(correctSeq)
+
+@rpc("authority", "call_local", "reliable")
+func _announce_solved() -> void:
+	puzzle_solved.emit()
 
 @rpc("authority", "call_local", "reliable")
 func _set_submitted(seq: Array[Vector2i]) -> void:

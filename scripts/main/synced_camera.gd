@@ -27,9 +27,12 @@ extends Camera2D
 ## also stays on the board. Set to 0 if you don't use offset mode.
 @export var side_screens := 1
 @export var haptic_duration_ms := 20
-## Which board section the HOST's camera starts on (0 = first section).
-## The shared start point shifts by this many screen-widths, so the client
-## (always one screen to the right) starts on host_start_index + 1.
+## Start with both players' screens centred on the middle of the board (the
+## big button). Turn off to start on host_start_index instead.
+@export var start_centered := true
+## Which board section the HOST's camera starts on (0 = first section) when
+## start_centered is off. The client (always one screen to the right) starts on
+## host_start_index + 1.
 @export var host_start_index := 0
 ## How long after MY last movement I keep snapping (vs smoothing) and drop my own
 ## network echoes. Authority is "newest mover wins"; this only hides my own echo.
@@ -47,9 +50,14 @@ var authority_id := 1
 
 
 func _ready() -> void:
-	# Start centered on the host's chosen section (index 0 = first section). The
-	# client shares this same base and renders one screen further right.
-	var start_x: float = world_min_x + get_viewport_rect().size.x * (host_start_index + 0.5)
+	# The client shares this same base and renders side_screens further right,
+	# so centring the pair means shifting the host half of that span left.
+	var screen_w: float = get_viewport_rect().size.x
+	var start_x: float
+	if start_centered:
+		start_x = (world_min_x + world_max_x) / 2.0 - screen_w * side_screens / 2.0
+	else:
+		start_x = world_min_x + screen_w * (host_start_index + 0.5)
 	master_x = _clamp_master(start_x)
 	display_x = master_x
 

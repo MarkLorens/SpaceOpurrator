@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="ThreatDef" format=3]
+[gd_resource type="Resource" script_class="ThreatDef" format=3 uid="uid://bcqpca6myt3jn"]
 
-[ext_resource type="Script" path="res://scripts/level/threat_def.gd" id="1_def"]
+[ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="1_def"]
 [ext_resource type="Texture2D" uid="uid://baa2715ltnt6" path="res://assets/threats/dog.png" id="2_sprite"]
+[ext_resource type="AudioStream" uid="uid://ocs4fjcwpw02" path="res://assets/audio/2_enemy/2_dog.wav" id="3_sound"]
 
 [resource]
 script = ExtResource("1_def")
 display_name = "Dog"
 sprite = ExtResource("2_sprite")
+sound = ExtResource("3_sound")
+sequence = Array[int]([1, 2, 3])
