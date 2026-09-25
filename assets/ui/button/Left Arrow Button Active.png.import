@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfhe5cxlc2ewe"
-path="res://.godot/imported/Left Arrow Button Disabled.png-89bdf4fbb2425412cb6eef2d27043178.ctex"
+uid="uid://bmm7b5trh3vmq"
+path="res://.godot/imported/Left Arrow Button Active.png-92842f15cdcc8c28c831d14eea0f9cdf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/Left Arrow Button Disabled.png"
-dest_files=["res://.godot/imported/Left Arrow Button Disabled.png-89bdf4fbb2425412cb6eef2d27043178.ctex"]
+source_file="res://assets/ui/button/Left Arrow Button Active.png"
+dest_files=["res://.godot/imported/Left Arrow Button Active.png-92842f15cdcc8c28c831d14eea0f9cdf.ctex"]
 
 [params]
 

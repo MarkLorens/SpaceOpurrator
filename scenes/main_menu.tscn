@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://bqxk8h2m5t7yf"]
 
 [ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main_menu.gd" id="1_l6cm7"]
-[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="2_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://curx48t2yp7y" path="res://assets/ui/main_bg.png" id="2_8ln24"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/button/Active Button.png" id="2_bqqt6"]
 [ext_resource type="FontFile" uid="uid://cq0cur5rppn7y" path="res://assets/fonts/retro-pixel/Retro Pixel - Italic.ttf" id="2_wu84c"]
 [ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="3_wu84c"]
 
@@ -16,13 +17,13 @@ mouse_filter = 2
 script = ExtResource("1_l6cm7")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1753331229]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_8ln24")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=840469325]
 layout_mode = 1
@@ -38,16 +39,23 @@ theme_override_constants/separation = 100
 
 [node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=811804289]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 0.78431374)
+theme_override_colors/font_color = Color(0.972549, 0.827451, 0.6078431, 1)
+theme_override_colors/font_shadow_color = Color(0.7686275, 0.23529412, 0.6117647, 1)
+theme_override_colors/font_outline_color = Color(0.16470589, 0.16862746, 0.30980393, 1)
+theme_override_constants/line_spacing = -20
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/outline_size = 28
+theme_override_constants/shadow_outline_size = 28
 theme_override_fonts/font = ExtResource("2_wu84c")
-theme_override_font_sizes/font_size = 160
+theme_override_font_sizes/font_size = 192
 text = "SPACE 
 OPURRATOR"
 horizontal_alignment = 1
 
 [node name="PlayButton" type="TextureButton" parent="CenterContainer/VBoxContainer" unique_id=1998507778]
 texture_filter = 1
-custom_minimum_size = Vector2(63, 217)
+custom_minimum_size = Vector2(63, 180)
 layout_mode = 2
 texture_normal = ExtResource("2_bqqt6")
 stretch_mode = 5

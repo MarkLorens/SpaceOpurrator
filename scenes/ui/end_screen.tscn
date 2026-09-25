@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://blc2mwv2twb6g" path="res://scripts/ui/end_screen.gd" id="1_vs"]
 [ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="2_53v5j"]
-[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="3_e4cmn"]
-[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/Inactive Button.png" id="4_dlhjq"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/button/Active Button.png" id="3_e4cmn"]
+[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/button/Inactive Button.png" id="4_dlhjq"]
 
 [node name="EndScreen" type="Control" unique_id=673917057]
 process_mode = 3

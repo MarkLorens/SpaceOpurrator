@@ -8,8 +8,8 @@ extends Control
 @export_file var HOST_BACKGROUND
 @export_file var CLIENT_BACKGROUND
 
-const ACTIVE_TEXTURE := preload("res://assets/ui/Active Button.png")
-const INACTIVE_TEXTURE := preload("res://assets/ui/Inactive Button.png")
+const ACTIVE_TEXTURE := preload("res://assets/ui/button/Active Button.png")
+const INACTIVE_TEXTURE := preload("res://assets/ui/button/Inactive Button.png")
 const ACTIVE_TEXT_COLOR := Color("ffd294")
 const INACTIVE_TEXT_COLOR := Color("7f86c6")
 

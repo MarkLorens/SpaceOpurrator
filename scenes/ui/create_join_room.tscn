@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://brhca5o40vqxk"]
 
 [ext_resource type="Script" uid="uid://bf60qbfy1cgk2" path="res://scripts/ui/create_join_room.gd" id="1_cjr"]
-[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="2_active"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/button/Active Button.png" id="2_active"]
 [ext_resource type="FontFile" uid="uid://c1o2oirbn4c7n" path="res://assets/fonts/pixel-stick/PixelStick-Regular.otf" id="2_ir6ml"]
-[ext_resource type="Texture2D" uid="uid://c4o2ivayyovro" path="res://assets/ui/center_board.png" id="2_o6i6t"]
+[ext_resource type="Texture2D" uid="uid://c4o2ivayyovro" path="res://assets/ui/board/center_board.png" id="2_o6i6t"]
 [ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="3_font"]
-[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/Inactive Button.png" id="4_inactive"]
+[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/button/Inactive Button.png" id="4_inactive"]
 [ext_resource type="Texture2D" uid="uid://d05gpflg3kvh" path="res://assets/ui/Text Field.png" id="5_field"]
+[ext_resource type="Texture2D" uid="uid://bn62qo5tj8tiw" path="res://assets/ui/button/close button.png" id="99_close"]
 
 [sub_resource type="FontVariation" id="FontVariation_field"]
 base_font = ExtResource("3_font")
@@ -166,25 +167,12 @@ vertical_alignment = 1
 
 [node name="CancelButton" type="TextureButton" parent="." unique_id=1468019200]
 texture_filter = 1
-custom_minimum_size = Vector2(350, 100)
+custom_minimum_size = Vector2(132, 132)
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
-offset_right = 390.0
-offset_bottom = 140.0
-texture_normal = ExtResource("2_active")
+offset_right = 172.0
+offset_bottom = 172.0
+texture_normal = ExtResource("99_close")
+ignore_texture_size = true
 stretch_mode = 5
-
-[node name="Label" type="Label" parent="CancelButton" unique_id=1057253645]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
-theme_override_fonts/font = ExtResource("3_font")
-theme_override_font_sizes/font_size = 48
-text = "Cancel"
-horizontal_alignment = 1
-vertical_alignment = 1

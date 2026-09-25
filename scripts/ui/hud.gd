@@ -2,7 +2,9 @@ extends Control
 ## Progress bar + puzzle timer. The host runs the numbers and streams the bar
 ## value to the client; the client's bar only displays it.
 
+## Holds the number (hidden); SatisfactionBar on the board draws it.
 @onready var progress_bar: ProgressBar = $ProgressBar
+@onready var satisfaction_bar: Control = $"../../SatisfactionBar" # world-space, under the big button
 @onready var solve_button: BaseButton = $"../../SolveButton" # world-space, centre of the board
 @onready var end_screen: Control = $"../EndScreen"
 
@@ -56,8 +58,11 @@ func _ready() -> void:
 			AudioManager.set_low_time(danger)
 		vignette.visible = danger)
 	
+	progress_bar.value_changed.connect(func(v: float) -> void:
+		satisfaction_bar.show_value(v, progress_bar.max_value))
 	progress_bar.max_value = cfg.end_target
 	progress_bar.value = cfg.start_progress
+	satisfaction_bar.show_value(progress_bar.value, progress_bar.max_value)
 	puzzleTimeLeft = cfg.puzzle_time
 
 func _process(delta: float) -> void:

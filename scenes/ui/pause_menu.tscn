@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://kvoe5jculr1y" path="res://scripts/ui/pause_menu.gd" id="1_pm"]
 [ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="2_5d2l8"]
-[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/Active Button.png" id="3_7l7mv"]
-[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/Inactive Button.png" id="4_v4r4p"]
+[ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/button/Active Button.png" id="3_7l7mv"]
+[ext_resource type="Texture2D" uid="uid://bonc58w064kx6" path="res://assets/ui/button/Inactive Button.png" id="4_v4r4p"]
 [ext_resource type="FontFile" uid="uid://c1o2oirbn4c7n" path="res://assets/fonts/pixel-stick/PixelStick-Regular.otf" id="5_7l7mv"]
 
 [node name="PauseMenu" type="Control" unique_id=633759355]
@@ -41,7 +41,7 @@ theme_override_constants/separation = 64
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = ExtResource("2_5d2l8")
-theme_override_font_sizes/font_size = 96
+theme_override_font_sizes/font_size = 192
 text = "PAWSED"
 horizontal_alignment = 1
 
@@ -113,7 +113,7 @@ theme_override_constants/separation = 16
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = ExtResource("5_7l7mv")
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 112
 text = "mission"
 horizontal_alignment = 1
 
@@ -121,7 +121,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = ExtResource("2_5d2l8")
-theme_override_font_sizes/font_size = 96
+theme_override_font_sizes/font_size = 192
 text = "PAWSED"
 horizontal_alignment = 1
 
