@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1s83pv5m67ue"
-path="res://.godot/imported/click.png-415753c0bcd32397aa458920d6d93cf6.ctex"
+uid="uid://hklri8hntyb4"
+path="res://.godot/imported/missile.png-f41138f3fa588bf8e99fd659b26fe1ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/swaft/click.png"
-dest_files=["res://.godot/imported/click.png-415753c0bcd32397aa458920d6d93cf6.ctex"]
+source_file="res://assets/missile.png"
+dest_files=["res://.godot/imported/missile.png-f41138f3fa588bf8e99fd659b26fe1ca.ctex"]
 
 [params]
 

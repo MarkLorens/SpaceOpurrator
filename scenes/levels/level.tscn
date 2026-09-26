@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://ne06oxrw0moj" path="res://scripts/main/synced_camera.gd" id="3_6761a"]
 [ext_resource type="PackedScene" uid="uid://blny4fuhn70fp" path="res://scenes/levels/level_ui.tscn" id="4_levelui"]
 [ext_resource type="PackedScene" uid="uid://bl7kw5vgn51si" path="res://scenes/ui/pause_menu.tscn" id="5_pause"]
-[ext_resource type="Texture2D" uid="uid://cgy8tvlji2r51" path="res://assets/ui/button/central_button/central_button.png" id="5_qhnmj"]
+[ext_resource type="Texture2D" uid="uid://b17cwmhnxcfla" path="res://assets/ui/button/central_button/central_button.png" id="5_qhnmj"]
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
 [ext_resource type="PackedScene" uid="uid://bfmqgn1fikgyn" path="res://scenes/tile_grid/control_panel_grid.tscn" id="5_wtwp4"]
 [ext_resource type="Texture2D" uid="uid://cjxirbf7avdpp" path="res://assets/ui/button/central_button/central_button_pressed.png" id="6_jyre1"]
@@ -98,7 +98,7 @@ texture_filter = 1
 position = Vector2(735, 581)
 
 [node name="PuzzleInterface" parent="." unique_id=744080779 instance=ExtResource("9_dga24")]
-position = Vector2(9597, 573)
+position = Vector2(9480, 620)
 
 [node name="SequencedDone" parent="." unique_id=2145105100 instance=ExtResource("13_dnkej")]
 position = Vector2(4650, 161)

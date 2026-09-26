@@ -46,6 +46,9 @@ var level: LevelConfig:
 var room_name := ""
 var ready_by_peer := {}  # peer id -> bool; one entry per connected player
 var in_room := false  # true from hosting/connecting until the first level loads
+## Host only: the client's level scene is in the tree, so level-node RPCs to it
+## will resolve. Reset on every level load.
+var client_level_ready := false
 var _pending_host_close := false  # host is waiting for the client to leave first
 
 func _ready() -> void:
@@ -177,6 +180,13 @@ func start_level(index: int, show_loading := false) -> void:
 	_load_level.rpc(index, randi() | 1, show_loading)  # seed never 0
 
 
+## True when this level's threat and puzzle interface trade their editor-placed
+## slots: a coin flip from the shared seed, so both peers agree. Bit 0 is always
+## 1, so use bit 1.
+func slots_swapped() -> bool:
+	return session_seed & 2 != 0
+
+
 func has_next_level() -> bool:
 	return level_index + 1 < LEVELS.size()
 
@@ -198,6 +208,7 @@ func _load_level(index: int, seed_value: int, show_loading: bool) -> void:
 	level_index = index
 	session_seed = seed_value
 	in_room = false
+	client_level_ready = false
 	get_tree().paused = false  # the end screen paused the previous level
 	if show_loading:
 		_change_scene(LOADING)  # the loading screen calls enter_level() when it finishes
@@ -213,6 +224,17 @@ func enter_level() -> void:
 	game_running = true
 	_change_scene(LEVEL)
 	level_started.emit()
+
+
+## Client, once its level scene is in the tree. Goes through this autoload
+## because it always exists on the host, unlike the level's nodes.
+func report_level_ready() -> void:
+	_client_level_ready.rpc_id(1)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func _client_level_ready() -> void:
+	client_level_ready = true
 
 
 # --- Helpers ---

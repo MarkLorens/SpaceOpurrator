@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="1_1oo2n"]
 [ext_resource type="Script" uid="uid://dy6b765a6x2pu" path="res://scripts/level/threat.gd" id="2_threat"]
+[ext_resource type="Texture2D" uid="uid://dyduse8nvrowi" path="res://assets/ui/SeqX.png" id="3_dot"]
+[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="4_font"]
 [ext_resource type="Texture2D" uid="uid://b4ppq0r8wlwbm" path="res://assets/Explosion/Explode1.png" id="10_boom"]
 [ext_resource type="Texture2D" uid="uid://cw33l4c5vfjmw" path="res://assets/Explosion/Explode2.png" id="11_boom"]
 [ext_resource type="Texture2D" uid="uid://c43g1r1goq3ho" path="res://assets/Explosion/Explode3.png" id="12_boom"]
@@ -41,6 +43,28 @@ script = ExtResource("2_threat")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=708624969]
 texture_filter = 1
 texture = ExtResource("1_1oo2n")
+
+[node name="CodeBadge" type="Node2D" parent="Sprite2D"]
+visible = false
+position = Vector2(0, 430)
+scale = Vector2(5, 5)
+
+[node name="Dot" type="Sprite2D" parent="Sprite2D/CodeBadge"]
+texture_filter = 1
+position = Vector2(-12, 0)
+texture = ExtResource("3_dot")
+
+[node name="Letter" type="Label" parent="Sprite2D/CodeBadge"]
+texture_filter = 1
+offset_left = 2.0
+offset_top = -14.0
+offset_right = 30.0
+offset_bottom = 14.0
+theme_override_colors/font_color = Color(0.77254903, 0.22745098, 0.6156863, 1)
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 24
+text = "X"
+vertical_alignment = 1
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1273280293]
 rect = Rect2(-420, -360, 840, 720)

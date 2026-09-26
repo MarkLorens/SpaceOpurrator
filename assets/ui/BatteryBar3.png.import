@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1s83pv5m67ue"
-path="res://.godot/imported/click.png-415753c0bcd32397aa458920d6d93cf6.ctex"
+uid="uid://c56yaakax7bwg"
+path="res://.godot/imported/BatteryBar3.png-276c8f60349d93df324c2cb9c40e7e52.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/items/swaft/click.png"
-dest_files=["res://.godot/imported/click.png-415753c0bcd32397aa458920d6d93cf6.ctex"]
+source_file="res://assets/ui/BatteryBar3.png"
+dest_files=["res://.godot/imported/BatteryBar3.png-276c8f60349d93df324c2cb9c40e7e52.ctex"]
 
 [params]
 

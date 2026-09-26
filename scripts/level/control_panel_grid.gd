@@ -1,6 +1,7 @@
 extends Node2D
 ## Button spawn points: one Marker2D child per panel in the control panel art,
-## placed at the panel's centre in texture pixels. This node's scale matches the
+## placed at the panel's centre in texture pixels. The two next slot markers are
+## kept free of random buttons: they hold the code cards' Next button. This node's scale matches the
 ## board's texture stretch (display size / texture size), so if that stretch
 ## changes, update the scale here, not the markers.
 ##
@@ -12,6 +13,12 @@ extends Node2D
 ## Half the button's on-screen size (64px sprite * scale 5 / 2). Markers whose
 ## button would cross a phone edge (every base viewport width) are skipped.
 @export var button_radius := 160.0
+## Dedicated panels for the Next button, one beside each place the puzzle
+## interface can be. Never used for random buttons, even when the level has no
+## code cards.
+@export var next_slot_left: Marker2D
+@export var next_slot_right: Marker2D
+@export var next_button_scene: PackedScene = preload("res://scenes/buttons/next_card_button.tscn")
 
 func _ready() -> void:
 	# GameState sets the seed before loading the level on both peers.
@@ -30,6 +37,8 @@ func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 	# Child order comes from the scene file, so it's the same on both peers.
 	var spots: Array[Vector2] = []
 	for marker in get_children():
+		if marker == next_slot_left or marker == next_slot_right:
+			continue
 		var pos: Vector2 = marker.global_position
 		if absf(pos.x - roundf(pos.x / screen_w) * screen_w) >= button_radius:
 			spots.append(pos)
@@ -53,3 +62,18 @@ func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 		button.art_scale = scale  # item art is drawn at the panel texture's resolution
 		button.position = spots[i]
 		get_parent().add_child.call_deferred(button)
+
+
+## Puts the Next button on the dedicated panel nearest near_x (the puzzle
+## interface), so the player beside it can flip cards for the one reading them.
+func place_next_button(near_x: float) -> void:
+	if not next_slot_left or not next_slot_right:
+		push_error("ControlPanelGrid: next_slot_left/right not set; no Next button")
+		return
+	var left_gap := absf(next_slot_left.global_position.x - near_x)
+	var right_gap := absf(next_slot_right.global_position.x - near_x)
+	var best := next_slot_left if left_gap < right_gap else next_slot_right
+	var button := next_button_scene.instantiate()
+	button.art_scale = scale  # same panel art resolution as the item buttons
+	button.position = best.global_position
+	get_parent().add_child.call_deferred(button)
