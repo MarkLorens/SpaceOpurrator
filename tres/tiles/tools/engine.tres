@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ButtonDef" format=3 uid="uid://cbpdsg3h4sgcl"]
 
 [ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="1_def"]
-[ext_resource type="Texture2D" uid="uid://pqq5xgv2ywya" path="res://assets/items/engine/unclick.png" id="2_unclick"]
-[ext_resource type="Texture2D" uid="uid://4yctngo73gpu" path="res://assets/items/engine/click.png" id="3_click"]
+[ext_resource type="Texture2D" uid="uid://b2v5vnrq4y5qv" path="res://assets/items/engine/unclick.png" id="2_unclick"]
+[ext_resource type="Texture2D" uid="uid://vb6kojukk8nq" path="res://assets/items/engine/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://os81gw8r81kh" path="res://assets/icon/engine_icon.png" id="4_icon"]
 [ext_resource type="Script" uid="uid://b1e54w7qxeya1" path="res://scripts/level/gestures/tap_count_gesture.gd" id="5_taps"]
 [ext_resource type="AudioStream" uid="uid://do3ifvugf60rk" path="res://assets/audio/4_buttons/tools/3_engine.wav" id="9_sfx"]
@@ -14,7 +14,7 @@ script = ExtResource("5_taps")
 script = ExtResource("1_def")
 kind = 1
 icon = ExtResource("4_icon")
-unclick = ExtResource("2_unclick")
-click = ExtResource("3_click")
+unclick = ExtResource("3_click")
+click = ExtResource("2_unclick")
 sfx = ExtResource("9_sfx")
 gesture = SubResource("Resource_taps")

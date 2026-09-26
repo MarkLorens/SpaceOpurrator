@@ -11,6 +11,9 @@ extends Node2D
 ## When the players solve the puzzle, the threat gets shot and blows up: a
 ## random laser sound fires, then the explosion plays over it with a random
 ## explosion sound, and the next threat appears once the blast has finished.
+##
+## With code cards on, a badge under the threat shows its code (X/Y/Z). It's
+## part of the sprite, so it hides and changes along with it.
 
 ## Seconds to fade the sound out once the threat scrolls off screen.
 @export var fade_out_time := 0.4
@@ -37,6 +40,9 @@ const EXPLOSION_SOUNDS: Array[AudioStream] = [
 @onready var on_screen: VisibleOnScreenNotifier2D = $OnScreen
 @onready var enemy_sound: AudioStreamPlayer = $EnemySound
 @onready var explosion: AnimatedSprite2D = $Explosion
+@onready var code_badge: Node2D = $Sprite2D/CodeBadge
+@onready var code_dot: Sprite2D = $Sprite2D/CodeBadge/Dot
+@onready var code_letter: Label = $Sprite2D/CodeBadge/Letter
 
 var _fade: Tween
 var _exploding := false
@@ -83,9 +89,19 @@ func _show_threat(threat: ThreatDef) -> void:
 		return
 	if threat:
 		sprite.texture = threat.sprite
+	_show_code(PuzzleSolver.current_code)
 	on_screen.rect = sprite.get_rect()  # track the sprite's size as threats change
 	if on_screen.is_on_screen():
 		_start_sound()  # a new threat appeared while the player is looking
+
+## Reuses the puzzle interface's code art so the badge matches the cards.
+func _show_code(code: int) -> void:
+	code_badge.visible = code >= 0 and code < PuzzleInterface.CODE_LETTERS.size()
+	if not code_badge.visible:
+		return
+	code_dot.texture = PuzzleInterface.CODE_DOTS[code]
+	code_letter.text = PuzzleInterface.CODE_LETTERS[code]
+	code_letter.add_theme_color_override("font_color", PuzzleInterface.CODE_COLORS[code])
 
 func _start_sound() -> void:
 	var threat := PuzzleSolver.current_threat

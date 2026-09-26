@@ -4,8 +4,9 @@ extends Resource
 ## GameState.LEVELS; the level scene itself is shared.
 
 @export_group("Puzzle")
-## Handwritten puzzles; each round picks one. Every button they use always
-## spawns. When empty, sequences are random (see below).
+## Handwritten puzzles for the code card rows (each row gets a different one
+## while they last). Every button they use always spawns. When empty, rows are
+## random sequences (see below).
 @export var sequences: Array[PuzzleSequence] = []
 ## Extra buttons for the panel: decoys next to the sequences' buttons, or the
 ## buttons random sequences are built from.
@@ -14,6 +15,11 @@ extends Resource
 @export var button_count := 3
 ## Threats are just for show: each round displays a random one.
 @export var threats: Array[ThreatDef] = []
+## How many codes this level uses: 1 = X only, 2 = X and Y, 3 = X, Y and Z.
+## Each round's threat carries one of them, and the players find its sequence
+## on that code's card: one row per threat (the first MAX_CODE_ROWS), fixed for
+## the level. With more than one code, the Next button flips between cards.
+@export_range(1, 3) var code_count := 1
 
 @export_subgroup("Random sequences")
 ## Steps in each random sequence.
@@ -31,6 +37,26 @@ extends Resource
 ## Seconds to solve the current puzzle before losing timeout_penalty.
 @export var puzzle_time := 10.0
 @export var timeout_penalty := 10.0
+
+
+## Rows on a code card (the card art has three slots).
+const MAX_CODE_ROWS := 3
+
+
+## There's at least one threat to put on the code cards. Without one the
+## puzzle falls back to showing the sequence directly.
+func uses_codes() -> bool:
+	return not threats.is_empty()
+
+
+## More than one card, so the players need the Next button to flip between them.
+func has_next_button() -> bool:
+	return uses_codes() and code_count > 1
+
+
+## Threats that appear on code cards (and so can be picked in code mode).
+func code_threats() -> int:
+	return mini(threats.size(), MAX_CODE_ROWS)
 
 
 ## Every button this level can spawn: the sequences' buttons first, then the

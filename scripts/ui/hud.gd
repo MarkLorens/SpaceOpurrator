@@ -65,6 +65,10 @@ func _ready() -> void:
 	satisfaction_bar.show_value(progress_bar.value, progress_bar.max_value)
 	puzzleTimeLeft = cfg.puzzle_time
 
+	# Host must not stream _sync_progress until this node exists on the client.
+	if not multiplayer.is_server():
+		GameState.report_level_ready()
+
 func _process(delta: float) -> void:
 	if not GameState.game_running or not multiplayer.is_server():
 		return
@@ -79,7 +83,8 @@ func _process(delta: float) -> void:
 		_end_game.rpc(false, progress_bar.value)
 		return
 	# ponytail: sends every frame; throttle to a fixed tick if bandwidth ever matters.
-	_sync_progress.rpc(progress_bar.value, cfg.end_target)
+	if GameState.client_level_ready:
+		_sync_progress.rpc(progress_bar.value, cfg.end_target)
 
 func _on_solve_pressed() -> void:
 	if get_viewport().get_mouse_position().distance_to(_solve_press_pos) > tap_max_distance:

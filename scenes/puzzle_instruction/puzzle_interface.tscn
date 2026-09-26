@@ -2,25 +2,110 @@
 
 [ext_resource type="Script" uid="uid://dgug8k4s6rthb" path="res://scripts/puzzle_interface.gd" id="1_pi"]
 [ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="2_seq"]
+[ext_resource type="Texture2D" uid="uid://w34ykwdvj5qp" path="res://assets/ui/SequenceBoard.png" id="3_cut36"]
+[ext_resource type="Texture2D" uid="uid://dyduse8nvrowi" path="res://assets/ui/SeqX.png" id="7_6d2k7"]
+[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="8_i4j5j"]
 
 [node name="PuzzleInterface" type="Node2D" unique_id=744080779]
 script = ExtResource("1_pi")
 
-[node name="instruction" type="Label" parent="." unique_id=1731694661]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -194.0
-offset_top = -102.5
-offset_right = 194.0
-offset_bottom = 102.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 150
-text = "FIX IT"
-
 [node name="TargetSequence" parent="." unique_id=1163888117 instance=ExtResource("2_seq")]
 position = Vector2(0, 220)
 source = 1
+
+[node name="Box" type="TextureRect" parent="." unique_id=2105624478]
+texture_filter = 1
+offset_left = -678.0
+offset_top = -483.0
+offset_right = -226.0
+offset_bottom = -161.0
+scale = Vector2(3, 3)
+mouse_filter = 2
+texture = ExtResource("3_cut36")
+
+[node name="Row1" type="Control" parent="Box"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 30.0
+offset_right = 452.0
+offset_bottom = 95.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Box/Row1"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 102.0
+offset_bottom = 65.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sequence" parent="Box/Row1" instance=ExtResource("2_seq")]
+position = Vector2(112, 32.5)
+source = 2
+symbol_size = Vector2(52, 52)
+
+[node name="Row2" type="Control" parent="Box"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 113.0
+offset_right = 452.0
+offset_bottom = 178.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Box/Row2"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 102.0
+offset_bottom = 65.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sequence" parent="Box/Row2" instance=ExtResource("2_seq")]
+position = Vector2(112, 32.5)
+source = 2
+symbol_size = Vector2(52, 52)
+
+[node name="Row3" type="Control" parent="Box"]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 195.0
+offset_right = 452.0
+offset_bottom = 260.0
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="Box/Row3"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 102.0
+offset_bottom = 65.0
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Sequence" parent="Box/Row3" instance=ExtResource("2_seq")]
+position = Vector2(112, 32.5)
+source = 2
+symbol_size = Vector2(52, 52)
+
+[node name="CodeDot" type="TextureRect" parent="Box" unique_id=1543876502]
+layout_mode = 0
+offset_left = 372.0
+offset_top = 277.0
+offset_right = 393.0
+offset_bottom = 298.0
+mouse_filter = 2
+texture = ExtResource("7_6d2k7")
+
+[node name="CodeLetter" type="Label" parent="Box" unique_id=1300807402]
+layout_mode = 0
+offset_left = 398.0
+offset_top = 271.0
+offset_right = 430.0
+offset_bottom = 303.0
+theme_override_colors/font_color = Color(0.77254903, 0.22745098, 0.6156863, 1)
+theme_override_fonts/font = ExtResource("8_i4j5j")
+theme_override_font_sizes/font_size = 24
+text = "X"
+vertical_alignment = 1

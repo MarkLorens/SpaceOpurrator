@@ -1,8 +1,8 @@
-[gd_resource type="Resource" script_class="ButtonDef" format=3]
+[gd_resource type="Resource" script_class="ButtonDef" format=3 uid="uid://bk0ba60dhn41o"]
 
-[ext_resource type="Script" path="res://scripts/level/button_def.gd" id="1_def"]
-[ext_resource type="Texture2D" uid="uid://bycw2ebb4lrlx" path="res://assets/items/yarn/unclick.png" id="2_unclick"]
-[ext_resource type="Texture2D" uid="uid://buj53tj6xvsv" path="res://assets/items/yarn/click.png" id="3_click"]
+[ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="1_def"]
+[ext_resource type="Texture2D" uid="uid://d4fjy1fb77wsh" path="res://assets/items/yarn/unclick.png" id="2_unclick"]
+[ext_resource type="Texture2D" uid="uid://d2pg3vvn4qhg1" path="res://assets/items/yarn/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://c6n7me78cgbh6" path="res://assets/icon/yarn_icon.png" id="4_icon"]
 [ext_resource type="AudioStream" uid="uid://yv7xnqyj3jp1" path="res://assets/audio/4_buttons/tools/2_purr.wav" id="9_sfx"]
 
@@ -10,6 +10,6 @@
 script = ExtResource("1_def")
 kind = 1
 icon = ExtResource("4_icon")
-unclick = ExtResource("2_unclick")
-click = ExtResource("3_click")
+unclick = ExtResource("3_click")
+click = ExtResource("2_unclick")
 sfx = ExtResource("9_sfx")
