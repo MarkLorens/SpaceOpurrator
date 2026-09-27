@@ -10,7 +10,7 @@ extends ButtonGesture
 @export var sample_distance := 16.0
 
 var _turned := 0.0  # signed total heading change, radians
-var _done := false  # completed; the ring stays full until the next roll
+var _done := false  # completed; the battery stays full until the next roll
 var _last_point := Vector2.ZERO
 var _last_heading := 0.0
 var _has_heading := false  # a heading needs two samples; reset on every press

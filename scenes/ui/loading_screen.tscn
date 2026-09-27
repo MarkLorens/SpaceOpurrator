@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dat7jyfu6ud7d"]
 
 [ext_resource type="Script" uid="uid://dk82d8c46vfef" path="res://scripts/ui/loading_screen.gd" id="1_load"]
-[ext_resource type="Texture2D" uid="uid://curx48t2yp7y" path="res://assets/ui/main_bg.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://curx48t2yp7y" path="res://assets/ui/backgrounds/main_bg.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://y4btyxpx22s4" path="res://assets/ui/Path.png" id="3_path"]
 [ext_resource type="Texture2D" uid="uid://dc1e1kf6ucvvh" path="res://assets/ui/planet.png" id="4_planet"]
 [ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="5_cat"]

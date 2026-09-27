@@ -10,7 +10,7 @@ extends Resource
 
 ## The gesture is complete: the tool + held component step goes in.
 signal activated
-## 0..1, drives the tool's progress ring; 0 = idle.
+## 0..1, drives the tool's battery bar; 0 = idle.
 signal progress_changed(value: float)
 
 ## Movement gestures (uses_drags) only: how far (pixels) outside the tool a
