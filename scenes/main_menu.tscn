@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://0t5oxjdrdro3" path="res://assets/main screen_characters.png" id="4_chars"]
 [ext_resource type="Texture2D" uid="uid://calxdijbm3hrc" path="res://assets/main screen_logotype.png" id="5_logo"]
 [ext_resource type="PackedScene" path="res://scenes/ui/volume_control.tscn" id="7_oa1go"]
-[ext_resource type="Texture2D" uid="uid://cwkdefl7q5y45" path="res://assets/ui/Volume Button.png" id="8_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://b1ctq6cxx86je" path="res://assets/ui/Trophy Active.png" id="8_jk1qb"]
 [ext_resource type="FontFile" uid="uid://ijg7ofwhbg78" path="res://assets/fonts/pixel-stick/PixelStick-Regular.ttf" id="8_tbmy8"]
 
 [node name="MainMenu" type="Control" unique_id=1947701498]
@@ -94,10 +94,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -396.0
-offset_top = 125.0
-offset_right = -295.0
-offset_bottom = 225.0
+offset_left = -500.0
+offset_top = 75.0
+offset_right = -300.0
+offset_bottom = 275.0
 grow_horizontal = 0
 texture_normal = ExtResource("8_jk1qb")
 ignore_texture_size = true
