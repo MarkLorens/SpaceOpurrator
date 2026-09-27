@@ -41,6 +41,9 @@ extends Camera2D
 var master_x: float = 0.0   # Authoritative shared world X, no offset applied.
 var display_x: float = 0.0  # Smoothed value actually written to position.x.
 var is_dragging := false     # Finger/mouse button down — only used for mouse drag detection.
+# Touch index Godot is turning into mouse events (the first finger down while
+# none was being emulated), mirrored so drags a tool gesture keeps don't pan.
+var _mouse_finger := -1
 var offset_mode := false
 var screen_index := 0
 var _last_local_move_ms := 0  # When I last actually moved the view (not just held).
@@ -85,14 +88,22 @@ func _input(event: InputEvent) -> void:
 	# and every tap buzz and send its RPCs twice. (TapArea buttons go the other
 	# way: touch only, with desktop clicks emulated as touches.)
 
-	if event is InputEventMouseButton:
+	if event is InputEventScreenTouch:
+		# Only tracked, never acted on (see above).
+		if event.pressed and _mouse_finger == -1:
+			_mouse_finger = event.index
+		elif not event.pressed and event.index == _mouse_finger:
+			_mouse_finger = -1
+
+	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			is_dragging = event.pressed
 			if event.pressed:
 				_on_local_click()
 				
 	elif event is InputEventMouseMotion:
-		if is_dragging and (event.button_mask & MOUSE_BUTTON_MASK_LEFT):
+		if is_dragging and (event.button_mask & MOUSE_BUTTON_MASK_LEFT) \
+				and not TapArea.is_finger_kept(_mouse_finger):
 			_apply_drag(-event.relative.x)
 			get_viewport().set_input_as_handled()
 

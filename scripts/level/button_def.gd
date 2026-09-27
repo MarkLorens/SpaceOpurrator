@@ -2,7 +2,7 @@ class_name ButtonDef
 extends Resource
 ## One kind of control-panel button. Every button shares button.tscn; a def only
 ## supplies what differs. Its value in the puzzle is its index in the level's
-## button_defs().
+## button_pool.
 ##
 ## Components are tapped on their own, or held while someone works a tool.
 ## Tools only count as part of a tool + component step, via their gesture.

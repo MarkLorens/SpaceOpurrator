@@ -13,6 +13,10 @@ signal activated
 ## 0..1, drives the tool's progress ring; 0 = idle.
 signal progress_changed(value: float)
 
+## Movement gestures (uses_drags) only: how far (pixels) outside the tool a
+## drag can start while armed. Never reaches onto another button.
+@export var grab_margin := 150.0
+
 ## True while some component is held (on either phone). Disarming resets.
 var armed := false:
 	set(value):
@@ -25,3 +29,8 @@ var armed := false:
 
 ## Drop any progress.
 @abstract func reset() -> void
+
+## Movement gestures return true: while armed, a drag that starts on the tool
+## belongs to the gesture instead of panning the board.
+func uses_drags() -> bool:
+	return false
