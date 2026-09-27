@@ -37,6 +37,7 @@ func _leave() -> void:
 ## solved: this level. run_solved / run_time: the whole run, for the final screen.
 func show_result(won: bool, solved: int, run_solved: int, run_time: float) -> void:
 	var final_win := won and not GameState.has_next_level()
+	_submit_scores(final_win, run_solved, run_time)
 	level_panel.visible = not final_win
 	final_panel.visible = final_win
 	if final_win:
@@ -58,6 +59,21 @@ func show_result(won: bool, solved: int, run_solved: int, run_time: float) -> vo
 	subtitle_label.visible = not won
 	show()
 	get_tree().paused = true
+
+## Both players submit the shared run totals to their own Game Center account.
+## most_targets after every level (Game Center keeps the best); fastest_time only
+## for a finished run, in hundredths of a second (the leaderboard's format).
+## ponytail: run_solved counts retries, so losing and replaying pads most_targets;
+## reset it per retry if that becomes a problem.
+func _submit_scores(final_win: bool, run_solved: int, run_time: float) -> void:
+	if not Engine.has_singleton("GameCenterKit"):
+		return
+	var game_center := Engine.get_singleton("GameCenterKit")
+	if not game_center.is_authenticated():
+		return
+	game_center.submit_score("most_targets", run_solved)
+	if final_win:
+		game_center.submit_score("fastest_time", roundi(run_time * 100.0))
 
 ## Built from the level's shared seed, so both players see the same name.
 func _planet_name() -> String:

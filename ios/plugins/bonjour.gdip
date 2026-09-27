@@ -8,7 +8,7 @@ deinitialization="unregister_bonjour_types"
 [dependencies]
 linked=[]
 embedded=[]
-system=[]
+system=["GameKit.framework"]
 
 capabilities=[]
 
