@@ -32,21 +32,6 @@ texture = ExtResource("2_8ln24")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Characters" type="TextureRect" parent="." unique_id=1918215517]
-texture_filter = 1
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.275
-anchor_top = 0.5
-anchor_right = 0.275
-anchor_bottom = 0.5
-offset_left = -555.0
-offset_top = -441.0
-offset_right = 555.0
-offset_bottom = 441.0
-mouse_filter = 2
-texture = ExtResource("4_chars")
-
 [node name="Column" type="VBoxContainer" parent="." unique_id=1379448841]
 layout_mode = 1
 anchors_preset = -1
@@ -122,3 +107,18 @@ theme_override_fonts/font = ExtResource("8_tbmy8")
 theme_override_font_sizes/font_size = 100
 text = "An evil cat looking for a partner in crime, exploring space to fulfill their satisfaction"
 autowrap_mode = 3
+
+[node name="Characters" type="TextureRect" parent="." unique_id=1918215517]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.275
+anchor_top = 0.5
+anchor_right = 0.275
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -441.0
+offset_right = 555.00006
+offset_bottom = 441.0
+mouse_filter = 2
+texture = ExtResource("4_chars")
