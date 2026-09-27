@@ -221,5 +221,3 @@ func receive_camera_x(x: float, origin: int) -> void:
 	if origin == multiplayer.get_unique_id():
 		return
 	master_x = x
-
-
