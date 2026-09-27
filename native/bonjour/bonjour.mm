@@ -118,7 +118,7 @@ void Bonjour::start_browsing() {
 				nw_endpoint_t ep = nw_browse_result_copy_endpoint(new_result);
 				NSString *name = @(nw_endpoint_get_bonjour_service_name(ep));
 				[live addObject:name];
-				resolve(ep, name, 5);
+				resolve(ep, name, 30); // ~30s+ of retries; stops early once the room is lost or browsing stops.
 			} else if (change & nw_browse_result_change_result_removed) {
 				NSString *name = @(nw_endpoint_get_bonjour_service_name(nw_browse_result_copy_endpoint(old_result)));
 				[live removeObject:name];
