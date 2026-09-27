@@ -10,6 +10,7 @@ extends ButtonGesture
 @export var sample_distance := 16.0
 
 var _turned := 0.0  # signed total heading change, radians
+var _quarters := 0  # quarter turns made so far, for a tick on each new one
 var _done := false  # completed; the battery stays full until the next roll
 var _last_point := Vector2.ZERO
 var _last_heading := 0.0
@@ -34,16 +35,22 @@ func _on_finger_moved(pos: Vector2) -> void:
 		if _done:
 			_done = false
 			_turned = 0.0
+			_quarters = 0
 		_turned += wrapf(heading - _last_heading, -PI, PI)
 		var progress := absf(_turned) / (turns * TAU)
 		progress_changed.emit(minf(progress, 1.0))
+		var quarters := int(absf(_turned) / (PI / 2.0))
 		if progress >= 1.0:
 			_done = true
 			activated.emit()
+		elif quarters > _quarters:
+			stepped.emit()
+		_quarters = quarters
 	_last_heading = heading
 	_has_heading = true
 
 func reset() -> void:
 	_turned = 0.0
+	_quarters = 0
 	_done = false
 	progress_changed.emit(0.0)

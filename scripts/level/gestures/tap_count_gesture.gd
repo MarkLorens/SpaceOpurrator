@@ -18,6 +18,8 @@ func _on_tapped() -> void:
 	progress_changed.emit(float(_count) / taps)
 	if _count >= taps:
 		activated.emit()
+	else:
+		stepped.emit()
 
 func reset() -> void:
 	_count = 0
