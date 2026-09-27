@@ -17,6 +17,8 @@ extends Control
 ## Bar tuning for this level. Only the host's copy drives the numbers.
 var cfg: LevelConfig = GameState.level
 var puzzleTimeLeft: float
+## Host only: puzzles solved this level. The hud is rebuilt each level, so it resets itself.
+var solved_count := 0
 var vignette: ColorRect
 var _solve_press_pos: Vector2
 
@@ -74,13 +76,14 @@ func _process(delta: float) -> void:
 		return
 	# ProgressBar clamps value to [0, max_value] itself.
 	progress_bar.value -= cfg.drain_per_second * delta
+	GameState.run_time += delta
 	puzzleTimeLeft -= delta
 	if puzzleTimeLeft <= 0.0:
 		progress_bar.value -= cfg.timeout_penalty
 		PuzzleSolver.new_puzzle()
 		puzzleTimeLeft = cfg.puzzle_time
 	if progress_bar.value <= 0.0:
-		_end_game.rpc(false, progress_bar.value)
+		_end_game.rpc(false, progress_bar.value, solved_count, GameState.run_solved, GameState.run_time)
 		return
 	# ponytail: sends every frame; throttle to a fixed tick if bandwidth ever matters.
 	if GameState.client_level_ready:
@@ -96,10 +99,12 @@ func _request_solve() -> void:
 	if not GameState.game_running:
 		return
 	if PuzzleSolver.solve_puzzle():
+		solved_count += 1
+		GameState.run_solved += 1
 		progress_bar.value += cfg.solve_reward
 		puzzleTimeLeft = cfg.puzzle_time
 		if progress_bar.value >= cfg.end_target:
-			_end_game.rpc(true, progress_bar.value)
+			_end_game.rpc(true, progress_bar.value, solved_count, GameState.run_solved, GameState.run_time)
 
 @rpc("authority", "call_remote", "unreliable_ordered")
 func _sync_progress(value: float, max_value: float) -> void:
@@ -108,7 +113,8 @@ func _sync_progress(value: float, max_value: float) -> void:
 
 ## Host decides; both players stop and see the end screen.
 @rpc("authority", "call_local", "reliable")
-func _end_game(won: bool, final_value: float) -> void:
+func _end_game(won: bool, final_value: float, solved: int, run_solved: int, run_time: float) -> void:
 	progress_bar.value = final_value
 	GameState.game_running = false
-	end_screen.show_result(won)
+	GameState.last_won = won
+	end_screen.show_result(won, solved, run_solved, run_time)

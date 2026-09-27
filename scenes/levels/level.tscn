@@ -28,8 +28,7 @@ script = ExtResource("1_oc4kc")
 position = Vector2(1311, 603)
 script = ExtResource("3_6761a")
 
-[node name="ControlPanelGrid" parent="." unique_id=162737333 node_paths=PackedStringArray("tool_slots") instance=ExtResource("5_wtwp4")]
-tool_slots = []
+[node name="ControlPanelGrid" parent="." unique_id=162737333 instance=ExtResource("5_wtwp4")]
 
 [node name="SolveButton" type="TextureButton" parent="." unique_id=1420606149]
 texture_filter = 1

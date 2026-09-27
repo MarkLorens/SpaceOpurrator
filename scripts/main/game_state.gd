@@ -7,6 +7,7 @@ extends Node
 ##                       -> join: lobby -> tap a room -> game room
 ##   game room: both Ready, host presses Start  -> loading screen -> level 1
 ##   level won -> Next (either player)          -> next level
+##   level lost -> Play Again (either player)   -> same level
 ##   leave / drop                               -> main menu
 ## The UI calls host_game()/join_game()/set_ready()/start_game()/leave_game();
 ## everything else is reactions to NetworkManager signals.
@@ -40,6 +41,12 @@ var game_running := false
 ## layout). Re-rolled every level. 0 = not received yet.
 var session_seed := 0
 var level_index := 0
+## Host only: totals for the whole run (every level and retry since Start),
+## shown on the final win screen. Counted by the hud, reset when a run starts.
+var run_solved := 0
+var run_time := 0.0
+## Result of the level that just ended; decides whether Continue retries or advances.
+var last_won := false
 var level: LevelConfig:
 	get: return LEVELS[level_index]
 ## Game room state, owned by the host and mirrored to the client.
@@ -124,6 +131,8 @@ func can_start() -> bool:
 ## Host only: starts level 1 for both players.
 func start_game() -> void:
 	if can_start():
+		run_solved = 0
+		run_time = 0.0
 		start_level(0, true)  # via the loading screen
 
 
@@ -191,15 +200,20 @@ func has_next_level() -> bool:
 	return level_index + 1 < LEVELS.size()
 
 
-## Either player, after a win. The host decides.
-func request_next_level() -> void:
-	_request_next_level.rpc_id(1)
+## Either player, from the end screen: next level after a win, same level
+## again after a loss. The host decides.
+func request_continue() -> void:
+	_request_continue.rpc_id(1)
 
 
 @rpc("any_peer", "call_local", "reliable")
-func _request_next_level() -> void:
+func _request_continue() -> void:
 	# game_running flips back on in _load_level, so a double press is ignored.
-	if not game_running and has_next_level():
+	if game_running:
+		return
+	if not last_won:
+		start_level(level_index)
+	elif has_next_level():
 		start_level(level_index + 1)
 
 

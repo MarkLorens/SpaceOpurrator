@@ -1,25 +1,69 @@
 extends Control
 ## Shown on both players when a level ends (bar full = win, bar empty = loss).
-## A win with levels left offers Next Level; either player can press it.
-## Its process_mode is ALWAYS (set in the scene) so the exit button works while
-## the tree is paused.
+## Win with levels left: Next Level. Loss: Play Again (same level). Either
+## player can press Continue; the host decides. Winning the last level swaps to
+## FinalPanel: whole-run stats and Back to Menu.
+## Its process_mode is ALWAYS (set in the scene) so the buttons work while the
+## tree is paused.
 
+const BG_LEVEL_COMPLETE := preload("res://assets/ui/backgrounds/level_complete.png")
+const BG_GAME_WIN := preload("res://assets/ui/backgrounds/game_win.png")
+const BG_FAILED := preload("res://assets/ui/backgrounds/main_bg.png")
+const PLANET_SYLLABLES := ["MEW", "PUR", "ZOR", "KIT", "NYA", "FLUF", "TOR", "BUL", "WHIS", "KER"]
+
+@onready var background: TextureRect = $Background
+@onready var level_panel: Control = $CenterContainer
 @onready var title_label: Label = $CenterContainer/VBoxContainer/TitleLabel
-@onready var next_button: TextureButton = $CenterContainer/VBoxContainer/VBoxContainer/NextButton
-@onready var exit_button: TextureButton = $CenterContainer/VBoxContainer/VBoxContainer/ExitButton
+@onready var subtitle_label: Label = $CenterContainer/VBoxContainer/SubtitleLabel
+@onready var score_label: RichTextLabel = $CenterContainer/VBoxContainer/ScoreLabel
+@onready var continue_button: TextureButton = $CenterContainer/VBoxContainer/Buttons/ContinueButton
+@onready var continue_label: Label = $CenterContainer/VBoxContainer/Buttons/ContinueButton/Label
+@onready var exit_button: TextureButton = $CenterContainer/VBoxContainer/Buttons/ExitButton
+@onready var final_panel: Control = $FinalPanel
+@onready var stats_label: RichTextLabel = $FinalPanel/Stats/StatsLabel
+@onready var menu_button: TextureButton = $FinalPanel/Stats/MenuButton
+@onready var planet_label: Label = $FinalPanel/PlanetLabel
 
 func _ready() -> void:
 	hide()
-	next_button.pressed.connect(GameState.request_next_level)
-	exit_button.pressed.connect(func() -> void:
-		get_tree().paused = false
-		GameState.leave_game())
+	continue_button.pressed.connect(GameState.request_continue)
+	exit_button.pressed.connect(_leave)
+	menu_button.pressed.connect(_leave)
 
-func show_result(won: bool) -> void:
-	var has_next := won and GameState.has_next_level()
-	next_button.visible = has_next
-	title_label.text = "Level Cleared!" if has_next else "Victory!" if won else "Defeated"
-	title_label.add_theme_color_override("font_color",
-		Color(1, 0.85, 0.2) if won else Color(0.9, 0.15, 0.15))
+func _leave() -> void:
+	get_tree().paused = false
+	GameState.leave_game()
+
+## solved: this level. run_solved / run_time: the whole run, for the final screen.
+func show_result(won: bool, solved: int, run_solved: int, run_time: float) -> void:
+	var final_win := won and not GameState.has_next_level()
+	level_panel.visible = not final_win
+	final_panel.visible = final_win
+	if final_win:
+		background.texture = BG_GAME_WIN
+		var secs := int(run_time)
+		stats_label.text = "Targets destroyed :  [b]%d[/b]\nTime elapsed :  [b]%02d:%02d[/b]" \
+				% [run_solved, secs / 60, secs % 60]
+		planet_label.text = "PLANET %s WAS CONQUERED" % _planet_name()
+	elif won:
+		background.texture = BG_LEVEL_COMPLETE
+		title_label.text = "LEVEL COMPLETED"
+		continue_label.text = "NEXT LEVEL"
+		score_label.text = "[b]%d[/b] targets were destroyed" % solved
+	else:
+		background.texture = BG_FAILED
+		title_label.text = "MISSION FAILED"
+		continue_label.text = "PLAY AGAIN"
+		score_label.text = "Only [b]%d[/b] targets were destroyed" % solved
+	subtitle_label.visible = not won
 	show()
 	get_tree().paused = true
+
+## Built from the level's shared seed, so both players see the same name.
+func _planet_name() -> String:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = GameState.session_seed
+	var planet := "%s%d-" % [char(rng.randi_range(65, 90)), rng.randi_range(10, 99)]
+	for i in rng.randi_range(2, 3):
+		planet += PLANET_SYLLABLES[rng.randi() % PLANET_SYLLABLES.size()]
+	return planet
