@@ -126,7 +126,7 @@ text = "EXIT"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="FinalPanel" type="Control" parent="."]
+[node name="FinalPanel" type="Control" parent="." unique_id=1675791529]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -136,8 +136,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="TitleLabel" type="Label" parent="FinalPanel"]
+[node name="TitleLabel" type="Label" parent="FinalPanel" unique_id=1745864325]
 layout_mode = 1
+anchors_preset = -1
 anchor_top = 0.15
 anchor_right = 1.0
 anchor_bottom = 0.15
@@ -148,15 +149,16 @@ theme_override_font_sizes/font_size = 130
 text = "MISSION SUCCESS"
 horizontal_alignment = 1
 
-[node name="Stats" type="VBoxContainer" parent="FinalPanel"]
+[node name="Stats" type="VBoxContainer" parent="FinalPanel" unique_id=664006213]
 layout_mode = 1
+anchors_preset = -1
 anchor_left = 0.534
 anchor_top = 0.36
 anchor_right = 0.534
 anchor_bottom = 0.36
 theme_override_constants/separation = 50
 
-[node name="StatsLabel" type="RichTextLabel" parent="FinalPanel/Stats"]
+[node name="StatsLabel" type="RichTextLabel" parent="FinalPanel/Stats" unique_id=2054178944]
 layout_mode = 2
 mouse_filter = 2
 theme_override_colors/default_color = Color(1, 0.5411765, 0.47843137, 1)
@@ -171,7 +173,7 @@ Time elapsed :  [b]00:00[/b]"
 fit_content = true
 autowrap_mode = 0
 
-[node name="MenuButton" type="TextureButton" parent="FinalPanel/Stats"]
+[node name="MenuButton" type="TextureButton" parent="FinalPanel/Stats" unique_id=530021336]
 texture_filter = 1
 custom_minimum_size = Vector2(615, 150)
 layout_mode = 2
@@ -181,7 +183,7 @@ texture_pressed = ExtResource("4_dlhjq")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="FinalPanel/Stats/MenuButton"]
+[node name="Label" type="Label" parent="FinalPanel/Stats/MenuButton" unique_id=588162860]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -195,8 +197,9 @@ text = "BACK TO MENU"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlanetLabel" type="Label" parent="FinalPanel"]
+[node name="PlanetLabel" type="Label" parent="FinalPanel" unique_id=253078904]
 layout_mode = 1
+anchors_preset = -1
 anchor_top = 0.8
 anchor_right = 1.0
 anchor_bottom = 0.8
