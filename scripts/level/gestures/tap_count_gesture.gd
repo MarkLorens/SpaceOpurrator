@@ -13,7 +13,7 @@ func _on_tapped() -> void:
 	if not armed:
 		return
 	if _count >= taps:
-		_count = 0  # last one completed; the ring stayed full until now
+		_count = 0  # last one completed; the battery stayed full until now
 	_count += 1
 	progress_changed.emit(float(_count) / taps)
 	if _count >= taps:
