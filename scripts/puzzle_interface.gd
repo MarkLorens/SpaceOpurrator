@@ -59,18 +59,18 @@ func _show_card(code: int) -> void:
 		var seq: Array[Vector2i] = []
 		seq.assign(card[i])
 		var display: Node2D = row.get_node("Sequence")
-		display.symbol_size = Vector2.ONE * _fit(seq, display.tool_scale)
+		display.symbol_size = Vector2.ONE * _fit(seq, display)
 		display.show_sequence(seq)
 	code_dot.texture = CODE_DOTS[code]
 	code_letter.text = CODE_LETTERS[code]
 	code_letter.add_theme_color_override("font_color", CODE_COLORS[code])
 
-## Icon size that fits seq in the row slot: tool icons are tool_scale wide.
-func _fit(seq: Array[Vector2i], tool_scale: float) -> float:
+## Icon size that fits seq in the row slot (combo steps are wider: tool + brackets).
+func _fit(seq: Array[Vector2i], display: Node2D) -> float:
 	if seq.is_empty():
 		return max_symbol_size
 	var units := 0.0
 	for step in seq:
-		units += 1.0 + (tool_scale if step.y != PuzzleSolver.NO_TOOL else 0.0)
+		units += display.step_width(step)
 	var room := row_width - symbol_separation * (seq.size() - 1)
 	return minf(max_symbol_size, floorf(room / units))

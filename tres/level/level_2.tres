@@ -2,18 +2,30 @@
 
 [ext_resource type="Script" uid="uid://dksvq7y3gkxdu" path="res://scripts/level/level_config.gd" id="1_cfg"]
 [ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="2_def"]
-[ext_resource type="Resource" uid="uid://b3shf04o5cpyy" path="res://tres/tiles/component/battery.tres" id="3_battery"]
+[ext_resource type="Resource" uid="uid://bk0ba60dhn41o" path="res://tres/tiles/tools/yarn.tres" id="3_cw0vj"]
 [ext_resource type="Resource" uid="uid://c5cvwi67mtcvd" path="res://tres/tiles/component/bomb.tres" id="4_bomb"]
-[ext_resource type="Resource" uid="uid://bfgw5aj8jo6c0" path="res://tres/tiles/component/catnip.tres" id="5_catnip"]
+[ext_resource type="Script" uid="uid://76y1s1yx52yo" path="res://scripts/level/puzzle_step.gd" id="5_jse00"]
 [ext_resource type="Script" uid="uid://dwyqj72iyuey7" path="res://scripts/level/puzzle_sequence.gd" id="6_jse00"]
 [ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="6_tdef"]
 [ext_resource type="Resource" uid="uid://rc2hj0ctqbuy" path="res://tres/enemies/cat.tres" id="7_cat"]
 [ext_resource type="Resource" uid="uid://bcqpca6myt3jn" path="res://tres/enemies/dog.tres" id="8_dog"]
 [ext_resource type="Resource" uid="uid://cevlaph1ev8l2" path="res://tres/enemies/planet.tres" id="9_planet"]
 
+[sub_resource type="Resource" id="Resource_cw0vj"]
+script = ExtResource("5_jse00")
+component = ExtResource("4_bomb")
+tool = ExtResource("3_cw0vj")
+metadata/_custom_type_script = "uid://76y1s1yx52yo"
+
+[sub_resource type="Resource" id="Resource_5aqos"]
+script = ExtResource("6_jse00")
+steps = Array[ExtResource("5_jse00")]([SubResource("Resource_cw0vj")])
+metadata/_custom_type_script = "uid://dwyqj72iyuey7"
+
 [resource]
 script = ExtResource("1_cfg")
-button_pool = Array[ExtResource("2_def")]([ExtResource("3_battery"), ExtResource("4_bomb"), ExtResource("5_catnip")])
+sequences = Array[ExtResource("6_jse00")]([SubResource("Resource_5aqos")])
+button_pool = Array[ExtResource("2_def")]([ExtResource("3_cw0vj")])
 threats = Array[ExtResource("6_tdef")]([ExtResource("7_cat"), ExtResource("8_dog"), ExtResource("9_planet")])
 code_count = 3
 sequence_length = 4
