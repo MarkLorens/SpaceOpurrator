@@ -1,9 +1,10 @@
 extends Node2D
 ## Button spawn points: one Marker2D child per panel in the control panel art,
 ## placed at the panel's centre in texture pixels. The two next slot markers are
-## kept free of random buttons: they hold the code cards' Next button. This node's scale matches the
-## board's texture stretch (display size / texture size), so if that stretch
-## changes, update the scale here, not the markers.
+## kept free of random buttons: they hold the code cards' Next button. Tools get
+## first pick of tool_slots. This node's scale matches the board's texture
+## stretch (display size / texture size), so if that stretch changes, update the
+## scale here, not the markers.
 ##
 ## Both players shuffle the markers with GameState.session_seed, so they get the
 ## same layout without sending positions.
@@ -19,6 +20,10 @@ extends Node2D
 @export var next_slot_left: Marker2D
 @export var next_slot_right: Marker2D
 @export var next_button_scene: PackedScene = preload("res://scenes/buttons/next_card_button.tscn")
+## Panels within reach of every other panel with both phones side by side (the
+## innermost ones), so any tool + component pair fits on screen together. Tools
+## spawn here first; components get whatever's left, plus every other panel.
+@export var tool_slots: Array[Marker2D] = []
 
 func _ready() -> void:
 	# GameState sets the seed before loading the level on both peers.
@@ -33,35 +38,51 @@ func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 	var screen_w: float = ProjectSettings.get_setting("display/window/size/viewport_width")
 	
 	# Child order comes from the scene file, so it's the same on both peers.
+	var tool_spots: Array[Vector2] = []
 	var spots: Array[Vector2] = []
 	for marker in get_children():
 		if marker == next_slot_left or marker == next_slot_right:
 			continue
 		var pos: Vector2 = marker.global_position
 		if absf(pos.x - roundf(pos.x / screen_w) * screen_w) >= button_radius:
-			spots.append(pos)
+			(tool_spots if tool_slots.has(marker) else spots).append(pos)
+
+	# Pool indices, tools first so they claim the tool spots.
+	var pool := cfg.button_pool
+	var order: Array[int] = []
+	order.assign(range(pool.size()).filter(func(i: int) -> bool: return pool[i] and pool[i].is_tool()))
+	var claimed := mini(order.size(), tool_spots.size())
+	if order.size() > tool_spots.size():
+		push_warning("ControlPanelGrid: %d tools but %d tool slots; the rest spawn anywhere" % [order.size(), tool_spots.size()])
+	order.append_array(range(pool.size()).filter(func(i: int) -> bool: return pool[i] and not pool[i].is_tool()))
 
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
-	for i in range(spots.size() - 1, 0, -1):  # Fisher-Yates with the shared rng
-		var j := rng.randi_range(0, i)
-		var tmp := spots[i]
-		spots[i] = spots[j]
-		spots[j] = tmp
+	_shuffle(tool_spots, rng)
+	spots.append_array(tool_spots.slice(claimed))  # unclaimed tool spots are open to anyone
+	_shuffle(spots, rng)
+	var placed := tool_spots.slice(0, claimed)  # tools, in order's order
+	placed.append_array(spots)
 
 	# The puzzle already assumes every pool button is on the panel.
-	var pool := cfg.button_pool
-	if spots.size() < pool.size():
-		push_error("ControlPanelGrid: only %d usable panels for %d buttons; add markers" % [spots.size(), pool.size()])
+	if placed.size() < order.size():
+		push_error("ControlPanelGrid: only %d usable panels for %d buttons; add markers" % [placed.size(), order.size()])
 	
-	for i in mini(pool.size(), spots.size()):
+	for i in mini(order.size(), placed.size()):
 		var button := button_scene.instantiate()
-		button.btnValue = i
-		button.def = pool[i]
+		button.btnValue = order[i]
+		button.def = pool[order[i]]
 		button.art_scale = scale  # item art is drawn at the panel texture's resolution
-		button.position = spots[i]
+		button.position = placed[i]
 		get_parent().add_child.call_deferred(button)
 
+## Fisher-Yates with the shared rng (Array.shuffle() isn't seedable).
+func _shuffle(values: Array, rng: RandomNumberGenerator) -> void:
+	for i in range(values.size() - 1, 0, -1):
+		var j := rng.randi_range(0, i)
+		var tmp = values[i]
+		values[i] = values[j]
+		values[j] = tmp
 
 ## Puts the Next button on the dedicated panel nearest near_x (the puzzle
 ## interface), so the player beside it can flip cards for the one reading them.

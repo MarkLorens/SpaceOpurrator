@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dpkt1v2di5f48" path="res://scripts/level/control_panel_grid.gd" id="2_grid"]
 
-[node name="ControlPanelGrid" type="Node2D" unique_id=162737333 node_paths=PackedStringArray("next_slot_left", "next_slot_right")]
+[node name="ControlPanelGrid" type="Node2D" unique_id=162737333 node_paths=PackedStringArray("next_slot_left", "next_slot_right", "tool_slots")]
 scale = Vector2(1.2138889, 1.1166667)
 script = ExtResource("2_grid")
 next_slot_left = NodePath("NextSlotLeft")
 next_slot_right = NodePath("NextSlotRight")
+tool_slots = [NodePath("Panel11"), NodePath("Panel04"), NodePath("Panel05"), NodePath("Panel14")]
 
 [node name="Panel01" type="Marker2D" parent="." unique_id=186204200]
 position = Vector2(1866, 252)
