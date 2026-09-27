@@ -5,6 +5,9 @@ extends Node
 ## Picks the track from whichever scene is showing, so screens don't have to
 ## call it: main menu = menu music, matchmaking screens = the same music a bit
 ## quieter, level = level music. The HUD switches to low-time music in danger.
+##
+## Also owns this phone's master volume (set_master_volume), saved on the
+## device; it's never sent to the other player.
 
 @export_file("*.wav", "*.ogg", "*.mp3") var MAIN_MENU_MUSIC: String
 @export_file("*.wav", "*.ogg", "*.mp3") var LEVEL_MUSIC: String
@@ -21,6 +24,7 @@ extends Node
 @export var button_click_sfx: AudioStream = preload("res://assets/audio/4_buttons/general/general_button_click.wav")
 
 const SILENT_DB := -40.0
+const SETTINGS_PATH := "user://settings.cfg"
 ## One-shot sounds that can overlap (e.g. quick button taps).
 const SFX_VOICES := 8
 
@@ -32,6 +36,9 @@ var _tweens := {}  # player -> its running volume tween
 var _sfx: Array[AudioStreamPlayer] = []
 var _music_db := 0.0  # the current track's normal volume, before ducking
 var _ducked := false
+## This phone's volume for all sound, 0..1 (see set_master_volume).
+var master_volume := 1.0
+var _save_queued := false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS  # keep playing while the game is paused
@@ -42,9 +49,34 @@ func _ready() -> void:
 		var p := AudioStreamPlayer.new()
 		add_child(p)
 		_sfx.append(p)
+	_load_settings()
 	get_tree().node_added.connect(_on_node_added)
 	get_tree().scene_changed.connect(_on_scene_changed)
 	_on_scene_changed()
+
+## Volume for everything this phone plays (music and sounds), 0..1. Saved a
+## moment after the last change, so dragging the slider doesn't write every frame.
+func set_master_volume(value: float) -> void:
+	master_volume = clampf(value, 0.0, 1.0)
+	AudioServer.set_bus_volume_db(0, linear_to_db(master_volume))
+	AudioServer.set_bus_mute(0, master_volume <= 0.0)
+	if not _save_queued:
+		_save_queued = true
+		get_tree().create_timer(0.5, true).timeout.connect(_save_settings)  # runs while paused too
+
+func _load_settings() -> void:
+	var cfg := ConfigFile.new()
+	cfg.load(SETTINGS_PATH)  # missing on first launch: keeps the default
+	master_volume = clampf(cfg.get_value("audio", "master_volume", 1.0), 0.0, 1.0)
+	AudioServer.set_bus_volume_db(0, linear_to_db(master_volume))
+	AudioServer.set_bus_mute(0, master_volume <= 0.0)
+
+func _save_settings() -> void:
+	_save_queued = false
+	var cfg := ConfigFile.new()
+	cfg.load(SETTINGS_PATH)  # keep any other settings in the file
+	cfg.set_value("audio", "master_volume", master_volume)
+	cfg.save(SETTINGS_PATH)
 
 func _on_scene_changed() -> void:
 	var scene := get_tree().current_scene

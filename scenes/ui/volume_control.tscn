@@ -1,0 +1,44 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/volume_control.gd" id="1_vol"]
+[ext_resource type="Texture2D" uid="uid://dha3lkx2jjims" path="res://assets/ui/Volume Bar.png" id="2_bar"]
+[ext_resource type="Texture2D" uid="uid://458ees180mbv" path="res://assets/ui/Volume Slider.png" id="3_knob"]
+[ext_resource type="Texture2D" uid="uid://cwkdefl7q5y45" path="res://assets/ui/Volume Button.png" id="4_button"]
+
+[node name="VolumeControl" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+mouse_filter = 2
+script = ExtResource("1_vol")
+
+[node name="Bar" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -795.0
+offset_top = 115.0
+offset_right = -237.0
+offset_bottom = 235.0
+texture = ExtResource("2_bar")
+expand_mode = 1
+
+[node name="Knob" type="TextureRect" parent="Bar"]
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 108.0
+mouse_filter = 2
+texture = ExtResource("3_knob")
+expand_mode = 1
+
+[node name="Button" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = -275.0
+offset_top = 75.0
+offset_right = -75.0
+offset_bottom = 275.0
+texture_normal = ExtResource("4_button")
+ignore_texture_size = true
+stretch_mode = 5
