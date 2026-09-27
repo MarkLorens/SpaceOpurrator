@@ -30,7 +30,7 @@ func _on_finger_moved(pos: Vector2) -> void:
 	if absf(dx) < swat_distance or not armed:
 		return
 	if _count >= swats:
-		_count = 0  # last one completed; the ring stayed full until now
+		_count = 0  # last one completed; the battery stayed full until now
 	_count += 1
 	_last_dir = 1 if dx > 0.0 else -1
 	_anchor_x = pos.x

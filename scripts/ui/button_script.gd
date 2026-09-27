@@ -3,6 +3,17 @@ extends TapArea
 ## released (a quick tap is a plain step); tools run their def's gesture, which
 ## only makes progress while some component is held.
 
+## Tool gesture progress, empty to full.
+const BATTERY_FRAMES: Array[Texture2D] = [
+	preload("res://assets/ui/BatteryBar0.png"),
+	preload("res://assets/ui/BatteryBar1.png"),
+	preload("res://assets/ui/BatteryBar2.png"),
+	preload("res://assets/ui/BatteryBar3.png"),
+	preload("res://assets/ui/BatteryBar4.png"),
+]
+## Gap between the panel's top edge and the battery, in panel-art pixels.
+const BATTERY_GAP := 12.0
+
 ## Longer presses on a component are holds (waiting for a tool), not taps.
 const COMPONENT_TAP_MAX_TIME := 0.4
 
@@ -46,7 +57,7 @@ func _setup_tool() -> void:
 	gesture = def.gesture.duplicate()
 	gesture.attach(self)
 	gesture.activated.connect(func() -> void: PuzzleSolver.complete_tool(btnValue))
-	_add_progress_ring()
+	_add_battery()
 	PuzzleSolver.held_component_changed.connect(_on_held_component_changed)
 	_on_held_component_changed(PuzzleSolver.held_component)
 
@@ -70,13 +81,20 @@ func _use_item_art() -> void:
 	collision.scale = Vector2.ONE
 	collision.shape = rect
 
-## Shows how far along the tool's gesture is. Hidden while idle.
-func _add_progress_ring() -> void:
-	var ring := ProgressRing.new()
-	ring.scale = Vector2.ONE / scale  # draw in world pixels, like the art
-	ring.z_index = 1
-	var art_size := sprite.texture.get_size() * sprite.scale * scale if sprite.texture else Vector2.ZERO
-	if art_size != Vector2.ZERO:
-		ring.radius = minf(art_size.x, art_size.y) * 0.45
-	add_child(ring)
-	gesture.progress_changed.connect(func(value: float) -> void: ring.progress = value)
+## Battery floating above the panel shows how far along the gesture is. Hidden while idle.
+func _add_battery() -> void:
+	var battery := Sprite2D.new()
+	battery.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	battery.texture = BATTERY_FRAMES[0]
+	battery.visible = false
+	battery.scale = sprite.scale  # same resolution as the panel art
+	battery.z_index = 1
+	var art_size := sprite.texture.get_size() if sprite.texture else Vector2.ZERO
+	var battery_height := battery.texture.get_size().y
+	battery.position = Vector2(0, -(art_size.y + battery_height) / 2 - BATTERY_GAP) * sprite.scale
+	add_child(battery)
+	# Full frame only once the gesture completes.
+	gesture.progress_changed.connect(func(value: float) -> void:
+		var last := BATTERY_FRAMES.size() - 1
+		battery.visible = value > 0.0
+		battery.texture = BATTERY_FRAMES[last if value >= 1.0 else int(value * last)])
