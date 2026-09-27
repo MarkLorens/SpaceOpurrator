@@ -2,24 +2,23 @@
 
 [ext_resource type="Script" uid="uid://dksvq7y3gkxdu" path="res://scripts/level/level_config.gd" id="1_cfg"]
 [ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="2_def"]
-[ext_resource type="Resource" uid="uid://bk0ba60dhn41o" path="res://tres/tiles/tools/yarn.tres" id="3_cw0vj"]
 [ext_resource type="Resource" uid="uid://c5cvwi67mtcvd" path="res://tres/tiles/component/bomb.tres" id="4_bomb"]
+[ext_resource type="Resource" path="res://tres/tiles/component/nuclear.tres" id="4_jse00"]
+[ext_resource type="Resource" path="res://tres/tiles/component/fish.tres" id="5_x2dnp"]
 [ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="6_tdef"]
 [ext_resource type="Resource" uid="uid://rc2hj0ctqbuy" path="res://tres/enemies/cat.tres" id="7_cat"]
 [ext_resource type="Resource" uid="uid://bcqpca6myt3jn" path="res://tres/enemies/dog.tres" id="8_dog"]
 [ext_resource type="Resource" uid="uid://cevlaph1ev8l2" path="res://tres/enemies/planet.tres" id="9_planet"]
-[ext_resource type="Resource" path="res://tres/tutorial/level_2_tutorial.tres" id="90_tut"]
+[ext_resource type="Resource" uid="uid://dq4rm5bh5n20p" path="res://tres/tutorial/level_2_tutorial.tres" id="90_tut"]
 
 [resource]
 script = ExtResource("1_cfg")
 sequence_length = 4
-button_pool = Array[ExtResource("2_def")]([ExtResource("4_bomb"), ExtResource("3_cw0vj")])
+button_pool = Array[ExtResource("2_def")]([ExtResource("4_bomb"), ExtResource("5_x2dnp"), ExtResource("4_jse00")])
 threats = Array[ExtResource("6_tdef")]([ExtResource("7_cat"), ExtResource("8_dog"), ExtResource("9_planet")])
 code_count = 3
 has_tutorial = true
 tutorial = ExtResource("90_tut")
-start_progress = 30.0
-drain_per_second = 1.5
-solve_reward = 25.0
+start_progress = 60.0
+solve_reward = 30.0
 puzzle_time = 20.0
-timeout_penalty = 15.0

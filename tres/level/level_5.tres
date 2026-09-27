@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dksvq7y3gkxdu" path="res://scripts/level/level_config.gd" id="1_cfg"]
 [ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="2_def"]
+[ext_resource type="Resource" path="res://tres/tiles/component/rocket.tres" id="2_julf1"]
+[ext_resource type="Resource" path="res://tres/tiles/component/pedal.tres" id="3_h705u"]
 [ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="3_tdef"]
 [ext_resource type="Resource" uid="uid://rc2hj0ctqbuy" path="res://tres/enemies/cat.tres" id="4_cat"]
 [ext_resource type="Resource" uid="uid://bcqpca6myt3jn" path="res://tres/enemies/dog.tres" id="5_dog"]
+[ext_resource type="Resource" uid="uid://cqi6udusb0mi1" path="res://tres/tiles/tools/swaft.tres" id="6_bls6x"]
 [ext_resource type="Resource" uid="uid://cevlaph1ev8l2" path="res://tres/enemies/planet.tres" id="6_planet"]
-[ext_resource type="Resource" uid="uid://bfgw5aj8jo6c0" path="res://tres/tiles/component/catnip.tres" id="10_b0"]
-[ext_resource type="Resource" path="res://tres/tiles/component/fish.tres" id="10_b1"]
 [ext_resource type="Resource" path="res://tres/tiles/component/milk.tres" id="10_b2"]
 [ext_resource type="Resource" uid="uid://bk0ba60dhn41o" path="res://tres/tiles/tools/yarn.tres" id="10_b3"]
 [ext_resource type="Resource" uid="uid://b4p341casa4vr" path="res://tres/tutorial/level_5_tutorial.tres" id="90_tut"]
@@ -15,7 +16,7 @@
 [resource]
 script = ExtResource("1_cfg")
 sequence_length = 4
-button_pool = Array[ExtResource("2_def")]([ExtResource("10_b0"), ExtResource("10_b1"), ExtResource("10_b2"), ExtResource("10_b3")])
+button_pool = Array[ExtResource("2_def")]([ExtResource("2_julf1"), ExtResource("3_h705u"), ExtResource("10_b2"), ExtResource("10_b3"), ExtResource("6_bls6x")])
 threats = Array[ExtResource("3_tdef")]([ExtResource("4_cat"), ExtResource("5_dog"), ExtResource("6_planet")])
 code_count = 3
 has_tutorial = true
