@@ -34,6 +34,13 @@ func _show_name_prompt() -> void:
 	_update_create()
 	name_edit.grab_focus()
 
+func _input(event: InputEvent) -> void:
+	# Same as the lobby's IP field: iOS only hides the keyboard when the field
+	# loses focus, so drop it on any tap outside the field.
+	if event is InputEventMouseButton and event.pressed and name_edit.has_focus() \
+			and not name_edit.get_global_rect().has_point(event.position):
+		name_edit.release_focus()
+
 func _update_create() -> void:
 	create_button.disabled = name_edit.text.strip_edges().is_empty()
 
