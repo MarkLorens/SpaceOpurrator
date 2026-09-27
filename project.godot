@@ -13,6 +13,9 @@ config_version=5
 config/name="SpaceOpurraider"
 run/main_scene="uid://bqxk8h2m5t7yf"
 config/features=PackedStringArray("4.7", "Forward Plus")
+boot_splash/bg_color=Color(0.34117648, 0.34117648, 0.34117648, 0)
+boot_splash/use_filter=false
+boot_splash/image="uid://bei4wf721dxhi"
 config/icon="uid://dvgp2xtkw1tp7"
 
 [autoload]

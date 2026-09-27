@@ -34,9 +34,9 @@ script = ExtResource("1_oc4kc")
 script = ExtResource("31_stars")
 stars = Dictionary[Texture2D, float]({
 ExtResource("32_starbig"): 1.0,
-ExtResource("33_starmed"): 2.0,
-ExtResource("34_starsmall"): 4.0,
-ExtResource("7_c8ctg"): 0.001
+ExtResource("33_starmed"): 3.0,
+ExtResource("34_starsmall"): 10.0,
+ExtResource("7_c8ctg"): 0.01
 })
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1730954771]
