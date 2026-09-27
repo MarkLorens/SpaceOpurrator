@@ -10,4 +10,5 @@ display_name = "Cat"
 sprite = ExtResource("2_sprite")
 sound = ExtResource("3_sound")
 sound_volume = 5
+badge_anchor = Vector2(-150, -140)
 sequence = Array[int]([2, 1, 3])

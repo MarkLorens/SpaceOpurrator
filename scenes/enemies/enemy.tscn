@@ -2,14 +2,32 @@
 
 [ext_resource type="Texture2D" uid="uid://brgvfwhd078or" path="res://assets/threats/cat.png" id="1_1oo2n"]
 [ext_resource type="Script" uid="uid://dy6b765a6x2pu" path="res://scripts/level/threat.gd" id="2_threat"]
-[ext_resource type="Texture2D" uid="uid://dyduse8nvrowi" path="res://assets/ui/SeqX.png" id="3_dot"]
-[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="4_font"]
+[ext_resource type="FontFile" uid="uid://ijg7ofwhbg78" path="res://assets/fonts/pixel-stick/PixelStick-Regular.ttf" id="4_font"]
 [ext_resource type="Texture2D" uid="uid://b4ppq0r8wlwbm" path="res://assets/Explosion/Explode1.png" id="10_boom"]
 [ext_resource type="Texture2D" uid="uid://cw33l4c5vfjmw" path="res://assets/Explosion/Explode2.png" id="11_boom"]
 [ext_resource type="Texture2D" uid="uid://c43g1r1goq3ho" path="res://assets/Explosion/Explode3.png" id="12_boom"]
 [ext_resource type="Texture2D" uid="uid://6umvw5y1er5o" path="res://assets/Explosion/Explode4.png" id="13_boom"]
 [ext_resource type="Texture2D" uid="uid://22dgxck5f7e5" path="res://assets/Explosion/Explode5.png" id="14_boom"]
 [ext_resource type="Texture2D" uid="uid://w2yqgikweypl" path="res://assets/Explosion/Explode6.png" id="15_boom"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge"]
+resource_local_to_scene = true
+content_margin_left = 3.0
+content_margin_top = 2.0
+content_margin_right = 3.0
+content_margin_bottom = 2.0
+bg_color = Color(0.043137256, 0.10980392, 0.21176471, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.77254903, 0.22745098, 0.6156863, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 3
+anti_aliasing = false
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_boom"]
 animations = [{
@@ -32,7 +50,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("15_boom")
 }],
-"loop": false,
+"loop": 0,
 "name": &"boom",
 "speed": 14.0
 }]
@@ -44,26 +62,28 @@ script = ExtResource("2_threat")
 texture_filter = 1
 texture = ExtResource("1_1oo2n")
 
-[node name="CodeBadge" type="Node2D" parent="Sprite2D"]
+[node name="CodeBadge" type="Node2D" parent="Sprite2D" unique_id=1986829593]
 visible = false
-position = Vector2(0, 430)
-scale = Vector2(5, 5)
 
-[node name="Dot" type="Sprite2D" parent="Sprite2D/CodeBadge"]
-texture_filter = 1
-position = Vector2(-12, 0)
-texture = ExtResource("3_dot")
+[node name="Leader" type="Line2D" parent="Sprite2D/CodeBadge" unique_id=1055786841]
+points = PackedVector2Array(-90, -270, 70, -180)
+width = 4.0
+default_color = Color(0.77254903, 0.22745098, 0.6156863, 1)
 
-[node name="Letter" type="Label" parent="Sprite2D/CodeBadge"]
-texture_filter = 1
-offset_left = 2.0
-offset_top = -14.0
-offset_right = 30.0
-offset_bottom = 14.0
+[node name="Box" type="PanelContainer" parent="Sprite2D/CodeBadge" unique_id=643107656]
+offset_right = 50.0
+offset_bottom = 20.0
+scale = Vector2(4, 4)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_badge")
+
+[node name="Label" type="Label" parent="Sprite2D/CodeBadge/Box" unique_id=1706762297]
+layout_mode = 2
 theme_override_colors/font_color = Color(0.77254903, 0.22745098, 0.6156863, 1)
 theme_override_fonts/font = ExtResource("4_font")
-theme_override_font_sizes/font_size = 24
-text = "X"
+theme_override_font_sizes/font_size = 16
+text = "DOG-X"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="OnScreen" type="VisibleOnScreenNotifier2D" parent="." unique_id=1273280293]

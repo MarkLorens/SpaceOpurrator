@@ -9,4 +9,5 @@ script = ExtResource("1_def")
 display_name = "Dog"
 sprite = ExtResource("2_sprite")
 sound = ExtResource("3_sound")
+badge_anchor = Vector2(70, -180)
 sequence = Array[int]([1, 2, 3])

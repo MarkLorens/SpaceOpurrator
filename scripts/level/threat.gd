@@ -12,8 +12,9 @@ extends Node2D
 ## random laser sound fires, then the explosion plays over it with a random
 ## explosion sound, and the next threat appears once the blast has finished.
 ##
-## With code cards on, a badge under the threat shows its code (X/Y/Z). It's
-## part of the sprite, so it hides and changes along with it.
+## A callout next to the threat names it and its code ("DOG-X"), in the
+## code's colour, with a line to the threat's badge_anchor. It's part of the
+## sprite, so it hides and changes along with it.
 
 ## Seconds to fade the sound out once the threat scrolls off screen.
 @export var fade_out_time := 0.4
@@ -21,6 +22,9 @@ extends Node2D
 @export var hide_on_frame := 2
 ## Seconds between the laser firing and the explosion.
 @export var laser_lead_time := 0.4
+## Where the badge's line starts (the box's right edge), relative to the
+## threat's badge_anchor.
+@export var badge_offset := Vector2(-160, -90)
 
 const LASER_SOUNDS: Array[AudioStream] = [
 	preload("res://assets/audio/1_laser shooting/1_laser-beam.wav"),
@@ -41,8 +45,9 @@ const EXPLOSION_SOUNDS: Array[AudioStream] = [
 @onready var enemy_sound: AudioStreamPlayer = $EnemySound
 @onready var explosion: AnimatedSprite2D = $Explosion
 @onready var code_badge: Node2D = $Sprite2D/CodeBadge
-@onready var code_dot: Sprite2D = $Sprite2D/CodeBadge/Dot
-@onready var code_letter: Label = $Sprite2D/CodeBadge/Letter
+@onready var badge_line: Line2D = $Sprite2D/CodeBadge/Leader
+@onready var badge_box: PanelContainer = $Sprite2D/CodeBadge/Box
+@onready var badge_label: Label = $Sprite2D/CodeBadge/Box/Label
 
 var _fade: Tween
 var _exploding := false
@@ -89,19 +94,27 @@ func _show_threat(threat: ThreatDef) -> void:
 		return
 	if threat:
 		sprite.texture = threat.sprite
-	_show_code(PuzzleSolver.current_code)
+	_show_code(threat, PuzzleSolver.current_code)
 	on_screen.rect = sprite.get_rect()  # track the sprite's size as threats change
 	if on_screen.is_on_screen():
 		_start_sound()  # a new threat appeared while the player is looking
 
-## Reuses the puzzle interface's code art so the badge matches the cards.
-func _show_code(code: int) -> void:
-	code_badge.visible = code >= 0 and code < PuzzleInterface.CODE_LETTERS.size()
+## Uses the puzzle interface's code letters and colours so the badge matches the cards.
+func _show_code(threat: ThreatDef, code: int) -> void:
+	code_badge.visible = threat != null and code >= 0 and code < PuzzleInterface.CODE_LETTERS.size()
 	if not code_badge.visible:
 		return
-	code_dot.texture = PuzzleInterface.CODE_DOTS[code]
-	code_letter.text = PuzzleInterface.CODE_LETTERS[code]
-	code_letter.add_theme_color_override("font_color", PuzzleInterface.CODE_COLORS[code])
+	var color := PuzzleInterface.CODE_COLORS[code]
+	badge_label.text = "%s-%s" % [threat.display_name.to_upper(), PuzzleInterface.CODE_LETTERS[code]]
+	badge_label.add_theme_color_override("font_color", color)
+	(badge_box.get_theme_stylebox("panel") as StyleBoxFlat).border_color = color
+	badge_line.default_color = color
+	# Line from the box's right edge to the threat; the box grows left with longer names.
+	var start := threat.badge_anchor + badge_offset
+	badge_line.points = PackedVector2Array([start, threat.badge_anchor])
+	badge_box.reset_size()
+	var box_size := badge_box.size * badge_box.scale
+	badge_box.position = start - Vector2(box_size.x, box_size.y / 2.0)
 
 func _start_sound() -> void:
 	var threat := PuzzleSolver.current_threat

@@ -10,4 +10,5 @@ display_name = "Planet"
 sprite = ExtResource("2_sprite")
 sound = ExtResource("3_sound")
 sound_volume = 5
+badge_anchor = Vector2(-150, -210)
 sequence = Array[int]([3, 1, 2])
