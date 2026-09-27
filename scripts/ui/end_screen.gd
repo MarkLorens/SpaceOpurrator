@@ -1,6 +1,6 @@
 extends Control
 ## Shown on both players when a level ends (bar full = win, bar empty = loss).
-## Win with levels left: Next Level. Loss: Play Again (same level). Either
+## Win with levels left: Next Level. Loss: Play Again (back to level 1). Either
 ## player can press Continue; the host decides. Winning the last level swaps to
 ## FinalPanel: whole-run stats and Back to Menu.
 ## Its process_mode is ALWAYS (set in the scene) so the buttons work while the

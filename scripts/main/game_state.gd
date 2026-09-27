@@ -7,7 +7,7 @@ extends Node
 ##                       -> join: lobby -> tap a room -> game room
 ##   game room: both Ready, host presses Start  -> loading screen -> level 1
 ##   level won -> Next (either player)          -> next level
-##   level lost -> Play Again (either player)   -> same level
+##   level lost -> Play Again (either player)   -> level 1
 ##   leave / drop                               -> main menu
 ## The UI calls host_game()/join_game()/set_ready()/start_game()/leave_game();
 ## everything else is reactions to NetworkManager signals.
@@ -54,7 +54,7 @@ var level_index := 0
 ## shown on the final win screen. Counted by the hud, reset when a run starts.
 var run_solved := 0
 var run_time := 0.0
-## Result of the level that just ended; decides whether Continue retries or advances.
+## Result of the level that just ended; decides whether Continue restarts or advances.
 var last_won := false
 var level: LevelConfig:
 	get: return LEVELS[level_index]
@@ -210,8 +210,8 @@ func has_next_level() -> bool:
 	return level_index + 1 < LEVELS.size()
 
 
-## Either player, from the end screen: next level after a win, same level
-## again after a loss. The host decides.
+## Either player, from the end screen: next level after a win, back to level 1
+## after a loss. The host decides.
 func request_continue() -> void:
 	_request_continue.rpc_id(1)
 
@@ -222,7 +222,10 @@ func _request_continue() -> void:
 	if game_running:
 		return
 	if not last_won:
-		start_level(level_index)
+		# A loss restarts the whole run from level 1, totals included.
+		run_solved = 0
+		run_time = 0.0
+		start_level(0)
 	elif has_next_level():
 		start_level(level_index + 1)
 
