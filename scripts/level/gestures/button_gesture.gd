@@ -10,6 +10,9 @@ extends Resource
 
 ## The gesture is complete: the tool + held component step goes in.
 signal activated
+## One unit of progress short of completing (a tap, a swat, a quarter turn),
+## for a haptic tick.
+signal stepped
 ## 0..1, drives the tool's battery bar; 0 = idle.
 signal progress_changed(value: float)
 
