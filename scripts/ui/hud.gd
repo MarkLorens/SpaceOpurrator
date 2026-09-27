@@ -8,6 +8,12 @@ extends Control
 @onready var solve_button: BaseButton = $"../../SolveButton" # world-space, centre of the board
 @onready var end_screen: Control = $"../EndScreen"
 
+## Played on both phones when a puzzle's time runs out unsolved (one at random).
+const FAIL_SOUNDS: Array[AudioStream] = [
+	preload("res://assets/audio/5_status/1.1_fail.wav"),
+	preload("res://assets/audio/5_status/1.2_fail.wav"),
+]
+
 ## Red vignette shows when the bar drops to this fraction of the end target.
 @export var dangerRatio: float = 0.2
 
@@ -29,6 +35,12 @@ func _ready() -> void:
 		_solve_press_pos = get_viewport().get_mouse_position())
 	
 	solve_button.pressed.connect(_on_solve_pressed)
+	# The claw's result buzzes both phones: it's the team's answer. Methods, not
+	# lambdas or bare Haptics statics: those connections would outlive this hud
+	# on the autoload and pile up, one more per level played.
+	PuzzleSolver.puzzle_solved.connect(_on_puzzle_solved)
+	PuzzleSolver.solve_failed.connect(_on_solve_failed)
+	PuzzleSolver.puzzle_timed_out.connect(_on_puzzle_timed_out)
 	
 	# ponytail: quick test vignette built in code; move into hud.tscn if it stays.
 	vignette = ColorRect.new()
@@ -80,7 +92,7 @@ func _process(delta: float) -> void:
 	puzzleTimeLeft -= delta
 	if puzzleTimeLeft <= 0.0:
 		progress_bar.value -= cfg.timeout_penalty
-		PuzzleSolver.new_puzzle()
+		PuzzleSolver.time_out()
 		puzzleTimeLeft = cfg.puzzle_time
 	if progress_bar.value <= 0.0:
 		_end_game.rpc(false, progress_bar.value, solved_count, GameState.run_solved, GameState.run_time)
@@ -88,6 +100,15 @@ func _process(delta: float) -> void:
 	# ponytail: sends every frame; throttle to a fixed tick if bandwidth ever matters.
 	if GameState.client_level_ready:
 		_sync_progress.rpc(progress_bar.value, cfg.end_target)
+
+func _on_puzzle_solved() -> void:
+	Haptics.success()
+
+func _on_solve_failed() -> void:
+	Haptics.error()
+
+func _on_puzzle_timed_out() -> void:
+	AudioManager.play_sfx(FAIL_SOUNDS.pick_random())
 
 func _on_solve_pressed() -> void:
 	if get_viewport().get_mouse_position().distance_to(_solve_press_pos) > tap_max_distance:

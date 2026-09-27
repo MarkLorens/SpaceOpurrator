@@ -22,6 +22,11 @@ signal threat_changed(threat: ThreatDef)
 ## Fires on host and client when the players enter the right sequence, just
 ## before the next puzzle arrives.
 signal puzzle_solved
+## Fires on host and client when the claw is pressed with the wrong sequence.
+signal solve_failed
+## Fires on host and client when a puzzle's time runs out unsolved, just
+## before the next puzzle arrives.
+signal puzzle_timed_out
 ## Fires on host and client when the held component changes (NONE = nothing held).
 signal held_component_changed(value: int)
 ## Fires on host and client when the puzzle interface flips to another code card.
@@ -178,6 +183,12 @@ func remove_last_press() -> void:
 func next_card() -> void:
 	_next_card.rpc_id(1)
 
+## Host only: the current puzzle ran out of time. Tells both phones, then
+## moves on to a new puzzle.
+func time_out() -> void:
+	_announce_timed_out.rpc()  # same reliable channel, so it lands before the new puzzle
+	new_puzzle()
+
 ## Host only.
 func solve_puzzle() -> bool:
 	var solved := correctSeq == submittedSeq
@@ -188,6 +199,8 @@ func solve_puzzle() -> bool:
 		# Same reliable channel as _set_sequence, so peers hear this before the next threat.
 		_announce_solved.rpc()
 		new_puzzle()
+	else:
+		_announce_failed.rpc()
 
 	return solved
 
@@ -255,6 +268,14 @@ func _set_sequence(seq: Array[Vector2i], threat_index: int, code: int) -> void:
 @rpc("authority", "call_local", "reliable")
 func _announce_solved() -> void:
 	puzzle_solved.emit()
+
+@rpc("authority", "call_local", "reliable")
+func _announce_failed() -> void:
+	solve_failed.emit()
+
+@rpc("authority", "call_local", "reliable")
+func _announce_timed_out() -> void:
+	puzzle_timed_out.emit()
 
 @rpc("authority", "call_local", "reliable")
 func _set_submitted(seq: Array[Vector2i]) -> void:

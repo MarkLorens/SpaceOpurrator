@@ -10,10 +10,6 @@ extends Camera2D
 ## screen_index * viewport_width, so a host (index 0) and a client (index 1)
 ## sitting side by side render as one continuous panorama instead of both
 ## showing the same patch of world.
-##
-## Haptics: every initial touch/click buzzes this device immediately and is
-## relayed to the other peer so it buzzes too — a physical way to feel the
-## network round-trip alongside the visual lerp.
 
 @export var lerp_speed := 12.0
 ## True LEFT/RIGHT edges of the board in world X (e.g. 0 and 10488 for a
@@ -26,7 +22,6 @@ extends Camera2D
 ## client is 1 screen right in offset mode). Room is reserved so that far screen
 ## also stays on the board. Set to 0 if you don't use offset mode.
 @export var side_screens := 1
-@export var haptic_duration_ms := 20
 ## Start with both players' screens centred on the middle of the board (the
 ## big button). Turn off to start on host_start_index instead.
 @export var start_centered := true
@@ -161,8 +156,6 @@ func set_screen_index(number: int) -> void:
 
 func _on_local_click() -> void:
 	_claim_authority()  # pressing down takes control of the camera
-	Input.vibrate_handheld(haptic_duration_ms)
-	_broadcast_click()
 
 
 ## Pressing a finger down makes me the camera's authority. Applied locally right
@@ -207,15 +200,6 @@ func _broadcast_camera_x(x: float) -> void:
 		client_dragged.rpc_id(1, x)
 
 
-func _broadcast_click() -> void:
-	if multiplayer.multiplayer_peer == null:
-		return
-	
-	if multiplayer.is_server():
-		receive_click.rpc()
-	else:
-		client_clicked.rpc_id(1)
-
 @rpc("any_peer", "call_remote", "unreliable_ordered")
 func client_dragged(x: float) -> void:
 	if not multiplayer.is_server():
@@ -239,13 +223,3 @@ func receive_camera_x(x: float, origin: int) -> void:
 	master_x = x
 
 
-@rpc("any_peer", "call_remote", "reliable")
-func client_clicked() -> void:
-	if not multiplayer.is_server(): 
-		return
-	receive_click.rpc()
-
-
-@rpc("any_peer", "call_remote", "reliable")
-func receive_click() -> void:
-	Input.vibrate_handheld(haptic_duration_ms)

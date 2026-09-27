@@ -48,15 +48,22 @@ func _ready() -> void:
 
 func _setup_component() -> void:
 	tap_max_time = COMPONENT_TAP_MAX_TIME
+	pressed.connect(Haptics.impact_medium)
 	pressed.connect(func() -> void: PuzzleSolver.hold_component(btnValue))
 	released.connect(func(was_tap: bool) -> void: PuzzleSolver.release_component(btnValue, was_tap))
 
 func _setup_tool() -> void:
+	# While armed, the gesture's own ticks are the feedback; otherwise just the press.
+	pressed.connect(func() -> void:
+		if not gesture or not gesture.armed:
+			Haptics.impact_light())
 	if not def.gesture:
 		return  # no gesture yet: this tool can't complete a step
 	gesture = def.gesture.duplicate()
 	gesture.attach(self)
 	gesture.activated.connect(func() -> void: PuzzleSolver.complete_tool(btnValue))
+	gesture.stepped.connect(Haptics.selection)
+	gesture.activated.connect(Haptics.impact_heavy)
 	_add_battery()
 	PuzzleSolver.held_component_changed.connect(_on_held_component_changed)
 	_on_held_component_changed(PuzzleSolver.held_component)

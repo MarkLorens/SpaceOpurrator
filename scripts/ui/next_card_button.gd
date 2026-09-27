@@ -19,6 +19,7 @@ func _ready() -> void:
 		sprite.texture = FLIP.click
 		AudioManager.play_sfx(FLIP.sfx))
 	released.connect(func(_was_tap: bool) -> void: sprite.texture = FLIP.unclick)
+	pressed.connect(Haptics.impact_light)
 	tapped.connect(PuzzleSolver.next_card)
 	# Tap area covers the whole item.
 	var rect := RectangleShape2D.new()

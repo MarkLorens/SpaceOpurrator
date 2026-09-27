@@ -37,6 +37,8 @@ func _on_finger_moved(pos: Vector2) -> void:
 	progress_changed.emit(float(_count) / swats)
 	if _count >= swats:
 		activated.emit()
+	else:
+		stepped.emit()
 
 func reset() -> void:
 	_count = 0
