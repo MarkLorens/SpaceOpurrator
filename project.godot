@@ -13,7 +13,7 @@ config_version=5
 config/name="SpaceOpurraider"
 run/main_scene="uid://bqxk8h2m5t7yf"
 config/features=PackedStringArray("4.7", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://dvgp2xtkw1tp7"
 
 [autoload]
 
