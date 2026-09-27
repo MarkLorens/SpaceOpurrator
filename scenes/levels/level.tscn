@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://2nqwir06mwy7" path="res://scripts/ui/satisfaction_bar.gd" id="20_satbar"]
 [ext_resource type="Texture2D" uid="uid://crmagda5wa52q" path="res://assets/ui/board/satisfaction_orange.png" id="21_satorange"]
 [ext_resource type="Texture2D" uid="uid://cj0lwbyqjyxqy" path="res://assets/ui/board/satisfaction_pink.png" id="22_satpink"]
+[ext_resource type="PackedScene" path="res://scenes/ui/tutorial_card.tscn" id="30_tutorial"]
 
 [node name="Level" type="Node2D" unique_id=825060166]
 script = ExtResource("1_oc4kc")
@@ -87,6 +88,8 @@ anchor_left = 1.0
 anchor_bottom = 0.0
 grow_horizontal = 0
 grow_vertical = 1
+
+[node name="TutorialCard" parent="UI" unique_id=73477312 instance=ExtResource("30_tutorial")]
 
 [node name="PauseMenu" parent="UI" unique_id=633759355 instance=ExtResource("5_pause")]
 

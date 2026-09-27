@@ -4,7 +4,7 @@ extends TapArea
 ## puzzle interface, so the other player can flip while the reader reads.
 ## Drawn with the flip item's panel art, like the item buttons.
 
-const FLIP: ButtonDef = preload("res://tres/flip.tres")
+const FLIP: ButtonDef = preload("res://tres/tiles/flip.tres")
 
 ## On-screen scale for the panel art. Set by ControlPanelGrid to its own stretch.
 var art_scale := Vector2.ONE

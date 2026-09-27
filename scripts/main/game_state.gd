@@ -22,7 +22,12 @@ const LOADING := "res://scenes/ui/loading_screen.tscn"
 const LEVEL := "res://scenes/levels/level.tscn"
 const LEVELS: Array[LevelConfig] = [
 	preload("res://tres/level/level_1.tres"),
-	preload("res://tres/level/level_2.tres")
+	preload("res://tres/level/level_2.tres"),
+	preload("res://tres/level/level_3.tres"),
+	preload("res://tres/level/level_4.tres"),
+	preload("res://tres/level/level_5.tres"),
+	preload("res://tres/level/level_6.tres"),
+	preload("res://tres/level/level_7.tres"),
 ]
 
 ## How long the host waits for the client to disconnect before closing anyway.
@@ -32,9 +37,13 @@ const CLIENT_LEAVE_TIMEOUT := 2.0
 signal level_started
 ## Fires on both peers whenever the room name, players or ready flags change.
 signal room_changed
+## Fires on both peers when play begins after the level's tutorial: once both
+## players have closed it. Levels without a tutorial start running straight away.
+signal play_started
 
 var role: Role.Type = Role.Type.NONE
-## True once both players are connected. Gameplay waits on this.
+## True once both players are connected (and have closed the level's
+## tutorial, if it has one). Gameplay waits on this.
 var game_running := false
 ## Host-picked seed for any randomness both players must agree on (e.g. button
 ## layout). Re-rolled every level. 0 = not received yet.
@@ -50,6 +59,7 @@ var in_room := false  # true from hosting/connecting until the first level loads
 ## will resolve. Reset on every level load.
 var client_level_ready := false
 var _pending_host_close := false  # host is waiting for the client to leave first
+var _tutorials_closed := {}  # host only: peer id -> true once they closed this level's tutorial
 
 func _ready() -> void:
 	# Session RPCs (next level, leave) must land while the end/pause screen has the tree paused.
@@ -209,6 +219,7 @@ func _load_level(index: int, seed_value: int, show_loading: bool) -> void:
 	session_seed = seed_value
 	in_room = false
 	client_level_ready = false
+	_tutorials_closed = {}
 	get_tree().paused = false  # the end screen paused the previous level
 	if show_loading:
 		_change_scene(LOADING)  # the loading screen calls enter_level() when it finishes
@@ -221,9 +232,31 @@ func _load_level(index: int, seed_value: int, show_loading: bool) -> void:
 func enter_level() -> void:
 	if role == Role.Type.NONE:
 		return  # session ended while loading
-	game_running = true
+	game_running = not level.shows_tutorial()  # else play waits for both tutorials to close
 	_change_scene(LEVEL)
 	level_started.emit()
+
+
+## Either player, when they close the level's tutorial. The host starts play
+## once every player has.
+func finish_tutorial() -> void:
+	_tutorial_closed.rpc_id(1)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _tutorial_closed() -> void:
+	if game_running:
+		return
+	var sender := multiplayer.get_remote_sender_id()
+	_tutorials_closed[1 if sender == 0 else sender] = true  # 0 = the host's own call
+	if _tutorials_closed.size() >= 1 + multiplayer.get_peers().size():
+		_start_play.rpc()
+
+
+@rpc("authority", "call_local", "reliable")
+func _start_play() -> void:
+	game_running = true
+	play_started.emit()
 
 
 ## Client, once its level scene is in the tree. Goes through this autoload
