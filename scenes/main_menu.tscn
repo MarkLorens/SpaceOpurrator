@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://0t5oxjdrdro3" path="res://assets/main screen_characters.png" id="4_chars"]
 [ext_resource type="Texture2D" uid="uid://calxdijbm3hrc" path="res://assets/main screen_logotype.png" id="5_logo"]
 [ext_resource type="PackedScene" path="res://scenes/ui/volume_control.tscn" id="7_oa1go"]
+[ext_resource type="Texture2D" uid="uid://cwkdefl7q5y45" path="res://assets/ui/Volume Button.png" id="8_jk1qb"]
 [ext_resource type="FontFile" uid="uid://ijg7ofwhbg78" path="res://assets/fonts/pixel-stick/PixelStick-Regular.ttf" id="8_tbmy8"]
 
 [node name="MainMenu" type="Control" unique_id=1947701498]
@@ -86,6 +87,21 @@ vertical_alignment = 1
 
 [node name="VolumeControl" parent="." unique_id=387999667 instance=ExtResource("7_oa1go")]
 layout_mode = 1
+
+[node name="LeaderboardButton" type="TextureButton" parent="." unique_id=1998736447]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -396.0
+offset_top = 125.0
+offset_right = -295.0
+offset_bottom = 225.0
+grow_horizontal = 0
+texture_normal = ExtResource("8_jk1qb")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="Label" type="Label" parent="." unique_id=19692316]
 custom_minimum_size = Vector2(1774, 0)

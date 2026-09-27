@@ -30,7 +30,7 @@ for variant in debug release; do
     minflag=-miphoneos-version-min=15.0
     [ $sdk = iphonesimulator ] && minflag=-mios-simulator-version-min=15.0
     d=$BUILD/$variant-$sdk; mkdir -p "$d"
-    for src in bonjour.mm bonjour_module.cpp; do compile $variant $sdk $minflag "$HERE/bonjour/$src" "$d/${src%.*}.o"; done
+    for src in bonjour.mm leaderboards.mm bonjour_module.cpp; do compile $variant $sdk $minflag "$HERE/bonjour/$src" "$d/${src%.*}.o"; done
     libtool -static -o "$d/libbonjour.a" "$d"/*.o
     args+=(-library "$d/libbonjour.a")
   done
