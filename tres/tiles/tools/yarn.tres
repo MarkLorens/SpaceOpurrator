@@ -1,9 +1,13 @@
-[gd_resource type="Resource" script_class="ButtonDef" format=3]
+[gd_resource type="Resource" script_class="ButtonDef" format=3 uid="uid://dsj4c1cgj55kg"]
 
-[ext_resource type="Script" path="res://scripts/level/button_def.gd" id="1_def"]
+[ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="1_def"]
 [ext_resource type="Texture2D" uid="uid://bycw2ebb4lrlx" path="res://assets/items/yarn/unclick.png" id="2_unclick"]
 [ext_resource type="Texture2D" uid="uid://buj53tj6xvsv" path="res://assets/items/yarn/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://c6n7me78cgbh6" path="res://assets/icon/yarn_icon.png" id="4_icon"]
+[ext_resource type="Script" uid="uid://bbf0rsk4p7p6j" path="res://scripts/level/gestures/roll_gesture.gd" id="5_roll"]
+
+[sub_resource type="Resource" id="Resource_gesture"]
+script = ExtResource("5_roll")
 
 [resource]
 script = ExtResource("1_def")
@@ -11,3 +15,4 @@ kind = 1
 icon = ExtResource("4_icon")
 unclick = ExtResource("2_unclick")
 click = ExtResource("3_click")
+gesture = SubResource("Resource_gesture")

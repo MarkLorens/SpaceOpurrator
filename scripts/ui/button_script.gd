@@ -45,6 +45,9 @@ func _setup_tool() -> void:
 
 func _on_held_component_changed(value: int) -> void:
 	gesture.armed = value != PuzzleSolver.NONE
+	# Only while armed: otherwise a drag from this tool still pans the board.
+	keep_drags = gesture.armed and gesture.uses_drags()
+	grab_margin = gesture.grab_margin
 
 ## Panel shows unclick at rest and click while held. The icon is only for the
 ## sequence display.

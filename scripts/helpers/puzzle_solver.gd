@@ -42,7 +42,7 @@ func _ready() -> void:
 func new_puzzle() -> void:
 	_set_submitted.rpc([] as Array[Vector2i])
 	var cfg := GameState.level
-	var seq := generate_sequence(cfg, GameState.session_seed)
+	var seq := generate_sequence(cfg)
 	_threat_index = _pick_other(cfg.threats.size(), _threat_index)
 	_set_sequence.rpc(seq, _threat_index)
 
@@ -53,20 +53,22 @@ func _pick_other(count: int, last: int) -> int:
 	var i := randi() % (count - 1)
 	return i + 1 if last >= 0 and i >= last else i
 
-## Random steps from this level's live buttons. Any live component, sometimes
-## paired with any live tool that has a gesture. Repeats are fine.
-func generate_sequence(cfg: LevelConfig, seed_value: int) -> Array[Vector2i]:
+## Random steps from this level's buttons. Any component, sometimes paired with
+## any tool that has a gesture. Repeats are fine.
+func generate_sequence(cfg: LevelConfig) -> Array[Vector2i]:
 	var defs := cfg.button_pool
 	var components: Array[int] = []
 	var tools: Array[int] = []
-	for value in cfg.live_buttons(seed_value):
+	for value in defs.size():
+		if not defs[value]:
+			continue
 		if not defs[value].is_tool():
 			components.append(value)
 		elif defs[value].gesture:
 			tools.append(value)
 	var seq: Array[Vector2i] = []
 	if components.is_empty():
-		push_error("PuzzleSolver: level has no live components to build a sequence from")
+		push_error("PuzzleSolver: level's button_pool has no components to build a sequence from")
 		return seq
 	for i in cfg.sequence_length:
 		var paired := not tools.is_empty() and randf() < cfg.combo_chance

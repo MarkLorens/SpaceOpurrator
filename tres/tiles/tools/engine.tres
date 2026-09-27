@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="ButtonDef" format=3]
+[gd_resource type="Resource" script_class="ButtonDef" format=3 uid="uid://btueocgke8cio"]
 
-[ext_resource type="Script" path="res://scripts/level/button_def.gd" id="1_def"]
+[ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="1_def"]
 [ext_resource type="Texture2D" uid="uid://pqq5xgv2ywya" path="res://assets/items/engine/unclick.png" id="2_unclick"]
 [ext_resource type="Texture2D" uid="uid://4yctngo73gpu" path="res://assets/items/engine/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://os81gw8r81kh" path="res://assets/icon/engine_icon.png" id="4_icon"]
@@ -8,7 +8,6 @@
 
 [sub_resource type="Resource" id="Resource_taps"]
 script = ExtResource("5_taps")
-taps = 4
 
 [resource]
 script = ExtResource("1_def")

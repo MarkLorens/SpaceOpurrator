@@ -5,16 +5,18 @@
 [ext_resource type="Resource" uid="uid://b3shf04o5cpyy" path="res://tres/tiles/component/battery.tres" id="2_qnba2"]
 [ext_resource type="Resource" uid="uid://cpq14648bog0l" path="res://tres/tiles/component/bomb.tres" id="3_sqrfq"]
 [ext_resource type="Resource" uid="uid://1ocb4fchdva6" path="res://tres/tiles/component/catnip.tres" id="4_sqrfq"]
+[ext_resource type="Resource" uid="uid://dsj4c1cgj55kg" path="res://tres/tiles/tools/yarn.tres" id="5_wwpw2"]
+[ext_resource type="Resource" uid="uid://cqi6udusb0mi1" path="res://tres/tiles/tools/swaft.tres" id="6_lwrxx"]
 [ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="6_tdef"]
 [ext_resource type="Resource" path="res://tres/enemies/dog.tres" id="7_dog"]
 [ext_resource type="Resource" uid="uid://rc2hj0ctqbuy" path="res://tres/enemies/cat.tres" id="8_cat"]
-[ext_resource type="Resource" path="res://tres/tiles/tools/engine.tres" id="9_engine"]
+[ext_resource type="Resource" uid="uid://btueocgke8cio" path="res://tres/tiles/tools/engine.tres" id="9_engine"]
 
 [resource]
 script = ExtResource("1_cfg")
-button_pool = Array[ExtResource("2_def")]([ExtResource("2_qnba2"), ExtResource("3_sqrfq"), ExtResource("4_sqrfq"), ExtResource("9_engine")])
-button_count = 4
-symbol_count = 4
+button_pool = Array[ExtResource("2_def")]([ExtResource("2_qnba2"), ExtResource("3_sqrfq"), ExtResource("4_sqrfq"), ExtResource("6_lwrxx"), ExtResource("5_wwpw2"), ExtResource("9_engine")])
 threats = Array[ExtResource("6_tdef")]([ExtResource("7_dog"), ExtResource("8_cat")])
 start_progress = 60.0
-solve_reward = 100.0
+drain_per_second = 0.01
+solve_reward = 1.0
+puzzle_time = 200.0
