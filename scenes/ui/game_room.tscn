@@ -181,7 +181,7 @@ vertical_alignment = 1
 
 [node name="CancelButton" type="TextureButton" parent="." unique_id=217004304]
 texture_filter = 1
-custom_minimum_size = Vector2(132, 132)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 0
 offset_left = 40.0
 offset_top = 40.0
