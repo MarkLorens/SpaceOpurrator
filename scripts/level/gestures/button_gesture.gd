@@ -8,12 +8,15 @@ extends Resource
 ## To add a gesture: extend this, listen to the TapArea's signals in attach(),
 ## only make progress while `armed`, and emit `activated` when it completes.
 
+# Emitted by the subclasses, not here, hence the ignores.
 ## The gesture is complete: the tool + held component step goes in.
+@warning_ignore("unused_signal")
 signal activated
 ## One unit of progress short of completing (a tap, a swat, a quarter turn),
 ## for a haptic tick.
 signal stepped
 ## 0..1, drives the tool's battery bar; 0 = idle.
+@warning_ignore("unused_signal")
 signal progress_changed(value: float)
 
 ## Movement gestures (uses_drags) only: how far (pixels) outside the tool a

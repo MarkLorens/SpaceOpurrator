@@ -43,7 +43,7 @@ func show_result(won: bool, solved: int, run_solved: int, run_time: float) -> vo
 		background.texture = BG_GAME_WIN
 		var secs := int(run_time)
 		stats_label.text = "Targets destroyed :  [b]%d[/b]\nTime elapsed :  [b]%02d:%02d[/b]" \
-				% [run_solved, secs / 60, secs % 60]
+				% [run_solved, floori(run_time / 60.0), secs % 60]
 		planet_label.text = "PLANET %s WAS CONQUERED" % _planet_name()
 	elif won:
 		background.texture = BG_LEVEL_COMPLETE

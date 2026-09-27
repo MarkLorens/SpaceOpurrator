@@ -20,3 +20,4 @@ code_count = 3
 start_progress = 60.0
 solve_reward = 30.0
 puzzle_time = 20.0
+timeout_penalty = 20.0

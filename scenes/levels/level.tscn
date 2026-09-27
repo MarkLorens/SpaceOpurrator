@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cmmbairwn7wr7" path="res://scenes/ui/hud.tscn" id="5_sk5k4"]
 [ext_resource type="PackedScene" uid="uid://bfmqgn1fikgyn" path="res://scenes/tile_grid/control_panel_grid.tscn" id="5_wtwp4"]
 [ext_resource type="Texture2D" uid="uid://cjxirbf7avdpp" path="res://assets/ui/button/central_button/central_button_pressed.png" id="6_jyre1"]
+[ext_resource type="Texture2D" uid="uid://bnxilcfa4mkwf" path="res://assets/space_opurrator_prototype_assets/star.png" id="7_c8ctg"]
 [ext_resource type="PackedScene" uid="uid://dxaglilp6as0u" path="res://scenes/enemies/enemy.tscn" id="8_s8va5"]
 [ext_resource type="PackedScene" uid="uid://ykvmdwssq2xn" path="res://scenes/puzzle_instruction/puzzle_interface.tscn" id="9_dga24"]
 [ext_resource type="PackedScene" uid="uid://bhn17qul7st3o" path="res://scenes/ui/end_screen.tscn" id="12_end"]
@@ -19,11 +20,24 @@
 [ext_resource type="Texture2D" uid="uid://crmagda5wa52q" path="res://assets/ui/board/satisfaction_orange.png" id="21_satorange"]
 [ext_resource type="Texture2D" uid="uid://cj0lwbyqjyxqy" path="res://assets/ui/board/satisfaction_pink.png" id="22_satpink"]
 [ext_resource type="PackedScene" uid="uid://hbh35i0j712c" path="res://scenes/ui/tutorial_card.tscn" id="30_tutorial"]
+[ext_resource type="Script" uid="uid://ia8winijj3fd" path="res://scripts/level/star_field.gd" id="31_stars"]
+[ext_resource type="Texture2D" uid="uid://fwac5o7nfbd2" path="res://assets/ui/backgrounds/stars_big.png" id="32_starbig"]
+[ext_resource type="Texture2D" uid="uid://bmibfnvfls571" path="res://assets/ui/backgrounds/stars_med.png" id="33_starmed"]
+[ext_resource type="Texture2D" uid="uid://cmjfhfqg25jn6" path="res://assets/ui/backgrounds/stars_small.png" id="34_starsmall"]
 
 [node name="Level" type="Node2D" unique_id=825060166]
 script = ExtResource("1_oc4kc")
 
 [node name="Board" parent="." unique_id=1723946669 instance=ExtResource("2_x42e6")]
+
+[node name="StarField" type="Node2D" parent="." unique_id=2081946958]
+script = ExtResource("31_stars")
+stars = Dictionary[Texture2D, float]({
+ExtResource("32_starbig"): 1.0,
+ExtResource("33_starmed"): 3.0,
+ExtResource("34_starsmall"): 10.0,
+ExtResource("7_c8ctg"): 0.01
+})
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1730954771]
 position = Vector2(1311, 603)

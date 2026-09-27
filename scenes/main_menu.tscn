@@ -3,8 +3,11 @@
 [ext_resource type="Script" uid="uid://do1eds3b71h6e" path="res://scripts/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://curx48t2yp7y" path="res://assets/ui/backgrounds/main_bg.png" id="2_8ln24"]
 [ext_resource type="Texture2D" uid="uid://nunkol084ag0" path="res://assets/ui/button/Active Button.png" id="2_bqqt6"]
-[ext_resource type="FontFile" uid="uid://cq0cur5rppn7y" path="res://assets/fonts/retro-pixel/Retro Pixel - Italic.ttf" id="2_wu84c"]
 [ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="3_wu84c"]
+[ext_resource type="Texture2D" uid="uid://0t5oxjdrdro3" path="res://assets/main screen_characters.png" id="4_chars"]
+[ext_resource type="Texture2D" uid="uid://calxdijbm3hrc" path="res://assets/main screen_logotype.png" id="5_logo"]
+[ext_resource type="PackedScene" path="res://scenes/ui/volume_control.tscn" id="7_oa1go"]
+[ext_resource type="FontFile" uid="uid://ijg7ofwhbg78" path="res://assets/fonts/pixel-stick/PixelStick-Regular.ttf" id="8_tbmy8"]
 
 [node name="MainMenu" type="Control" unique_id=1947701498]
 layout_mode = 3
@@ -17,6 +20,7 @@ mouse_filter = 2
 script = ExtResource("1_l6cm7")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1753331229]
+texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,43 +28,49 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_8ln24")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=840469325]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=2033377048]
-layout_mode = 2
-theme_override_constants/separation = 100
-
-[node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=811804289]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.972549, 0.827451, 0.6078431, 1)
-theme_override_colors/font_shadow_color = Color(0.7686275, 0.23529412, 0.6117647, 1)
-theme_override_colors/font_outline_color = Color(0.16470589, 0.16862746, 0.30980393, 1)
-theme_override_constants/line_spacing = -20
-theme_override_constants/shadow_offset_x = 10
-theme_override_constants/shadow_offset_y = 10
-theme_override_constants/outline_size = 28
-theme_override_constants/shadow_outline_size = 28
-theme_override_fonts/font = ExtResource("2_wu84c")
-theme_override_font_sizes/font_size = 192
-text = "SPACE 
-OPURRATOR"
-horizontal_alignment = 1
-
-[node name="PlayButton" type="TextureButton" parent="CenterContainer/VBoxContainer" unique_id=1998507778]
+[node name="Characters" type="TextureRect" parent="." unique_id=1918215517]
 texture_filter = 1
-custom_minimum_size = Vector2(63, 180)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.275
+anchor_top = 0.5
+anchor_right = 0.275
+anchor_bottom = 0.5
+offset_left = -555.0
+offset_top = -441.0
+offset_right = 555.0
+offset_bottom = 441.0
+mouse_filter = 2
+texture = ExtResource("4_chars")
+
+[node name="Column" type="VBoxContainer" parent="." unique_id=1379448841]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.51
+anchor_top = 0.3
+anchor_right = 0.51
+anchor_bottom = 0.3
+theme_override_constants/separation = 70
+
+[node name="Logo" type="TextureRect" parent="Column" unique_id=1816229622]
+texture_filter = 1
 layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_logo")
+
+[node name="PlayButton" type="TextureButton" parent="Column" unique_id=1998507778]
+texture_filter = 1
+custom_minimum_size = Vector2(615, 168)
+layout_mode = 2
+size_flags_horizontal = 0
 texture_normal = ExtResource("2_bqqt6")
+ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/PlayButton" unique_id=1245533361]
+[node name="Label" type="Label" parent="Column/PlayButton" unique_id=1245533361]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,7 +79,30 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
 theme_override_fonts/font = ExtResource("3_wu84c")
-theme_override_font_sizes/font_size = 100
-text = "Play"
+theme_override_font_sizes/font_size = 72
+text = "PLAY"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="VolumeControl" parent="." unique_id=387999667 instance=ExtResource("7_oa1go")]
+layout_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=19692316]
+custom_minimum_size = Vector2(1774, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -887.0
+offset_top = -96.5
+offset_right = 887.0
+offset_bottom = 96.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.8235294, 0.5803922, 1)
+theme_override_fonts/font = ExtResource("8_tbmy8")
+theme_override_font_sizes/font_size = 100
+text = "An evil cat looking for a partner in crime, exploring space to fulfill their satisfaction"
+autowrap_mode = 3

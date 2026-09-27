@@ -65,11 +65,11 @@ func _set_arrow(arrow: TextureButton, usable: bool) -> void:
 	arrow.disabled = not usable
 	arrow.modulate.a = 1.0 if usable else 0.0
 
-func _fit_picture(size: Vector2) -> Vector2:
-	var fit := minf(picture_max_size.x / size.x, picture_max_size.y / size.y)
+func _fit_picture(picture_size: Vector2) -> Vector2:
+	var fit := minf(picture_max_size.x / picture_size.x, picture_max_size.y / picture_size.y)
 	if fit >= 1.0:
 		fit = floorf(fit)
-	return (size * fit).floor()
+	return (picture_size * fit).floor()
 
 func _close() -> void:
 	board.hide()
