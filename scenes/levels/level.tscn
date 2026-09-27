@@ -24,11 +24,32 @@
 [ext_resource type="Texture2D" uid="uid://fwac5o7nfbd2" path="res://assets/ui/backgrounds/stars_big.png" id="32_starbig"]
 [ext_resource type="Texture2D" uid="uid://bmibfnvfls571" path="res://assets/ui/backgrounds/stars_med.png" id="33_starmed"]
 [ext_resource type="Texture2D" uid="uid://cmjfhfqg25jn6" path="res://assets/ui/backgrounds/stars_small.png" id="34_starsmall"]
+[ext_resource type="Script" path="res://scripts/level/stroke_field.gd" id="60_strokes"]
+[ext_resource type="Texture2D" uid="uid://bvwykgb1uqyw6" path="res://assets/ui/backgrounds/space strokes_1.png" id="61_stroke"]
+[ext_resource type="Texture2D" uid="uid://nyypd5tt4ywr" path="res://assets/ui/backgrounds/stroke_flow/space strokes_1_flow.png" id="71_flow"]
+[ext_resource type="Texture2D" uid="uid://ctb6wes3awv6p" path="res://assets/ui/backgrounds/space strokes_2.png" id="62_stroke"]
+[ext_resource type="Texture2D" uid="uid://p3w3u4jljj5y" path="res://assets/ui/backgrounds/stroke_flow/space strokes_2_flow.png" id="72_flow"]
+[ext_resource type="Texture2D" uid="uid://g4febbnxvfki" path="res://assets/ui/backgrounds/space strokes_3.png" id="63_stroke"]
+[ext_resource type="Texture2D" uid="uid://bvtp5luswwq4r" path="res://assets/ui/backgrounds/stroke_flow/space strokes_3_flow.png" id="73_flow"]
+[ext_resource type="Texture2D" uid="uid://dgkaxia112nyt" path="res://assets/ui/backgrounds/space strokes_4.png" id="64_stroke"]
+[ext_resource type="Texture2D" uid="uid://b8u5jrqfam0d2" path="res://assets/ui/backgrounds/stroke_flow/space strokes_4_flow.png" id="74_flow"]
+[ext_resource type="Texture2D" uid="uid://dr8pnnnuhk6ff" path="res://assets/ui/backgrounds/space strokes_5.png" id="65_stroke"]
+[ext_resource type="Texture2D" uid="uid://y76o4w4yn8v8" path="res://assets/ui/backgrounds/stroke_flow/space strokes_5_flow.png" id="75_flow"]
 
 [node name="Level" type="Node2D" unique_id=825060166]
 script = ExtResource("1_oc4kc")
 
 [node name="Board" parent="." unique_id=1723946669 instance=ExtResource("2_x42e6")]
+
+[node name="StrokeField" type="Node2D" parent="."]
+script = ExtResource("60_strokes")
+strokes = Dictionary[Texture2D, Texture2D]({
+ExtResource("61_stroke"): ExtResource("71_flow"),
+ExtResource("62_stroke"): ExtResource("72_flow"),
+ExtResource("63_stroke"): ExtResource("73_flow"),
+ExtResource("64_stroke"): ExtResource("74_flow"),
+ExtResource("65_stroke"): ExtResource("75_flow")
+})
 
 [node name="StarField" type="Node2D" parent="." unique_id=2081946958]
 script = ExtResource("31_stars")
