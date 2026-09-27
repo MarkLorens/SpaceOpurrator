@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/next_card_button.gd" id="1_next"]
-[ext_resource type="Texture2D" uid="uid://dxfi031n6x7i0" path="res://assets/items/flip/unclick.png" id="2_unclick"]
+[ext_resource type="Texture2D" uid="uid://84vp2adnlxsd" path="res://assets/items/flip/unclick.png" id="2_unclick"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_next"]
 size = Vector2(64, 64)

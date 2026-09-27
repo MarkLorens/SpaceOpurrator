@@ -39,6 +39,9 @@ signal tapped
 static var _kept_fingers: Array[int] = []
 ## Every TapArea in the tree, to settle overlapping grab margins.
 static var _all: Array[TapArea] = []
+## While true no TapArea starts a press, e.g. while a popup covers the board.
+## The level sets it; the UI can't block these, since _input runs before it.
+static var locked := false
 
 ## Where the current press started, in screen pixels.
 var press_position := Vector2.ZERO
@@ -53,7 +56,7 @@ static func is_finger_kept(index: int) -> bool:
 # the button, and so each finger is tracked by its own touch index.
 func _input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
-		if event.pressed and _finger == -1 and _claims(event.position):
+		if event.pressed and not locked and _finger == -1 and _claims(event.position):
 			_finger = event.index
 			press_position = event.position
 			_press_ms = Time.get_ticks_msec()

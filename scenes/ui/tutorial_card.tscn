@@ -1,0 +1,189 @@
+[gd_scene format=3 uid="uid://hbh35i0j712c"]
+
+[ext_resource type="Script" uid="uid://byfubils63ct" path="res://scripts/ui/tutorial_card.gd" id="1_card"]
+[ext_resource type="Texture2D" uid="uid://ymfc3o6j2uoo" path="res://assets/ui/TutorialBoard.png" id="2_board"]
+[ext_resource type="Texture2D" uid="uid://d0qmtwlm7icvl" path="res://assets/ui/Arrow Left Active.png" id="3_left"]
+[ext_resource type="Texture2D" uid="uid://be17ghdjuicg" path="res://assets/ui/Arrow Left Disabled.png" id="4_left_off"]
+[ext_resource type="Texture2D" uid="uid://dyqv4ya7di80v" path="res://assets/ui/Arrow Right Active.png" id="5_right"]
+[ext_resource type="Texture2D" uid="uid://cpg7u15cx51ly" path="res://assets/ui/Arrow Right Disabled.png" id="6_right_off"]
+[ext_resource type="Texture2D" uid="uid://bn62qo5tj8tiw" path="res://assets/ui/button/close button.png" id="7_close"]
+[ext_resource type="FontFile" uid="uid://dy4glkgjjd3l" path="res://assets/fonts/retro-pixel/Retro Pixel.otf" id="8_bold"]
+[ext_resource type="FontFile" uid="uid://ijg7ofwhbg78" path="res://assets/fonts/pixel-stick/PixelStick-Regular.ttf" id="9_body"]
+
+[node name="TutorialCard" type="Control" unique_id=112346300]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_card")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1037512656]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=634833200]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Board" type="TextureRect" parent="Center" unique_id=1306545227]
+custom_minimum_size = Vector2(1353, 963)
+layout_mode = 2
+texture = ExtResource("2_board")
+expand_mode = 1
+
+[node name="Margin" type="MarginContainer" parent="Center/Board" unique_id=739685070]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 90
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 90
+theme_override_constants/margin_bottom = 50
+
+[node name="Page" type="VBoxContainer" parent="Center/Board/Margin" unique_id=971220494]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="TopSpacer" type="Control" parent="Center/Board/Margin/Page" unique_id=1003964289]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Picture" type="VBoxContainer" parent="Center/Board/Margin/Page" unique_id=1344993018]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Picture" type="TextureRect" parent="Center/Board/Margin/Page/Picture" unique_id=735119136]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Caption" type="Label" parent="Center/Board/Margin/Page/Picture" unique_id=1608973501]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.15686275, 0.14901961, 0.3372549, 1)
+theme_override_fonts/font = ExtResource("8_bold")
+theme_override_font_sizes/font_size = 64
+text = "CAPTION"
+horizontal_alignment = 1
+
+[node name="GroupGap" type="Control" parent="Center/Board/Margin/Page" unique_id=1948571391]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Steps" type="VBoxContainer" parent="Center/Board/Margin/Page" unique_id=99041095]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="StepsTitle" type="Label" parent="Center/Board/Margin/Page/Steps" unique_id=2118633621]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.77254903, 0.22745098, 0.6156863, 1)
+theme_override_fonts/font = ExtResource("8_bold")
+theme_override_font_sizes/font_size = 48
+text = "STEPS TITLE"
+horizontal_alignment = 1
+
+[node name="StepsBody" type="RichTextLabel" parent="Center/Board/Margin/Page/Steps" unique_id=146967843]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.15686275, 0.14901961, 0.3372549, 1)
+theme_override_fonts/normal_font = ExtResource("9_body")
+theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
+text = "[center]Steps body[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Spacer" type="Control" parent="Center/Board/Margin/Page" unique_id=1116523560]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Bar" type="HBoxContainer" parent="Center/Board/Margin/Page" unique_id=1543903984]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PrevButton" type="TextureButton" parent="Center/Board/Margin/Page/Bar" unique_id=177294345]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 72)
+layout_mode = 2
+texture_normal = ExtResource("3_left")
+texture_disabled = ExtResource("4_left_off")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="PageLabel" type="Label" parent="Center/Board/Margin/Page/Bar" unique_id=1346692091]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.2901961, 0.16470589, 0.5294118, 1)
+theme_override_fonts/font = ExtResource("8_bold")
+theme_override_font_sizes/font_size = 48
+text = "1 / 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextButton" type="TextureButton" parent="Center/Board/Margin/Page/Bar" unique_id=1865625662]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 72)
+layout_mode = 2
+texture_normal = ExtResource("5_right")
+texture_disabled = ExtResource("6_right_off")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CloseButton" type="TextureButton" parent="Center/Board" unique_id=1094441170]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.011000001
+anchor_right = 1.0
+anchor_bottom = 0.011000001
+offset_left = -116.0
+offset_top = -55.593002
+offset_right = 44.0
+offset_bottom = 114.407
+grow_horizontal = 0
+texture_normal = ExtResource("7_close")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="WaitingLabel" type="Label" parent="." unique_id=1367504678]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("8_bold")
+theme_override_font_sizes/font_size = 64
+text = "Waiting for co-pilot..."
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="Tutorial" format=3 uid="uid://dq4rm5bh5n20p"]
+
+[ext_resource type="Script" uid="uid://x712t8s3gk0a" path="res://scripts/level/tutorial.gd" id="1_tut"]
+[ext_resource type="Script" uid="uid://d0255lt18fcu6" path="res://scripts/level/tutorial_page.gd" id="2_page"]
+[ext_resource type="Texture2D" uid="uid://bt2akqt6qcdk5" path="res://assets/ui/tutorial/level_2/find_the_right_sheet.png" id="3_pic"]
+
+[sub_resource type="Resource" id="TutorialPage_1"]
+script = ExtResource("2_page")
+picture = ExtResource("3_pic")
+caption = "FIND THE RIGHT SHEET"
+steps_title = "FIND THE RIGHT SHEET!"
+steps_body = "Flip through the Decode Sheet
+by clicking the [img width=60 height=48]res://assets/items/flip/click.png[/img] [img width=60 height=48]res://assets/items/flip/unclick.png[/img] buttons."
+
+[resource]
+script = ExtResource("1_tut")
+pages = Array[ExtResource("2_page")]([SubResource("TutorialPage_1")])

@@ -21,6 +21,13 @@ extends Resource
 ## for the level. With more than one code, the Next button flips between cards.
 @export_range(1, 3) var code_count := 1
 
+@export_group("Tutorial")
+## Show a tutorial card when the level starts. Play waits until both players
+## have closed it.
+@export var has_tutorial := false
+## Pages of the tutorial card (picture, caption, steps title, steps body).
+@export var tutorial: Tutorial
+
 @export_group("Progress bar")
 @export var end_target := 100.0
 @export var start_progress := 70.0
@@ -29,6 +36,11 @@ extends Resource
 ## Seconds to solve the current puzzle before losing timeout_penalty.
 @export var puzzle_time := 10.0
 @export var timeout_penalty := 10.0
+
+
+## The tutorial card opens at the start of this level.
+func shows_tutorial() -> bool:
+	return has_tutorial and tutorial != null and not tutorial.pages.is_empty()
 
 
 ## Rows on a code card (the card art has three slots).

@@ -10,10 +10,13 @@
 [ext_resource type="Resource" uid="uid://bcqpca6myt3jn" path="res://tres/enemies/dog.tres" id="7_dog"]
 [ext_resource type="Resource" uid="uid://rc2hj0ctqbuy" path="res://tres/enemies/cat.tres" id="8_cat"]
 [ext_resource type="Resource" uid="uid://cevlaph1ev8l2" path="res://tres/enemies/planet.tres" id="12_5foi8"]
+[ext_resource type="Resource" path="res://tres/tutorial/level_1_tutorial.tres" id="90_tut"]
 
 [resource]
 script = ExtResource("1_cfg")
 button_pool = Array[ExtResource("2_def")]([ExtResource("2_lwrxx"), ExtResource("3_lwrxx"), ExtResource("4_spxpl"), ExtResource("3_spxpl")])
 threats = Array[ExtResource("6_tdef")]([ExtResource("7_dog"), ExtResource("8_cat"), ExtResource("12_5foi8")])
+has_tutorial = true
+tutorial = ExtResource("90_tut")
 start_progress = 60.0
 solve_reward = 100.0

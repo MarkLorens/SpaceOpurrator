@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="Tutorial" format=3 uid="uid://yjadq1u3ircu"]
+
+[ext_resource type="Script" uid="uid://x712t8s3gk0a" path="res://scripts/level/tutorial.gd" id="1_tut"]
+[ext_resource type="Script" uid="uid://d0255lt18fcu6" path="res://scripts/level/tutorial_page.gd" id="2_page"]
+[ext_resource type="Texture2D" uid="uid://c8w1m8n6sckqv" path="res://assets/ui/tutorial/level_1/satisfcation_bar.png" id="3_bar"]
+[ext_resource type="Texture2D" uid="uid://xwm8o3j8wtjm" path="res://assets/ui/tutorial/level_1/enemy_and_sequence.png" id="4_decode"]
+[ext_resource type="Texture2D" uid="uid://d12lte7vamm7w" path="res://assets/ui/tutorial/level_1/sequence_and_central_button.png" id="5_button"]
+
+[sub_resource type="Resource" id="Resource_sqink"]
+script = ExtResource("2_page")
+picture = ExtResource("3_bar")
+caption = "SATISFACTION BAR"
+steps_title = "DESTROY THEM ALL!"
+steps_body = "This world is yours for the taking. The only thing that matters is your satisfaction,
+don’t let yourself be bored!"
+metadata/_custom_type_script = "uid://d0255lt18fcu6"
+
+[sub_resource type="Resource" id="TutorialPage_2"]
+script = ExtResource("2_page")
+picture = ExtResource("4_decode")
+caption = "TARGETS AND DECODE SHEET"
+steps_title = "DECODE AND SHOOT!"
+steps_body = "Swipe the control panel to the far left and right
+to find your Targets and Decode Sheet."
+
+[sub_resource type="Resource" id="TutorialPage_3"]
+script = ExtResource("2_page")
+picture = ExtResource("5_button")
+caption = "SEQUENCE AND BUTTON"
+steps_title = "KABOOM!"
+steps_body = "Click the buttons in sequence.
+Once completed, press the big CLAW button
+in the middle to destroy your target."
+
+[resource]
+script = ExtResource("1_tut")
+pages = Array[ExtResource("2_page")]([SubResource("Resource_sqink"), SubResource("TutorialPage_2"), SubResource("TutorialPage_3")])

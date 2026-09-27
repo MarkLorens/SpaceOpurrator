@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ykvmdwssq2xn"]
 
-[ext_resource type="Script" uid="uid://dgug8k4s6rthb" path="res://scripts/puzzle_interface.gd" id="1_pi"]
+[ext_resource type="Script" uid="uid://dgug8k4s6rthb" path="res://scripts/ui/puzzle_interface.gd" id="1_pi"]
 [ext_resource type="PackedScene" uid="uid://b30tevqiiola3" path="res://scenes/puzzle_instruction/sequenced_display.tscn" id="2_seq"]
 [ext_resource type="Texture2D" uid="uid://w34ykwdvj5qp" path="res://assets/ui/SequenceBoard.png" id="3_cut36"]
 [ext_resource type="Texture2D" uid="uid://dyduse8nvrowi" path="res://assets/ui/SeqX.png" id="7_6d2k7"]
@@ -23,15 +23,14 @@ scale = Vector2(3, 3)
 mouse_filter = 2
 texture = ExtResource("3_cut36")
 
-[node name="Row1" type="Control" parent="Box"]
-layout_mode = 3
+[node name="Row1" type="Control" parent="Box" unique_id=706314160]
 anchors_preset = 0
 offset_top = 30.0
 offset_right = 452.0
 offset_bottom = 95.0
 mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="Box/Row1"]
+[node name="Icon" type="TextureRect" parent="Box/Row1" unique_id=177164670]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 102.0
@@ -40,20 +39,19 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Sequence" parent="Box/Row1" instance=ExtResource("2_seq")]
+[node name="Sequence" parent="Box/Row1" unique_id=1557055339 instance=ExtResource("2_seq")]
 position = Vector2(112, 32.5)
 source = 2
 symbol_size = Vector2(52, 52)
 
-[node name="Row2" type="Control" parent="Box"]
-layout_mode = 3
+[node name="Row2" type="Control" parent="Box" unique_id=997255094]
 anchors_preset = 0
 offset_top = 113.0
 offset_right = 452.0
 offset_bottom = 178.0
 mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="Box/Row2"]
+[node name="Icon" type="TextureRect" parent="Box/Row2" unique_id=141690420]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 102.0
@@ -62,20 +60,19 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Sequence" parent="Box/Row2" instance=ExtResource("2_seq")]
+[node name="Sequence" parent="Box/Row2" unique_id=1444276814 instance=ExtResource("2_seq")]
 position = Vector2(112, 32.5)
 source = 2
 symbol_size = Vector2(52, 52)
 
-[node name="Row3" type="Control" parent="Box"]
-layout_mode = 3
+[node name="Row3" type="Control" parent="Box" unique_id=1975120231]
 anchors_preset = 0
 offset_top = 195.0
 offset_right = 452.0
 offset_bottom = 260.0
 mouse_filter = 2
 
-[node name="Icon" type="TextureRect" parent="Box/Row3"]
+[node name="Icon" type="TextureRect" parent="Box/Row3" unique_id=1533469971]
 layout_mode = 0
 offset_left = 6.0
 offset_right = 102.0
@@ -84,7 +81,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Sequence" parent="Box/Row3" instance=ExtResource("2_seq")]
+[node name="Sequence" parent="Box/Row3" unique_id=1632503037 instance=ExtResource("2_seq")]
 position = Vector2(112, 32.5)
 source = 2
 symbol_size = Vector2(52, 52)

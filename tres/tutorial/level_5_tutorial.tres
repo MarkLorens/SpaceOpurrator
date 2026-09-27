@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Tutorial" format=3 uid="uid://b4p341casa4vr"]
+
+[ext_resource type="Script" uid="uid://x712t8s3gk0a" path="res://scripts/level/tutorial.gd" id="1_tut"]
+[ext_resource type="Script" uid="uid://d0255lt18fcu6" path="res://scripts/level/tutorial_page.gd" id="2_page"]
+[ext_resource type="Texture2D" uid="uid://4ijhwbxwumlf" path="res://assets/ui/tutorial/level_5/yarn_ball.png" id="3_pic"]
+
+[sub_resource type="Resource" id="TutorialPage_1"]
+script = ExtResource("2_page")
+picture = ExtResource("3_pic")
+caption = "YARN BALL"
+steps_title = "NEW TOOL UNLOCKED!"
+steps_body = "Drag it in circular motion to activate.
+To use a tool, hold down the button they need
+while interacting with the tool."
+
+[resource]
+script = ExtResource("1_tut")
+pages = Array[ExtResource("2_page")]([SubResource("TutorialPage_1")])
