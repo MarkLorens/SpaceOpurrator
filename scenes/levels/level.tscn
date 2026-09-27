@@ -18,7 +18,7 @@
 [ext_resource type="Script" uid="uid://2nqwir06mwy7" path="res://scripts/ui/satisfaction_bar.gd" id="20_satbar"]
 [ext_resource type="Texture2D" uid="uid://crmagda5wa52q" path="res://assets/ui/board/satisfaction_orange.png" id="21_satorange"]
 [ext_resource type="Texture2D" uid="uid://cj0lwbyqjyxqy" path="res://assets/ui/board/satisfaction_pink.png" id="22_satpink"]
-[ext_resource type="PackedScene" path="res://scenes/ui/tutorial_card.tscn" id="30_tutorial"]
+[ext_resource type="PackedScene" uid="uid://hbh35i0j712c" path="res://scenes/ui/tutorial_card.tscn" id="30_tutorial"]
 
 [node name="Level" type="Node2D" unique_id=825060166]
 script = ExtResource("1_oc4kc")

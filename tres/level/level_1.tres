@@ -3,20 +3,20 @@
 [ext_resource type="Script" uid="uid://dksvq7y3gkxdu" path="res://scripts/level/level_config.gd" id="1_cfg"]
 [ext_resource type="Script" uid="uid://cvn0ykeg1tmei" path="res://scripts/level/button_def.gd" id="2_def"]
 [ext_resource type="Resource" uid="uid://b3shf04o5cpyy" path="res://tres/tiles/component/battery.tres" id="2_lwrxx"]
-[ext_resource type="Resource" uid="uid://cbpdsg3h4sgcl" path="res://tres/tiles/tools/engine.tres" id="3_lwrxx"]
 [ext_resource type="Resource" uid="uid://c5cvwi67mtcvd" path="res://tres/tiles/component/bomb.tres" id="3_spxpl"]
-[ext_resource type="Resource" uid="uid://cqi6udusb0mi1" path="res://tres/tiles/tools/swaft.tres" id="4_spxpl"]
+[ext_resource type="Resource" uid="uid://bfgw5aj8jo6c0" path="res://tres/tiles/component/catnip.tres" id="4_lwrxx"]
 [ext_resource type="Script" uid="uid://dxsyfvrevlr2r" path="res://scripts/level/threat_def.gd" id="6_tdef"]
 [ext_resource type="Resource" uid="uid://bcqpca6myt3jn" path="res://tres/enemies/dog.tres" id="7_dog"]
 [ext_resource type="Resource" uid="uid://rc2hj0ctqbuy" path="res://tres/enemies/cat.tres" id="8_cat"]
 [ext_resource type="Resource" uid="uid://cevlaph1ev8l2" path="res://tres/enemies/planet.tres" id="12_5foi8"]
-[ext_resource type="Resource" path="res://tres/tutorial/level_1_tutorial.tres" id="90_tut"]
+[ext_resource type="Resource" uid="uid://yjadq1u3ircu" path="res://tres/tutorial/level_1_tutorial.tres" id="90_tut"]
 
 [resource]
 script = ExtResource("1_cfg")
-button_pool = Array[ExtResource("2_def")]([ExtResource("2_lwrxx"), ExtResource("3_lwrxx"), ExtResource("4_spxpl"), ExtResource("3_spxpl")])
+button_pool = Array[ExtResource("2_def")]([ExtResource("2_lwrxx"), ExtResource("3_spxpl"), ExtResource("4_lwrxx")])
 threats = Array[ExtResource("6_tdef")]([ExtResource("7_dog"), ExtResource("8_cat"), ExtResource("12_5foi8")])
 has_tutorial = true
 tutorial = ExtResource("90_tut")
 start_progress = 60.0
-solve_reward = 100.0
+solve_reward = 40.0
+puzzle_time = 30.0
