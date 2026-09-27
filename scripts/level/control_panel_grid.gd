@@ -27,8 +27,6 @@ func _ready() -> void:
 	_spawn_buttons(GameState.session_seed, GameState.level)
 
 func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
-	var picked := cfg.pick_buttons(seed_value)
-	var defs := cfg.button_defs()
 	# Project base width, NOT get_viewport_rect(): with stretch aspect "expand" a
 	# wider phone reports a wider viewport, which would filter different markers
 	# and desync the layout between players.
@@ -51,14 +49,15 @@ func _spawn_buttons(seed_value: int, cfg: LevelConfig) -> void:
 		spots[i] = spots[j]
 		spots[j] = tmp
 
-	# The puzzle already assumes every picked button is on the panel.
-	if spots.size() < picked.size():
-		push_error("ControlPanelGrid: only %d usable panels for %d buttons; add markers" % [spots.size(), picked.size()])
+	# The puzzle already assumes every pool button is on the panel.
+	var pool := cfg.button_pool
+	if spots.size() < pool.size():
+		push_error("ControlPanelGrid: only %d usable panels for %d buttons; add markers" % [spots.size(), pool.size()])
 	
-	for i in mini(picked.size(), spots.size()):
+	for i in mini(pool.size(), spots.size()):
 		var button := button_scene.instantiate()
-		button.btnValue = picked[i]
-		button.def = defs[picked[i]]
+		button.btnValue = i
+		button.def = pool[i]
 		button.art_scale = scale  # item art is drawn at the panel texture's resolution
 		button.position = spots[i]
 		get_parent().add_child.call_deferred(button)

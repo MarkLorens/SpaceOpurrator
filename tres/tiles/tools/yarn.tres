@@ -4,7 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://d4fjy1fb77wsh" path="res://assets/items/yarn/unclick.png" id="2_unclick"]
 [ext_resource type="Texture2D" uid="uid://d2pg3vvn4qhg1" path="res://assets/items/yarn/click.png" id="3_click"]
 [ext_resource type="Texture2D" uid="uid://c6n7me78cgbh6" path="res://assets/icon/yarn_icon.png" id="4_icon"]
+[ext_resource type="Script" uid="uid://bbf0rsk4p7p6j" path="res://scripts/level/gestures/roll_gesture.gd" id="5_roll"]
 [ext_resource type="AudioStream" uid="uid://yv7xnqyj3jp1" path="res://assets/audio/4_buttons/tools/2_purr.wav" id="9_sfx"]
+
+[sub_resource type="Resource" id="Resource_gesture"]
+script = ExtResource("5_roll")
 
 [resource]
 script = ExtResource("1_def")
@@ -13,3 +17,4 @@ icon = ExtResource("4_icon")
 unclick = ExtResource("3_click")
 click = ExtResource("2_unclick")
 sfx = ExtResource("9_sfx")
+gesture = SubResource("Resource_gesture")

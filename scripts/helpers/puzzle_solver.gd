@@ -3,7 +3,7 @@ extends Node
 ## host and receive the current sequence back; only the host checks answers.
 ##
 ## A sequence is a list of steps, each Vector2i(component, tool): values are
-## indices into GameState.level.button_defs(), and tool is NO_TOOL for a plain
+## indices into GameState.level.button_pool, and tool is NO_TOOL for a plain
 ## tap. A tool + component step goes in when a tool's gesture completes while a
 ## component is held — on either phone, so one player can hold while the other
 ## works the tool.
@@ -42,7 +42,6 @@ var card_index := 0
 var _codebook_key := []  # [level_index, seed] the codebook was built for
 ## The component tools act on: the most recently pressed one still held.
 var held_component := NONE
-var _sequence_index := -1  # last handwritten sequence, so it isn't picked twice in a row
 var _threat_index := -1
 # Host only.
 var _held: Array[int] = []  # held components, oldest first
@@ -52,7 +51,6 @@ func _ready() -> void:
 	GameState.level_started.connect(func():
 		_held.clear()
 		_used_in_combo.clear()
-		_sequence_index = -1
 		_threat_index = -1
 		current_code = NONE
 		card_index = 0
@@ -72,11 +70,7 @@ func new_puzzle() -> void:
 		code = randi() % cfg.code_count
 		seq.assign(codebook[code][_threat_index])
 	else:
-		if cfg.sequences.is_empty():
-			seq = generate_sequence(cfg, GameState.session_seed)
-		else:
-			_sequence_index = _pick_other(cfg.sequences.size(), _sequence_index)
-			seq = sequence_steps(cfg, _sequence_index)
+		seq = generate_sequence(cfg)
 		_threat_index = _pick_other(cfg.threats.size(), _threat_index)
 	_set_sequence.rpc(seq, _threat_index, code)
 	if code != NONE:
@@ -89,38 +83,26 @@ func _pick_other(count: int, last: int) -> int:
 	var i := randi() % (count - 1)
 	return i + 1 if last >= 0 and i >= last else i
 
-## A handwritten sequence as step values.
-func sequence_steps(cfg: LevelConfig, sequence_index: int) -> Array[Vector2i]:
-	var defs := cfg.button_defs()
-	var seq: Array[Vector2i] = []
-	for step in cfg.sequences[sequence_index].steps:
-		if not step or not step.component or step.component.is_tool():
-			push_warning("Level sequence %d has a step without a component; skipping it" % sequence_index)
-			continue
-		if step.tool and not step.tool.is_tool():
-			push_warning("Level sequence %d pairs a component with a non-tool; treating it as a tap" % sequence_index)
-		var tool := defs.find(step.tool) if step.tool and step.tool.is_tool() else NO_TOOL
-		seq.append(Vector2i(defs.find(step.component), tool))
-	return seq
-
-## Random steps from this level's live buttons. Any live component, sometimes
-## paired with any live tool that has a gesture. Repeats are fine. Pass an rng
-## to get the same steps on both peers; without one the steps are random.
-func generate_sequence(cfg: LevelConfig, seed_value: int, rng: RandomNumberGenerator = null) -> Array[Vector2i]:
+## Random steps from this level's button_pool. Any component, sometimes paired
+## with any tool that has a gesture. Repeats are fine. Pass an rng to get the
+## same steps on both peers; without one the steps are random.
+func generate_sequence(cfg: LevelConfig, rng: RandomNumberGenerator = null) -> Array[Vector2i]:
 	if rng == null:
 		rng = RandomNumberGenerator.new()
 		rng.randomize()
-	var defs := cfg.button_defs()
+	var defs := cfg.button_pool
 	var components: Array[int] = []
 	var tools: Array[int] = []
-	for value in cfg.live_buttons(seed_value):
+	for value in defs.size():
+		if not defs[value]:
+			continue
 		if not defs[value].is_tool():
 			components.append(value)
 		elif defs[value].gesture:
 			tools.append(value)
 	var seq: Array[Vector2i] = []
 	if components.is_empty():
-		push_error("PuzzleSolver: level has no live components to build a sequence from")
+		push_error("PuzzleSolver: level's button_pool has no components to build a sequence from")
 		return seq
 	for i in cfg.sequence_length:
 		var paired := not tools.is_empty() and rng.randf() < cfg.combo_chance
@@ -137,9 +119,8 @@ func ensure_codebook() -> void:
 		_codebook_key = key
 		_build_codebook(GameState.level, GameState.session_seed)
 
-## One sequence per (code, threat), all different where possible, and a
-## shuffled card order. Rows use the level's handwritten sequences if it has
-## any, else random ones. Seeded, so both peers build the same cards.
+## One random sequence per (code, threat), all different where possible, and a
+## shuffled card order. Seeded, so both peers build the same cards.
 func _build_codebook(cfg: LevelConfig, seed_value: int) -> void:
 	codebook = []
 	card_order = []
@@ -147,24 +128,15 @@ func _build_codebook(cfg: LevelConfig, seed_value: int) -> void:
 		return
 	var rng := RandomNumberGenerator.new()
 	rng.seed = hash([seed_value, "codebook"])  # not the button layout's stream
-	var handwritten: Array[int] = []  # shuffled sequence indices, dealt out in order
-	handwritten.assign(range(cfg.sequences.size()))
-	_shuffle(handwritten, rng)
-	if not handwritten.is_empty() and handwritten.size() < cfg.code_count * cfg.code_threats():
-		push_warning("PuzzleSolver: fewer handwritten sequences than code card rows; some rows repeat")
 	var used: Array = []
 	for code in cfg.code_count:
 		var card: Array = []
 		for threat in cfg.code_threats():
-			var seq: Array[Vector2i]
-			if not handwritten.is_empty():
-				seq = sequence_steps(cfg, handwritten[used.size() % handwritten.size()])
-			else:
-				seq = generate_sequence(cfg, seed_value, rng)
-				for attempt in CODEBOOK_REROLLS:  # small button pools may run out of new ones
-					if not used.has(seq):
-						break
-					seq = generate_sequence(cfg, seed_value, rng)
+			var seq := generate_sequence(cfg, rng)
+			for attempt in CODEBOOK_REROLLS:  # small button pools may run out of new ones
+				if not used.has(seq):
+					break
+				seq = generate_sequence(cfg, rng)
 			used.append(seq)
 			card.append(seq)
 		codebook.append(card)

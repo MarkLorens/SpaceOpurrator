@@ -7,7 +7,7 @@ extends TapArea
 const COMPONENT_TAP_MAX_TIME := 0.4
 
 ## Set by ControlPanelGrid before the button enters the tree.
-var btnValue := 0  # index in the level's button_defs()
+var btnValue := 0  # index in the level's button_pool
 var def: ButtonDef
 ## On-screen scale for item art (unclick/click), which is drawn at the panel
 ## texture's resolution. Set by ControlPanelGrid to its own stretch.
@@ -52,6 +52,9 @@ func _setup_tool() -> void:
 
 func _on_held_component_changed(value: int) -> void:
 	gesture.armed = value != PuzzleSolver.NONE
+	# Only while armed: otherwise a drag from this tool still pans the board.
+	keep_drags = gesture.armed and gesture.uses_drags()
+	grab_margin = gesture.grab_margin
 
 ## Panel shows unclick at rest and click while held. The icon is only for the
 ## sequence display.
