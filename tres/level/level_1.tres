@@ -19,4 +19,4 @@ has_tutorial = true
 tutorial = ExtResource("90_tut")
 start_progress = 60.0
 solve_reward = 40.0
-puzzle_time = 30.0
+puzzle_time = 45.0
